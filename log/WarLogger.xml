@@ -1,0 +1,34 @@
+18/09/2014 12:42:13 INFO	====== >	War started	< ======
+18/09/2014 12:42:15 INFO	D201	FAIL: missile M4 does not exist
+18/09/2014 12:42:16 INFO	L101	Launch: M1			Target: Sderot
+18/09/2014 12:42:16 INFO	D202	FAIL: missile M2 does not exist
+18/09/2014 12:42:17 INFO	L102	is now: visible
+18/09/2014 12:42:18 INFO	L102	Launch: M3			Target: Ofakim
+18/09/2014 12:42:18 INFO	D201	Launch: DM1001			Target: M1
+18/09/2014 12:42:18 INFO	D201	Intercept: M1			Status: SUCCESS
+18/09/2014 12:42:18 INFO	P301	Launch: PM2001			Target: L101
+18/09/2014 12:42:18 INFO	P301	Intercept: L101			Status: SUCCESS
+18/09/2014 12:42:18 INFO	L101	Status: DESTROYED
+18/09/2014 12:42:21 INFO	L102	is now: hidden
+18/09/2014 12:42:21 INFO	L102	Target: Ofakim		Status: HIT			Land Time: 18/09/2014 12:42:21			Damage: 5000
+18/09/2014 12:42:21 INFO	D201	FAIL: missile M3 does not exist
+18/09/2014 12:42:21 INFO	S302	Intercept: L102			Status: FAIL			Reason: Launcher is hidden
+18/09/2014 12:42:21 INFO	P303	Intercept: L103			Status: FAIL			Reason: Launcher is hidden
+18/09/2014 12:42:22 INFO	L102	is now: visible
+18/09/2014 12:42:23 INFO	L102	Launch: M4			Target: Beer-Sheva
+18/09/2014 12:42:23 INFO	L103	is now: visible
+18/09/2014 12:42:24 INFO	L103	Launch: M5			Target: BenAmir
+18/09/2014 12:42:26 INFO	D203	Launch: DM1003			Target: M5
+18/09/2014 12:42:26 INFO	D203	Intercept: M5			Status: SUCCESS
+18/09/2014 12:42:26 INFO	S302	Launch: SM2002			Target: L102
+18/09/2014 12:42:26 INFO	S302	Intercept: L102			Status: FAIL
+18/09/2014 12:42:27 INFO	L103	is now: hidden
+18/09/2014 12:42:30 INFO	L102	is now: hidden
+18/09/2014 12:42:30 INFO	L103	is now: visible
+18/09/2014 12:42:30 INFO	L102	Target: Beer-Sheva		Status: HIT			Land Time: 18/09/2014 12:42:30			Damage: 1000
+18/09/2014 12:42:30 INFO	D203	FAIL: missile M6 does not exist
+18/09/2014 12:42:31 INFO	L103	Launch: M6			Target: GuyEshel
+18/09/2014 12:42:34 INFO	P304	Launch: PM2003			Target: L103
+18/09/2014 12:42:34 INFO	P304	Intercept: L103			Status: SUCCESS
+18/09/2014 12:42:34 INFO	L103	Status: DESTROYED
+18/09/2014 12:42:38 INFO	L103	Target: GuyEshel		Status: HIT			Land Time: 18/09/2014 12:42:38			Damage: 1000

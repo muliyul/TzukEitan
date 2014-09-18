@@ -1,0 +1,3 @@
+18/09/2014 12:42:16 INFO	L101	Launch: M1			Target: Sderot
+18/09/2014 12:42:18 INFO	P301	Launch: PM2001			Target: L101
+18/09/2014 12:42:18 INFO	P301	Intercept: L101			Status: SUCCESS
