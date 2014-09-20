@@ -10,6 +10,7 @@ public class InterceptEnemyLauncherForm extends JPanel implements FormPanel {
 	private JTextField idTF;
 
 	public InterceptEnemyLauncherForm(WarEventUIListener l) {
+		
 		add(new JLabel("Enter id:"));
 		add(idTF = new JTextField());
 	}

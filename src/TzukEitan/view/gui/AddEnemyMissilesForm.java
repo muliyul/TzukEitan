@@ -1,6 +1,7 @@
 package TzukEitan.view.gui;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JComboBox;
@@ -18,7 +19,7 @@ public class AddEnemyMissilesForm extends JPanel implements FormPanel {
 	private JSlider flyTimeSlider;
 
 	public AddEnemyMissilesForm(WarEventUIListener l) {
-		setLayout(new GridLayout(4, 2, 1, 1));
+		setLayout(new GridLayout(5, 2, 1, 1));
 		add(new JLabel("Choose launcher:"));
 		add(launcherCombo = new JComboBox<String>(l.showAllLaunchers()));
 		add(new JLabel("Choose destination:"));
@@ -31,7 +32,7 @@ public class AddEnemyMissilesForm extends JPanel implements FormPanel {
 		add(flyTimeSlider = new JSlider());
 		flyTimeSlider.setMaximum(30);
 		flyTimeSlider.setMajorTickSpacing(5);
-		this.setPreferredSize(new Dimension(280, 120));
+		this.setPreferredSize(new Dimension(280, 150));
 	}
 
 	@Override

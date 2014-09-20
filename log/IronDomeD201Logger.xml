@@ -1,4 +1,6 @@
-18/09/2014 12:42:15 INFO	D201	FAIL: missile M4 does not exist
-18/09/2014 12:42:18 INFO	D201	Launch: DM1001			Target: M1
-18/09/2014 12:42:18 INFO	D201	Intercept: M1			Status: SUCCESS
-18/09/2014 12:42:21 INFO	D201	FAIL: missile M3 does not exist
+20/09/2014 04:29:28 INFO	D201	FAIL: missile M4 does not exist
+20/09/2014 04:29:31 INFO	D201	Launch: DM1001			Target: M1
+20/09/2014 04:29:31 INFO	D201	Intercept: M1			Status: SUCCESS
+20/09/2014 04:29:34 INFO	D201	FAIL: missile M3 does not exist
+20/09/2014 04:30:04 INFO	D201	Launch: DM1004			Target: M9
+20/09/2014 04:30:04 INFO	D201	Intercept: M9			Status: FAIL 			Damage: 2222

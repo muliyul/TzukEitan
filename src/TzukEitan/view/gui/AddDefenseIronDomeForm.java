@@ -12,7 +12,7 @@ public class AddDefenseIronDomeForm extends JPanel implements FormPanel {
 	public AddDefenseIronDomeForm(WarEventUIListener l) {
 		// TODO Auto-generated constructor stub
 		add(new JLabel("Enter id:"));
-		add(idTF = new JTextField());
+		add(idTF = new JTextField(10));
 	}
 
 	@Override

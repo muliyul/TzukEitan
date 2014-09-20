@@ -35,8 +35,8 @@ public class GUIView implements AbstractWarView {
 	private String[] enemyImgsString = { "launcher.png", "missile.png" };
 	private String[] enemyActionString = { "Add Launcher", "Launch Missile" };
 
-	private String[] friendlyImgsString = { "irondome.png" };
-	private String[] friendlyActionString = { "Add Iron Dome" };
+	private String[] friendlyImgsString = { "irondome.png","","","" };
+	private String[] friendlyActionString = { "Add Iron Dome","Add Launcher Destructor", "Intercept Missile","Intercept Launcher" };
 
 	private JFrame mainFrame;
 	private JPanel mainPanel;
@@ -91,8 +91,8 @@ public class GUIView implements AbstractWarView {
 				friendlyInvPane = new JScrollPane(), friendlyActionPanel = new JPanel(), friendlyActionBtnArray,
 				friendlyFormPanel = new JPanel());
 
-		addBottomBtn(enemyPanel, enemyApplyBtn, enemyCancelBtn);
-		addBottomBtn(friendlyPanel, friendlyApplyBtn, friendlyCancelBtn);
+		addBottomBtn(enemyPanel, enemyApplyBtn = new JButton("Apply"), enemyCancelBtn = new JButton("Cancel"));
+		addBottomBtn(friendlyPanel, friendlyApplyBtn = new JButton("Apply"), friendlyCancelBtn = new JButton("Cancel"));
 		enemyPanel.setBackground(Color.RED);
 		friendlyPanel.setBackground(Color.GREEN);
 		enemyPanel.setBorder(BorderFactory.createTitledBorder("Enemy Panel"));
@@ -109,6 +109,7 @@ public class GUIView implements AbstractWarView {
 		mainPanel.add(centerPanel, BorderLayout.CENTER);
 		mainPanel.add(friendlyPanel, BorderLayout.EAST);
 		mainFrame.setContentPane(mainPanel);
+		
 		enemyActionBtnArray[0].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				for (JButton jbt : enemyActionBtnArray)
@@ -133,6 +134,49 @@ public class GUIView implements AbstractWarView {
 				friendlyActionBtnArray[0].setEnabled(false);
 			}
 		});
+		friendlyActionBtnArray[1].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for (JButton jbt : friendlyActionBtnArray)
+					jbt.setEnabled(true);
+				fireAddDefenseLauncherDestructor();
+				friendlyActionBtnArray[1].setEnabled(false);
+			}
+		});
+		friendlyActionBtnArray[2].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for (JButton jbt : friendlyActionBtnArray)
+					jbt.setEnabled(true);
+				fireInterceptMissile();
+				friendlyActionBtnArray[2].setEnabled(false);
+			}
+		});
+		friendlyActionBtnArray[3].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for (JButton jbt : friendlyActionBtnArray)
+					jbt.setEnabled(true);
+				fireInterceptEnemyLauncher();
+				friendlyActionBtnArray[3].setEnabled(false);
+			}
+		});
+		
+		enemyCancelBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for (JButton jbt : enemyActionBtnArray)
+					jbt.setEnabled(true);
+				enemyFormPanel.removeAll();
+				enemyPanel.validate();				
+			}
+		});
+		
+		friendlyCancelBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for (JButton jbt : friendlyActionBtnArray)
+					jbt.setEnabled(true);
+				friendlyFormPanel.removeAll();
+				friendlyPanel.validate();				
+			}
+		});
+		
 		mainFrame.setVisible(true);
 	}
 
@@ -151,8 +195,7 @@ public class GUIView implements AbstractWarView {
 
 	public void addBottomBtn(JPanel sidePanel, JButton applyBtn,
 			JButton cancelBtn) {
-		applyBtn = new JButton("Apply");
-		cancelBtn = new JButton("Cancel");
+
 
 		JPanel bottomPanel = new JPanel(new GridLayout(2, 1));
 
@@ -192,7 +235,6 @@ public class GUIView implements AbstractWarView {
 		return sidePanel;
 	}
 
-	@Override
 	public void fireAddDefenseLauncherDestructor() {
 		friendlyFormPanel.removeAll();
 		for (WarEventUIListener l : listeners) {
@@ -203,7 +245,7 @@ public class GUIView implements AbstractWarView {
 		friendlyPanel.validate();
 	}
 
-	@Override
+	
 	public void fireAddDefenseIronDome() {
 		friendlyFormPanel.removeAll();
 		for (WarEventUIListener l : listeners) {
@@ -213,7 +255,7 @@ public class GUIView implements AbstractWarView {
 		friendlyPanel.validate();
 	}
 
-	@Override
+	
 	public void fireAddEnemyLauncher() {
 		enemyFormPanel.removeAll();		
 		for (WarEventUIListener l : listeners) {
@@ -223,7 +265,7 @@ public class GUIView implements AbstractWarView {
 		enemyPanel.validate();
 	}
 
-	@Override
+	
 	public void fireAddEnemyMissile() {
 		enemyFormPanel.removeAll();
 		for (WarEventUIListener l : listeners) {
@@ -233,31 +275,33 @@ public class GUIView implements AbstractWarView {
 		enemyPanel.validate();
 	}
 
-	@Override
+	
 	public void fireInterceptEnemyLauncher() {
 		friendlyFormPanel.removeAll();
 		for (WarEventUIListener l : listeners) {
 			friendlyFormPanel.add(FormPanelFactory.get(
 					FormPanelFactory.FormType.INTERCEPT_ENEMY_LAUNCHER, l));
 		}
+		friendlyPanel.validate();
 	}
 
-	@Override
+	
 	public void fireInterceptMissile() {
 		friendlyFormPanel.removeAll();
 		for (WarEventUIListener l : listeners) {
 			friendlyFormPanel.add(FormPanelFactory.get(
 					FormPanelFactory.FormType.INTERCEPT_ENEMY_MISSILE, l));
 		}
+		friendlyPanel.validate();
 	}
 
-	@Override
+	
 	public void fireShowStatistics() {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+	
 	public void fireFinishWar() {
 		// TODO Auto-generated method stub
 
