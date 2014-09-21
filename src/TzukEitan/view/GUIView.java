@@ -184,6 +184,7 @@ public class GUIView implements AbstractWarView {
 			for (JButton jbt : enemyActionBtnArray)
 			    jbt.setEnabled(true);
 			fireAddEnemyLauncher();
+			enemyFormPanelContainer.repaint();
 			enemyActionBtnArray[0].setEnabled(false);
 		    }
 		});
@@ -192,6 +193,7 @@ public class GUIView implements AbstractWarView {
 			for (JButton jbt : enemyActionBtnArray)
 			    jbt.setEnabled(true);
 			fireAddEnemyMissile();
+			enemyFormPanelContainer.repaint();
 			enemyActionBtnArray[1].setEnabled(false);
 		    }
 		});
@@ -202,6 +204,7 @@ public class GUIView implements AbstractWarView {
 				for (JButton jbt : friendlyActionBtnArray)
 				    jbt.setEnabled(true);
 				fireAddDefenseIronDome();
+				friendlyFormPanelContainer.repaint();
 				friendlyActionBtnArray[0].setEnabled(false);
 			    }
 			});
@@ -211,6 +214,7 @@ public class GUIView implements AbstractWarView {
 				for (JButton jbt : friendlyActionBtnArray)
 				    jbt.setEnabled(true);
 				fireAddDefenseLauncherDestructor();
+				friendlyFormPanelContainer.repaint();
 				friendlyActionBtnArray[1].setEnabled(false);
 			    }
 			});
@@ -220,6 +224,7 @@ public class GUIView implements AbstractWarView {
 				for (JButton jbt : friendlyActionBtnArray)
 				    jbt.setEnabled(true);
 				fireInterceptMissile();
+				friendlyFormPanelContainer.repaint();
 				friendlyActionBtnArray[2].setEnabled(false);
 			    }
 			});
@@ -229,6 +234,7 @@ public class GUIView implements AbstractWarView {
 				for (JButton jbt : friendlyActionBtnArray)
 				    jbt.setEnabled(true);
 				fireInterceptEnemyLauncher();
+				friendlyFormPanelContainer.repaint();
 				friendlyActionBtnArray[3].setEnabled(false);
 			    }
 			});
@@ -239,6 +245,7 @@ public class GUIView implements AbstractWarView {
 			for (JButton jbt : enemyActionBtnArray)
 			    jbt.setEnabled(true);
 			enemyFormPanelContainer.removeAll();
+			enemyFormPanelContainer.repaint();
 			enemyPanel.validate();
 		    }
 		});
@@ -247,8 +254,9 @@ public class GUIView implements AbstractWarView {
 		    public void actionPerformed(ActionEvent e) {
 			friendlyApplyBtn.setActionCommand(null);
 			for (JButton jbt : friendlyActionBtnArray)
-			    jbt.setEnabled(true);
+			    jbt.setEnabled(true);	
 			friendlyFormPanelContainer.removeAll();
+			friendlyFormPanelContainer.repaint();
 			friendlyPanel.validate();
 		    }
 		});
