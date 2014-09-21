@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 
 import TzukEitan.listeners.WarEventUIListener;
 
-public class InterceptEnemyMissileForm extends JPanel implements FormPanel {
+public class InterceptEnemyMissileForm extends FormPanel {
 	private JComboBox<String> missileComboBox;
 
 	public InterceptEnemyMissileForm(WarEventUIListener l) {
@@ -34,7 +34,7 @@ public class InterceptEnemyMissileForm extends JPanel implements FormPanel {
 	}
 
 	@Override
-	public Object[] getParams() throws Exception {
+	public Object[] getParams(){
 		return new Object[] { missileComboBox.getSelectedItem() };
 	}
 

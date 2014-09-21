@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 
 import TzukEitan.listeners.WarEventUIListener;
 
-public class AddEnemyLauncherForm extends JPanel implements FormPanel {
+public class AddEnemyLauncherForm extends FormPanel {
 	
 	
 	public AddEnemyLauncherForm(WarEventUIListener l) {
@@ -22,7 +22,7 @@ public class AddEnemyLauncherForm extends JPanel implements FormPanel {
 	}
 
 	@Override
-	public Object[] getParams() throws Exception {
+	public Object[] getParams(){
 		return null;
 	}
 

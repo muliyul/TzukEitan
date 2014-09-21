@@ -9,9 +9,8 @@ import javax.swing.JTextField;
 
 import TzukEitan.listeners.WarEventUIListener;
 
-public class AddDefenseIronDomeForm extends JPanel implements FormPanel {
+public class AddDefenseIronDomeForm extends FormPanel {
 	
-
 	public AddDefenseIronDomeForm(WarEventUIListener l) {
 		// TODO Auto-generated constructor stub
 		JLabel tempLbl1 = new JLabel("Press Apply to add");
@@ -24,7 +23,7 @@ public class AddDefenseIronDomeForm extends JPanel implements FormPanel {
 	}
 
 	@Override
-	public Object[] getParams() throws Exception {
+	public Object[] getParams(){
 		return null;
 	}
 

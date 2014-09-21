@@ -14,8 +14,10 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import TzukEitan.view.AbstractWarView;
+import TzukEitan.view.ConsoleView;
+import TzukEitan.view.GUIView;
 import TzukEitan.view.WarXMLReader;
-import TzukEitan.view.gui.GUIView;
 import TzukEitan.war.War;
 import TzukEitan.war.WarControl;
 
@@ -24,13 +26,16 @@ public class TzukEitan {
 	public static void main(String[] args) {
 		WarXMLReader warXML;
 
-		GUIView view = new GUIView();
+		AbstractWarView guiView = new GUIView();
+		AbstractWarView consoleView = new ConsoleView();
+		
 		War warModel = new War();
 
-		WarControl warControl = new WarControl(warModel, view);
-
+		WarControl warGUIControl = new WarControl(warModel, guiView);
+		WarControl warConsoleControl = new WarControl(warModel, consoleView);
+		
 		try {
-			warXML = new WarXMLReader("warStart.xml", warControl);
+			warXML = new WarXMLReader("warStart.xml", warGUIControl);
 			warXML.start();
 
 			warXML.join();
@@ -46,7 +51,7 @@ public class TzukEitan {
 		}
 
 		warModel.start();
-		view.start();
+		((ConsoleView)consoleView).start();
 	}
 
 }

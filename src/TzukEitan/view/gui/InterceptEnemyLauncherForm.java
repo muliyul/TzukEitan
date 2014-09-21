@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 
 import TzukEitan.listeners.WarEventUIListener;
 
-public class InterceptEnemyLauncherForm extends JPanel implements FormPanel {
+public class InterceptEnemyLauncherForm extends FormPanel {
 	
 	private JComboBox<String> launcherCombo;
 
@@ -35,7 +35,7 @@ public class InterceptEnemyLauncherForm extends JPanel implements FormPanel {
 	}
 
 	@Override
-	public Object[] getParams() throws Exception {
+	public Object[] getParams(){
 		return new Object[] { launcherCombo.getSelectedItem() };
 	}
 

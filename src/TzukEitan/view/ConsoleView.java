@@ -27,7 +27,7 @@ public class ConsoleView extends Thread implements AbstractWarView{
 			e.printStackTrace();
 		}
 		while (isRunning) {
-			selectUserChoiseMethod();
+			selectUserChoiceMethod();
 		}
 	}// run
 
@@ -59,7 +59,7 @@ public class ConsoleView extends Thread implements AbstractWarView{
 				flag = true;
 
 			} catch (NumberFormatException e) {
-				System.out.println("Worng input, please try again:");
+				System.out.println("Wrong input, please try again:");
 				choise = input.nextInt();
 			}
 
@@ -68,10 +68,10 @@ public class ConsoleView extends Thread implements AbstractWarView{
 		return choise;
 	}
 
-	public void selectUserChoiseMethod() {
-		int choise = readUserChoise();
+	public void selectUserChoiceMethod() {
+		int choice = readUserChoise();
 
-		switch (choise) {
+		switch (choice) {
 		case 1:
 			fireAddDefenseLauncherDestructor();
 			break;
@@ -264,7 +264,7 @@ public class ConsoleView extends Thread implements AbstractWarView{
 		System.out.println("[" + Utils.getCurrentTime() + "] Launcher: "
 				+ MunitionsId + " just launched missile: " + missileId
 				+ " towards: " + destination
-				+ " its about to cause damade of: " + damage);
+				+ " is about to cause damage of: " + damage);
 	}
 
 	public void showLauncherIsVisible(String id, boolean visible) {

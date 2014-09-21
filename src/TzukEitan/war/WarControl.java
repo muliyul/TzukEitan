@@ -17,7 +17,7 @@ public class WarControl implements WarEventListener, WarEventUIListener{
 		this.warModel = warModel;
 		this.view = view;
 		
-		warModel.registerListenerts(this);
+		warModel.registerListeners(this);
 		view.registerListener(this);
 	}
 	
@@ -205,6 +205,16 @@ public class WarControl implements WarEventListener, WarEventUIListener{
 	public void enemyMissDestination(String whoLaunchedMeId, String id,
 			String destination, String launchTime) {
 		view.showEnemyMissDestination(whoLaunchedMeId, id, destination, launchTime);
+	}
+
+	@Override
+	public String requestEnemyInventory() {
+	    return warModel.getEnemyInventory();
+	}
+
+	@Override
+	public String requestFriendlyInventory() {
+	    return warModel.getFriendlyInventory();
 	}
 
 

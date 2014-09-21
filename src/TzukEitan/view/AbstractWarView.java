@@ -4,7 +4,6 @@ import TzukEitan.war.WarControl;
 
 public interface AbstractWarView {
 	void registerListener(WarControl controller);
-	void start();
 	void showDefenseLaunchMissile(String myMunitionsId, String missileId,
 			String enemyMissileId);
 	void showDefenseLaunchMissile(String myMunitionsId, String type,

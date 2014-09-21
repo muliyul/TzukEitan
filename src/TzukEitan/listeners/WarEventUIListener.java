@@ -52,4 +52,8 @@ public interface WarEventUIListener {
 	/** Returns all war city targets **/
 	public String[] getAllWarDestinations();
 
+	public String requestEnemyInventory();
+
+	public String requestFriendlyInventory();
+
 }

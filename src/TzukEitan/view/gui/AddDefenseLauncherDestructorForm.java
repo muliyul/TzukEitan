@@ -5,20 +5,21 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import TzukEitan.listeners.WarEventUIListener;
 
-public class AddDefenseLauncherDestructorForm extends JPanel implements
-		FormPanel {
+
+public class AddDefenseLauncherDestructorForm extends FormPanel {
 	
 	private JComboBox<String> launcherDestructorCombo;
 	private String[] type = {"Ship", "Plane"};
 
-	public AddDefenseLauncherDestructorForm() {
+	public AddDefenseLauncherDestructorForm(WarEventUIListener l) {
 		add(new JLabel("Enter type:"));
 		add(launcherDestructorCombo = new JComboBox<String>(type));
 	}
 
 	@Override
-	public Object[] getParams() throws Exception {
+	public Object[] getParams(){
 		return new Object[] { launcherDestructorCombo.getSelectedItem() };
 	}
 

@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 
 import TzukEitan.listeners.WarEventUIListener;
 
-public class AddEnemyMissilesForm extends JPanel implements FormPanel {
+public class AddEnemyMissilesForm extends FormPanel {
 	private JComboBox<String> launcherCombo;
 	private JComboBox<String> destinationCombo;
 	private JSlider damageSlider;
@@ -49,7 +49,7 @@ public class AddEnemyMissilesForm extends JPanel implements FormPanel {
 	}
 
 	@Override
-	public Object[] getParams() throws Exception {
+	public Object[] getParams(){
 		return new Object[] { launcherCombo.getSelectedItem(),
 				destinationCombo.getSelectedItem(), damageSlider.getValue(),
 				flyTimeSlider.getValue() };

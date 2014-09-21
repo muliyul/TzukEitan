@@ -1,9 +1,0 @@
-20/09/2014 11:50:21 INFO	L102	is now: visible
-20/09/2014 11:50:22 INFO	L102	Launch: M3			Target: Ofakim
-20/09/2014 11:50:25 INFO	L102	is now: hidden
-20/09/2014 11:50:25 INFO	L102	Target: Ofakim		Status: MISS			Land Time: 20/09/2014 11:50:25
-20/09/2014 11:50:25 INFO	S302	Intercept: L102			Status: FAIL			Reason: Launcher is hidden
-20/09/2014 11:50:26 INFO	L102	is now: visible
-20/09/2014 11:50:27 INFO	L102	Launch: M4			Target: Beer-Sheva
-20/09/2014 11:50:30 INFO	S302	Launch: SM2002			Target: L102
-20/09/2014 11:50:30 INFO	S302	Intercept: L102			Status: SUCCESS

@@ -1,7 +1,0 @@
-20/09/2014 11:50:25 INFO	P303	Intercept: L103			Status: FAIL			Reason: Launcher is hidden
-20/09/2014 11:50:27 INFO	L103	is now: visible
-20/09/2014 11:50:28 INFO	L103	Launch: M5			Target: BenAmir
-20/09/2014 11:50:31 INFO	L103	is now: hidden
-20/09/2014 11:50:34 INFO	L103	is now: visible
-20/09/2014 11:50:35 INFO	L103	Launch: M6			Target: GuyEshel
-20/09/2014 11:50:38 INFO	P304	Launch: PM2003			Target: L103

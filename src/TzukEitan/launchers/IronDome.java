@@ -93,7 +93,7 @@ public class IronDome extends Thread implements Munitions {
 
 	private void fireMissileNotExist(String missileId) {
 		for (WarEventListener l : allListeners)
-			l.missileNotExist(getIronDomeId(), missileId);;
+			l.missileNotExist(getIronDomeId(), missileId);
 	}
 
 	public void createMissile() {
