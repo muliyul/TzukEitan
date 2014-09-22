@@ -3,14 +3,12 @@ package TzukEitan.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Vector;
-
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -26,10 +24,9 @@ import javax.swing.Timer;
 import TzukEitan.listeners.WarEventUIListener;
 import TzukEitan.utils.ImageUtils;
 import TzukEitan.utils.Utils;
-import TzukEitan.view.gui.FormPanel;
-import TzukEitan.view.gui.FormPanelFactory;
-import TzukEitan.view.gui.GUIMissile;
-import TzukEitan.war.WarControl;
+import TzukEitan.view.gui.forms.FormPanel;
+import TzukEitan.view.gui.forms.FormPanelFactory;
+import TzukEitan.war.WarController;
 
 public class GUIView implements AbstractWarView {
     private List<WarEventUIListener> listeners;
@@ -46,7 +43,6 @@ public class GUIView implements AbstractWarView {
     private JPanel mainPanel;
     private JPanel enemyPanel;
     private JPanel friendlyPanel;
-    private JPanel logsPanel;
     private AnimationPanel animationPanel;
     private JPanel centerPanel;
 
@@ -70,6 +66,12 @@ public class GUIView implements AbstractWarView {
 
     private Timer refresh;
 
+    private JTextArea logsTxtArea;
+    
+    public static void main(String[] args) {
+	new GUIView();
+    }
+
     public GUIView() {
 	SwingUtilities.invokeLater(new Runnable() {
 	    public void run() {
@@ -78,11 +80,17 @@ public class GUIView implements AbstractWarView {
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setSize(1300, 800);
 		mainPanel = new JPanel(new BorderLayout());
-		logsPanel = new JPanel();
+		JPanel logsPanel = new JPanel();
+		JScrollPane jsp;
+		logsPanel.add(jsp = new JScrollPane(logsTxtArea = new JTextArea(10,
+			61)));
+		logsTxtArea.setFont(new Font("Arial", Font.BOLD, 12));
+		logsTxtArea.setForeground(Color.RED);
+		logsTxtArea.setEditable(false);
 		animationPanel = new AnimationPanel();
-		
-		animationPanel.addMissile(10,120,10);
-		
+
+		animationPanel.addMissile(10, 120, 10);
+
 		centerPanel = new JPanel(new BorderLayout());
 		JPanel enemyActionsPanel, friendlyActionPanel;
 		enemyActionBtnArray = createButtonsArray(enemyImgsString,
@@ -254,7 +262,7 @@ public class GUIView implements AbstractWarView {
 		    public void actionPerformed(ActionEvent e) {
 			friendlyApplyBtn.setActionCommand(null);
 			for (JButton jbt : friendlyActionBtnArray)
-			    jbt.setEnabled(true);	
+			    jbt.setEnabled(true);
 			friendlyFormPanelContainer.removeAll();
 			friendlyFormPanelContainer.repaint();
 			friendlyPanel.validate();
@@ -403,126 +411,145 @@ public class GUIView implements AbstractWarView {
 
     }
 
-    @Override
-    public void registerListener(WarControl controller) {
-	listeners.add(controller);
-
+    /* Prints to screen event from controller */
+    public void showDefenseLaunchMissile(String MunitionsId, String missileId,
+	    String enemyMissileId) {
+	logsTxtArea.append("[" + Utils.getCurrentTime() + "] Iron dome: "
+		+ MunitionsId + " just launched missile: " + missileId
+		+ " towards missile: " + enemyMissileId + "\r\n");
     }
 
-    @Override
-    public void showDefenseLaunchMissile(String myMunitionsId,
-	    String missileId, String enemyMissileId) {
-
-    }
-
-    @Override
-    public void showDefenseLaunchMissile(String myMunitionsId, String type,
+    public void showDefenseLaunchMissile(String MunitionsId, String type,
 	    String missileId, String enemyLauncherId) {
-	// TODO Auto-generated method stub
-
+	logsTxtArea.append("[" + Utils.getCurrentTime() + "] " + type + ": "
+		+ MunitionsId + " just launched missile: " + missileId
+		+ " towards launcher: " + enemyLauncherId + "\r\n");
     }
 
-    @Override
-    public void showEnemyLaunchMissile(String myMunitionsId, String missileId,
+    public void showEnemyLaunchMissile(String MunitionsId, String missileId,
 	    String destination, int damage) {
-	// TODO Auto-generated method stub
-
+	logsTxtArea.append("[" + Utils.getCurrentTime() + "] Launcher: "
+		+ MunitionsId + " just launched missile: " + missileId
+		+ " towards: " + destination + " is about to cause damage of: "
+		+ damage + "\r\n");
     }
 
-    @Override
     public void showLauncherIsVisible(String id, boolean visible) {
-	// TODO Auto-generated method stub
-
+	String str = visible ? "visible" : "hidden";
+	logsTxtArea.append("[" + Utils.getCurrentTime() + "] Launcher: " + id
+		+ " just turned " + str + "\r\n");
     }
 
-    @Override
-    public void showMissInterceptionMissile(String whoLaunchedMeId,
-	    String missileId, String enemyMissileId) {
-	// TODO Auto-generated method stub
-
+    public void showMissInterceptionMissile(String whoLaunchedMeId, String id,
+	    String enemyMissileId) {
+	logsTxtArea.append("[" + Utils.getCurrentTime() + "] Iron Dome: "
+		+ whoLaunchedMeId + " fired missile: " + id
+		+ " but missed the missile: " + enemyMissileId + "\r\n");
     }
 
-    @Override
-    public void showEnemyHitDestination(String whoLaunchedMeId,
-	    String missileId, String destination, int damage) {
-	// TODO Auto-generated method stub
-
+    public void showHitInterceptionMissile(String whoLaunchedMeId, String id,
+	    String enemyMissileId) {
+	logsTxtArea.append("[" + Utils.getCurrentTime() + "] Iron Dome: "
+		+ whoLaunchedMeId + " fired missile: " + id
+		+ " and intercept succesfully the missile: " + enemyMissileId
+		+ "\r\n");
     }
 
-    @Override
-    public void showHitInterceptionMissile(String whoLaunchedMeId,
-	    String missileId, String enemyMissileId) {
-	// TODO Auto-generated method stub
-
+    public void showEnemyHitDestination(String whoLaunchedMeId, String id,
+	    String destination, int damage) {
+	logsTxtArea.append("[" + Utils.getCurrentTime() + "] Enemy Missile: "
+		+ id + " HIT " + destination + ". the damage is: " + damage
+		+ ". Launch by: " + whoLaunchedMeId + "\r\n");
     }
 
-    @Override
+    public void showEnemyMissDestination(String whoLaunchedMeId, String id,
+	    String destination, String launchTime) {
+	logsTxtArea.append("[" + Utils.getCurrentTime() + "] Enemy Missile: "
+		+ id + " MISSED " + destination + " launch at: " + launchTime
+		+ ". Launch by: " + whoLaunchedMeId + "\r\n");
+    }
+
     public void showMissInterceptionLauncher(String whoLaunchedMeId,
 	    String type, String enemyLauncherId, String missileId) {
-	// TODO Auto-generated method stub
-
+	logsTxtArea.append("[" + Utils.getCurrentTime() + "] " + type + ": "
+		+ whoLaunchedMeId + " fired missile: " + missileId
+		+ " but missed the Launcher: " + enemyLauncherId + "\r\n");
     }
 
-    @Override
     public void showMissInterceptionHiddenLauncher(String whoLaunchedMeId,
 	    String type, String enemyLauncherId) {
-	// TODO Auto-generated method stub
+	logsTxtArea.append("[" + Utils.getCurrentTime() + "] " + type + ": "
+		+ whoLaunchedMeId + " missed the Launcher: " + enemyLauncherId
+		+ " because he is hidden" + "\r\n");
+    }
 
+    public void showHitInterceptionLauncher(String whoLaunchedMeId,
+	    String type, String enemyLauncherId, String missileId) {
+	logsTxtArea.append("[" + Utils.getCurrentTime() + "] " + type + ": "
+		+ whoLaunchedMeId + " fired missile: " + missileId
+		+ " and intercept succesfully the Launcher: " + enemyLauncherId
+		+ "\r\n");
+    }
+
+    // prints all war statistics
+    public void showStatistics(long[] array) {
+	StringBuilder msg = new StringBuilder();
+	msg.append("\n[" + Utils.getCurrentTime() + "]"
+		+ "\t\t   War Statistics\n");
+	msg.append("\t\t\t=========================================\n");
+	msg.append("\t\t\t||\tNum of launch missiles: " + array[0] + "\t||\n");
+	msg.append("\t\t\t||\tNum of intercept missiles: " + array[1]
+		+ "\t||\n");
+	msg.append("\t\t\t||\tNum of hit target missiles: " + array[2]
+		+ "\t||\n");
+	msg.append("\t\t\t||\tNum of launchers destroyed: " + array[3]
+		+ "\t||\n");
+	msg.append("\t\t\t||\ttotal damage: " + array[4] + "\t\t||\n");
+	msg.append("\t\t\t==========================================\n");
+	logsTxtArea.append(msg.toString() + "\r\n");
+    }
+
+    public void showWarHasBeenFinished() {
+	for (WarEventUIListener l : listeners) {
+	    l.showStatistics();
+	}
+
+	logsTxtArea.append("[" + Utils.getCurrentTime()
+		+ "] =========>> Finally THIS WAR IS OVER!!! <<========="
+		+ "\r\n");
+	// System.out.println("[" + Utils.getCurrentTime() + "]");
+    }
+
+    public void showWarHasBeenStarted() {
+	logsTxtArea.append("[" + Utils.getCurrentTime()
+		+ "] =========>> War has been started!!! <<=========" + "\r\n");
+	// System.out.println("[" + Utils.getCurrentTime() + "]");
+    }
+
+    public void showNoSuchObject(String type) {
+	logsTxtArea.append("[" + Utils.getCurrentTime()
+		+ "] ERROR: Cannot find " + type + " you selected in war"
+		+ "\r\n");
+    }
+
+    public void showMissileNotExist(String defenseLauncherId, String enemyId) {
+	logsTxtArea.append("[" + Utils.getCurrentTime() + "] ERROR: "
+		+ defenseLauncherId + " tried to intercept, " + "but missed: "
+		+ enemyId + " doesn't exist!" + "\r\n");
+    }
+
+    public void showLauncherNotExist(String defenseLauncherId, String launcherId) {
+	logsTxtArea.append("[" + Utils.getCurrentTime() + "] ERROR: "
+		+ defenseLauncherId + " tried to intercept, " + "but missed: "
+		+ launcherId + " doesn't exist!" + "\r\n");
     }
 
     @Override
-    public void showHitInterceptionLauncher(String whoLaunchedMeId,
-	    String type, String enemyLauncherId, String missileId) {
-	// TODO Auto-generated method stub
-
+    public void registerListener(WarController controller) {
+	listeners.add(controller);
     }
 
     @Override
     public void join() throws InterruptedException {
-	// TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void showWarHasBeenFinished() {
-	// TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void showNoSuchObject(String type) {
-	// TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void showMissileNotExist(String defenseLauncherId, String enemyId) {
-	// TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void showLauncherNotExist(String defenseLauncherId, String launcherId) {
-	// TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void showEnemyMissDestination(String whoLaunchedMeId, String id,
-	    String destination, String launchTime) {
-	// TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void showStatistics(long[] statisticsToArray) {
-	// TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void showWarHasBeenStarted() {
-	// TODO Auto-generated method stub
-
     }
 }

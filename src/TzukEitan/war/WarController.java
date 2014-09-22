@@ -9,11 +9,11 @@ import TzukEitan.view.ConsoleView;
 import TzukEitan.view.WarXMLReader;
 
 
-public class WarControl implements WarEventListener, WarEventUIListener{
+public class WarController implements WarEventListener, WarEventUIListener{
 	private War warModel;
 	private AbstractWarView view;
 	
-	public WarControl(War warModel, AbstractWarView view){
+	public WarController(War warModel, AbstractWarView view){
 		this.warModel = warModel;
 		this.view = view;
 		

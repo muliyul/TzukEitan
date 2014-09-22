@@ -1,12 +1,17 @@
-package TzukEitan.view.gui;
+package TzukEitan.view.gui.polygons;
 
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Arc2D;
 
 public class GUIMissile extends Polygon {
-    public static GUIMissile FLAT_MISSILE = new GUIMissile(0, 0);
-    
+    public static final GUIMissile FLAT_MISSILE;
+
+    static {
+	FLAT_MISSILE = new GUIMissile(0, 0);
+    }
+
     private int x;
     private int y;
     private int flyTime;
@@ -29,22 +34,26 @@ public class GUIMissile extends Polygon {
 	addPoint(x -= 15, y += 5);
 	addPoint(x, y -= 20);
     }
-    
+
+    private GUIMissile() {
+    }
+
     public void setAngle(int angle) {
 	this.angle = angle;
     }
-    
+
     public int getAngle() {
 	return angle;
     }
 
-    public GUIMissile getAngledMissile(double d, double e, int angle) {
-	GUIMissile poly = new GUIMissile(FLAT_MISSILE.x, FLAT_MISSILE.y);
+    public GUIMissile getAngledMissile(double dx, double dy, int angle) {
+	GUIMissile poly = new GUIMissile();
 	for (int i = 0; i < npoints; i++) {
-	    Point p = new Point(FLAT_MISSILE.xpoints[i], FLAT_MISSILE.ypoints[i]);
+	    Point p = new Point(FLAT_MISSILE.xpoints[i],
+		    FLAT_MISSILE.ypoints[i]);
 	    AffineTransform.getRotateInstance(Math.toRadians(angle)).transform(
 		    p, p);
-	    AffineTransform.getTranslateInstance(d, e).transform(p, p);
+	    AffineTransform.getTranslateInstance(dx, dy).transform(p, p);
 	    poly.addPoint(p.x, p.y);
 	}
 	return poly;

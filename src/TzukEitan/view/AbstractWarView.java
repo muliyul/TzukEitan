@@ -1,9 +1,9 @@
 package TzukEitan.view;
 
-import TzukEitan.war.WarControl;
+import TzukEitan.war.WarController;
 
 public interface AbstractWarView {
-	void registerListener(WarControl controller);
+	void registerListener(WarController controller);
 	void showDefenseLaunchMissile(String myMunitionsId, String missileId,
 			String enemyMissileId);
 	void showDefenseLaunchMissile(String myMunitionsId, String type,

@@ -6,7 +6,7 @@ import org.w3c.dom.NamedNodeMap;
 
 import TzukEitan.utils.IdGenerator;
 import TzukEitan.utils.Utils;
-import TzukEitan.war.WarControl;
+import TzukEitan.war.WarController;
 
 import javax.xml.parsers.*;
 
@@ -18,9 +18,9 @@ public class WarXMLReader extends Thread {
 	private Document document;
 	private Element root;
 	private static ThreadGroup threadGroup = new ThreadGroup("group");
-	private WarControl warControl;
+	private WarController warControl;
 
-	public WarXMLReader(String fileName, WarControl warControl)
+	public WarXMLReader(String fileName, WarController warControl)
 			throws ParserConfigurationException, SAXException, IOException {
 		this.warControl = warControl;
 

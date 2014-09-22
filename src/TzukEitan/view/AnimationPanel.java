@@ -5,7 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Arc2D;
 import java.awt.geom.CubicCurve2D;
+import java.awt.geom.FlatteningPathIterator;
 import java.awt.geom.Path2D;
+import java.awt.geom.PathIterator;
 import java.awt.geom.QuadCurve2D;
 import java.util.List;
 import java.util.Vector;
@@ -13,24 +15,18 @@ import java.util.Vector;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import TzukEitan.view.gui.GUIMissile;
+import TzukEitan.view.gui.polygons.GUIMissile;
 
 public class AnimationPanel extends JPanel implements ActionListener {
+    private Arc2D arc;
     private List<GUIMissile> missiles = new Vector<>();
     private Timer refresh = new Timer(200, this);
     private int flyTime;
 
-    public static void main(String[] args) {
-	QuadCurve2D q = new QuadCurve2D.Double();
-	double[] eqn = {0, 0, 8}; 
-	QuadCurve2D.solveQuadratic(eqn);
-	System.out.println();
-    }
-    
     public void addMissile(int x, int y, int flyTime) {
 	missiles.add(new GUIMissile(x, y));
 	this.flyTime = flyTime;
-	
+
     }
 
     protected void paintComponent(Graphics g) {
@@ -49,5 +45,14 @@ public class AnimationPanel extends JPanel implements ActionListener {
 		    m.getAngle() + 1);
 	}
 	repaint();
+    }
+
+    protected Arc2D getArcPath() {
+	if (arc == null) {
+	    arc = new Arc2D.Double();
+	    arc.setArcByCenter(getWidth() / 2, getHeight() / 2, getWidth() / 2,
+		    0, 180, Arc2D.OPEN);
+	}
+	return arc;
     }
 }

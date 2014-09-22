@@ -1,4 +1,4 @@
-package TzukEitan.view.gui;
+package TzukEitan.view.gui.forms;
 
 import java.awt.Color;
 import java.awt.Dimension;

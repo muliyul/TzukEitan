@@ -1,4 +1,4 @@
-package TzukEitan.view.gui;
+package TzukEitan.view.gui.forms;
 
 public interface Form {
     Object[] getParams();

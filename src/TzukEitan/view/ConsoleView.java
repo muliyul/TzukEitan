@@ -7,7 +7,7 @@ import java.util.Vector;
 
 import TzukEitan.listeners.WarEventUIListener;
 import TzukEitan.utils.Utils;
-import TzukEitan.war.WarControl;
+import TzukEitan.war.WarController;
 
 public class ConsoleView extends Thread implements AbstractWarView{
 	private List<WarEventUIListener> allListeners;
@@ -376,7 +376,7 @@ public class ConsoleView extends Thread implements AbstractWarView{
 	}
 
 	@Override
-	public void registerListener(WarControl controller) {
+	public void registerListener(WarController controller) {
 		allListeners.add(controller);
 	}
 

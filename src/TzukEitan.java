@@ -19,7 +19,7 @@ import TzukEitan.view.ConsoleView;
 import TzukEitan.view.GUIView;
 import TzukEitan.view.WarXMLReader;
 import TzukEitan.war.War;
-import TzukEitan.war.WarControl;
+import TzukEitan.war.WarController;
 
 public class TzukEitan {
 
@@ -31,8 +31,8 @@ public class TzukEitan {
 		
 		War warModel = new War();
 
-		WarControl warGUIControl = new WarControl(warModel, guiView);
-		WarControl warConsoleControl = new WarControl(warModel, consoleView);
+		WarController warGUIControl = new WarController(warModel, guiView);
+		WarController warConsoleControl = new WarController(warModel, consoleView);
 		
 		try {
 			warXML = new WarXMLReader("warStart.xml", warGUIControl);
