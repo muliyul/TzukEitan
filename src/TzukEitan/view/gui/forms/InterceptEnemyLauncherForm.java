@@ -36,7 +36,10 @@ public class InterceptEnemyLauncherForm extends FormPanel {
 
 	@Override
 	public Object[] getParams(){
-		return new Object[] { launcherCombo.getSelectedItem() };
+		if(launcherCombo == null)
+			return null;
+		else
+			return new Object[] { launcherCombo.getSelectedItem() };
 	}
 
 }

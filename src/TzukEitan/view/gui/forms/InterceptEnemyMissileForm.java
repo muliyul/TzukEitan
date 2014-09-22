@@ -35,7 +35,10 @@ public class InterceptEnemyMissileForm extends FormPanel {
 
 	@Override
 	public Object[] getParams(){
-		return new Object[] { missileComboBox.getSelectedItem() };
+		if(missileComboBox == null)
+			return null;
+		else
+			return new Object[] { missileComboBox.getSelectedItem() };
 	}
 
 }

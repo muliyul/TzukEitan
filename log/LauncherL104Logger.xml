@@ -1,6 +1,8 @@
-22/09/2014 00:38:15 INFO	L104	is now: visible
-22/09/2014 00:38:16 INFO	L104	Launch: M7			Target: t1
-22/09/2014 00:38:19 INFO	L104	is now: hidden
-22/09/2014 00:38:19 INFO	L104	Target: t1		Status: HIT			Land Time: 22/09/2014 00:38:19			Damage: 2000
-22/09/2014 00:38:20 INFO	L104	is now: visible
-22/09/2014 00:38:21 INFO	L104	Launch: M9			Target: t7
+22/09/2014 17:59:27 INFO	L104	is now: visible
+22/09/2014 17:59:28 INFO	L104	Launch: M7			Target: t1
+22/09/2014 17:59:31 INFO	L104	is now: hidden
+22/09/2014 17:59:31 INFO	L104	Target: t1		Status: MISS			Land Time: 22/09/2014 17:59:31
+22/09/2014 17:59:31 INFO	P301	Intercept: L104			Status: FAIL			Reason: Launcher is hidden
+22/09/2014 17:59:32 INFO	L104	is now: visible
+22/09/2014 17:59:33 INFO	L104	Launch: M9			Target: t7
+22/09/2014 17:59:37 INFO	P301	Launch: PM2006			Target: L104

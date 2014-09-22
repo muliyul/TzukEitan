@@ -68,9 +68,7 @@ public class GUIView implements AbstractWarView {
 
     private JTextArea logsTxtArea;
     
-    public static void main(String[] args) {
-	new GUIView();
-    }
+ 
 
     public GUIView() {
 	SwingUtilities.invokeLater(new Runnable() {
@@ -148,13 +146,15 @@ public class GUIView implements AbstractWarView {
 				break;
 			    }
 			    case "interceptlauncher": {
-				l.interceptGivenLauncher((String) friendlyFormPanel
-					.getParams()[0]);
+			    	if(friendlyFormPanel.getParams() != null)
+			    		l.interceptGivenLauncher((String) friendlyFormPanel
+			    									.getParams()[0]);
 				break;
 			    }
 			    case "interceptmissile": {
-				l.interceptGivenMissile((String) friendlyFormPanel
-					.getParams()[0]);
+			    	if(friendlyFormPanel.getParams() != null)
+			    		l.interceptGivenMissile((String) friendlyFormPanel
+			    									.getParams()[0]);
 				break;
 			    }
 			    }
