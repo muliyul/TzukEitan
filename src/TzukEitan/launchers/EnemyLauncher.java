@@ -13,6 +13,7 @@ import TzukEitan.war.WarStatistics;
 public class EnemyLauncher extends Thread implements Munitions{
 	private List<WarEventListener> allListeners;
 
+	private String warName;
 	private String id;
 	private String destination;
 	private int damage;
@@ -23,14 +24,13 @@ public class EnemyLauncher extends Thread implements Munitions{
 	private WarStatistics statistics;
 	private EnemyMissile currentMissile;
 
-	public EnemyLauncher(String id, boolean isHidden, WarStatistics statistics) {
+	public EnemyLauncher(String id, boolean isHidden, String warName, WarStatistics statistics) {
 		this.id = id;
 		this.isHidden = isHidden;
 		this.statistics = statistics;
-
+		this.warName = warName;
 		allListeners = new LinkedList<WarEventListener>();
 		firstHiddenState = isHidden;
-
 		WarLogger.addLoggerHandler("Launcher", id);
 	}
 

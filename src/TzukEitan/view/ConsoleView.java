@@ -237,11 +237,11 @@ public class ConsoleView extends Thread implements AbstractWarView{
 	}
 
 	public void fireFinishWar() {
+		isRunning = false;
+			
 		for (WarEventUIListener l : allListeners) {
 			l.finishWar();
 		}
-
-		isRunning = false;
 	}
 
 	/* Prints to screen event from controller */
@@ -343,6 +343,7 @@ public class ConsoleView extends Thread implements AbstractWarView{
 	}
 
 	public void showWarHasBeenFinished() {
+	    	isRunning = false;
 		for (WarEventUIListener l : allListeners) {
 			l.showStatistics();
 		}
@@ -354,7 +355,7 @@ public class ConsoleView extends Thread implements AbstractWarView{
 
 	public void showWarHasBeenStarted() {
 		System.out.println("[" + Utils.getCurrentTime()
-				+ "] =========>> War has been strated!!! <<=========");
+				+ "] =========>> War has been started!!! <<=========");
 		// System.out.println("[" + Utils.getCurrentTime() + "]");
 	}
 
@@ -378,6 +379,12 @@ public class ConsoleView extends Thread implements AbstractWarView{
 	@Override
 	public void registerListener(WarController controller) {
 		allListeners.add(controller);
+	}
+
+	@Override
+	public String getWarName() {
+	    System.out.print("Enter war name: ");
+	    return input.nextLine();
 	}
 
 }

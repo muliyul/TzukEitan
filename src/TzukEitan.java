@@ -29,7 +29,7 @@ public class TzukEitan {
 		AbstractWarView guiView = new GUIView();
 		AbstractWarView consoleView = new ConsoleView();
 		
-		War warModel = new War();
+		War warModel = new War(guiView.getWarName());
 
 		WarController warGUIControl = new WarController(warModel, guiView);
 		WarController warConsoleControl = new WarController(warModel, consoleView);

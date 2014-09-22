@@ -7,14 +7,18 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.LinkedList;
 import java.util.List;
+
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -67,21 +71,47 @@ public class GUIView implements AbstractWarView {
     private Timer refresh;
 
     private JTextArea logsTxtArea;
-    
- 
 
     public GUIView() {
 	SwingUtilities.invokeLater(new Runnable() {
 	    public void run() {
 		listeners = new LinkedList<WarEventUIListener>();
 		mainFrame = new JFrame("WarSim");
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame.addWindowListener(new WindowListener() {
+		    public void windowOpened(WindowEvent e) {
+		    }
+		    
+		    @Override
+		    public void windowIconified(WindowEvent e) {
+		    }
+		    
+		    @Override
+		    public void windowDeiconified(WindowEvent e) {
+		    }
+		    
+		    @Override
+		    public void windowDeactivated(WindowEvent e) {
+		    }
+		    
+		    @Override
+		    public void windowClosing(WindowEvent e) {
+			for(WarEventUIListener l : listeners)
+			    l.finishWar();
+		    }
+		    
+		    @Override
+		    public void windowClosed(WindowEvent e) {
+		    }
+		    
+		    @Override
+		    public void windowActivated(WindowEvent e) {
+		    }
+		});
 		mainFrame.setSize(1300, 800);
 		mainPanel = new JPanel(new BorderLayout());
 		JPanel logsPanel = new JPanel();
-		JScrollPane jsp;
-		logsPanel.add(jsp = new JScrollPane(logsTxtArea = new JTextArea(10,
-			61)));
+		logsPanel.add(new JScrollPane(
+			logsTxtArea = new JTextArea(10, 61)));
 		logsTxtArea.setFont(new Font("Arial", Font.BOLD, 12));
 		logsTxtArea.setForeground(Color.RED);
 		logsTxtArea.setEditable(false);
@@ -146,15 +176,15 @@ public class GUIView implements AbstractWarView {
 				break;
 			    }
 			    case "interceptlauncher": {
-			    	if(friendlyFormPanel.getParams() != null)
-			    		l.interceptGivenLauncher((String) friendlyFormPanel
-			    									.getParams()[0]);
+				if (friendlyFormPanel.getParams() != null)
+				    l.interceptGivenLauncher((String) friendlyFormPanel
+					    .getParams()[0]);
 				break;
 			    }
 			    case "interceptmissile": {
-			    	if(friendlyFormPanel.getParams() != null)
-			    		l.interceptGivenMissile((String) friendlyFormPanel
-			    									.getParams()[0]);
+				if (friendlyFormPanel.getParams() != null)
+				    l.interceptGivenMissile((String) friendlyFormPanel
+					    .getParams()[0]);
 				break;
 			    }
 			    }
@@ -275,11 +305,13 @@ public class GUIView implements AbstractWarView {
 		refresh = new Timer(Utils.SECOND, new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 			for (WarEventUIListener l : listeners) {
-			    enemyInventory.setText(l.requestEnemyInventory());
-			    friendlyInventory.setText(l
-				    .requestFriendlyInventory());
-			    enemyInventory.repaint();
-			    friendlyInventory.repaint();
+			    String inv;
+			    if (!(inv = l.requestEnemyInventory())
+				    .equals(enemyInventory.getText()))
+				enemyInventory.setText(inv);
+			    if (!(inv = l.requestFriendlyInventory())
+				    .equals(friendlyInventory.getText()))
+				friendlyInventory.setText(inv);
 			}
 		    }
 		});
@@ -401,15 +433,6 @@ public class GUIView implements AbstractWarView {
 	friendlyPanel.validate();
     }
 
-    public void fireShowStatistics() {
-	// TODO Auto-generated method stub
-
-    }
-
-    public void fireFinishWar() {
-	// TODO Auto-generated method stub
-
-    }
 
     /* Prints to screen event from controller */
     public void showDefenseLaunchMissile(String MunitionsId, String missileId,
@@ -494,29 +517,29 @@ public class GUIView implements AbstractWarView {
     // prints all war statistics
     public void showStatistics(long[] array) {
 	StringBuilder msg = new StringBuilder();
-	msg.append("\n[" + Utils.getCurrentTime() + "]"
-		+ "\t\t   War Statistics\n");
-	msg.append("\t\t\t=========================================\n");
-	msg.append("\t\t\t||\tNum of launch missiles: " + array[0] + "\t||\n");
-	msg.append("\t\t\t||\tNum of intercept missiles: " + array[1]
-		+ "\t||\n");
-	msg.append("\t\t\t||\tNum of hit target missiles: " + array[2]
-		+ "\t||\n");
-	msg.append("\t\t\t||\tNum of launchers destroyed: " + array[3]
-		+ "\t||\n");
-	msg.append("\t\t\t||\ttotal damage: " + array[4] + "\t\t||\n");
-	msg.append("\t\t\t==========================================\n");
-	logsTxtArea.append(msg.toString() + "\r\n");
+	JFrame statswindow = new JFrame("Statistics");
+	msg.append("\tWar Statistics\n");
+	msg.append("=========================================\n");
+	msg.append("\tNum of launch missiles: " + array[0] + "\n");
+	msg.append("\tNum of intercept missiles: " + array[1] + "\n");
+	msg.append("\tNum of hit target missiles: " + array[2] + "\n");
+	msg.append("\tNum of launchers destroyed: " + array[3] + "\n");
+	msg.append("\ttotal damage: " + array[4] + "\n");
+	msg.append("==========================================\n");
+	statswindow.add(new JTextArea(msg.toString()));
+	statswindow.setLocationRelativeTo(mainFrame);
+	statswindow.pack();
+	statswindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	statswindow.setVisible(true);
+
     }
 
     public void showWarHasBeenFinished() {
-	for (WarEventUIListener l : listeners) {
-	    l.showStatistics();
-	}
-
 	logsTxtArea.append("[" + Utils.getCurrentTime()
 		+ "] =========>> Finally THIS WAR IS OVER!!! <<========="
 		+ "\r\n");
+	for(WarEventUIListener l : listeners)
+	    l.showStatistics();
 	// System.out.println("[" + Utils.getCurrentTime() + "]");
     }
 
@@ -551,5 +574,10 @@ public class GUIView implements AbstractWarView {
 
     @Override
     public void join() throws InterruptedException {
+    }
+
+    @Override
+    public String getWarName() {
+	return JOptionPane.showInputDialog("Enter war name:");
     }
 }

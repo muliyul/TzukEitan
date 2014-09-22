@@ -21,14 +21,15 @@ public class LauncherDestructor extends Thread implements Munitions{
 	private EnemyLauncher toDestroy;
 	private WarStatistics statistics;
 	private DefenseDestructorMissile currentMissile;
+	private String warName;
 
-	public LauncherDestructor(String type, String id, WarStatistics statistics) {
+	public LauncherDestructor(String type, String id, String warName, WarStatistics statistics) {
 		allListeners = new LinkedList<WarEventListener>();
 
 		this.id = id;
 		this.type = Utils.capitalize(type);
 		this.statistics = statistics;
-
+		this.warName = warName;
 		WarLogger.addLoggerHandler(this.type, id);
 	}
 

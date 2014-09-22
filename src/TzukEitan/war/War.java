@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Logger;
 
 import TzukEitan.launchers.EnemyLauncher;
 import TzukEitan.launchers.IronDome;
@@ -14,7 +15,7 @@ import TzukEitan.utils.IdGenerator;
 
 public class War extends Thread {
     private List<WarEventListener> allListeners;
-
+    private String name;
     private List<IronDome> ironDomeArr = new ArrayList<>();
     private List<LauncherDestructor> launcherDestractorArr = new ArrayList<>();
     private List<EnemyLauncher> enemyLauncherArr = new ArrayList<>();
@@ -22,12 +23,12 @@ public class War extends Thread {
     private String[] targetCities = { "Sderot", "Ofakim", "Beer-Sheva",
 	    "Netivot", "Tel-Aviv", "Re'ut" };
 
-    public War() {
+    public War(String warName) {
 	allListeners = new LinkedList<>();
 	statistics = new WarStatistics();
-
+	this.name = warName;
 	registerListeners(new WarLogger());
-	WarLogger.addWarLoggerHandler("War");
+	WarLogger.addWarLoggerHandler(warName);
     }
 
     public void run() {
@@ -307,7 +308,7 @@ public class War extends Thread {
 
     // add enemy launcher with parameters
     public String addEnemyLauncher(String launcherId, boolean isHidden) {
-	EnemyLauncher launcher = new EnemyLauncher(launcherId, isHidden,
+	EnemyLauncher launcher = new EnemyLauncher(launcherId, isHidden, name,
 		statistics);
 	for (WarEventListener l : allListeners)
 	    launcher.registerListeners(l);
@@ -327,7 +328,7 @@ public class War extends Thread {
 
     // add iron dome with given parameters
     public String addIronDome(String id) {
-	IronDome ironDome = new IronDome(id, statistics);
+	IronDome ironDome = new IronDome(id, name, statistics);
 
 	for (WarEventListener l : allListeners)
 	    ironDome.registerListeners(l);
@@ -344,7 +345,7 @@ public class War extends Thread {
 	String id = IdGenerator.defenseLauncherDestractorIdGenerator(type
 		.charAt(0));
 
-	LauncherDestructor destructor = new LauncherDestructor(type, id,
+	LauncherDestructor destructor = new LauncherDestructor(type, id, name,
 		statistics);
 
 	for (WarEventListener l : allListeners)
@@ -422,10 +423,12 @@ public class War extends Thread {
     public String getEnemyInventory() {
 	StringBuilder retval = new StringBuilder(1000);
 	retval.append("Launchers:\r\n");
-	if (getAllLaunchersIds() != null)
-	    for (String launcher : getAllLaunchersIds()) {
-		retval.append('\t' + launcher + "\r\n");
-	    }
+	for (EnemyLauncher launcher : enemyLauncherArr) {
+	    if (launcher.isAlive())
+		retval.append('\t' + launcher.getLauncherId() + " "
+			+ (launcher.getIsHidden() ? "(Hidden)" : "(Exposed)")
+			+ "\r\n");
+	}
 	retval.append("\r\nMissiles in air:\r\n");
 
 	if (getAllDuringFlyMissilesIds() != null)

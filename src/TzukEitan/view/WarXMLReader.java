@@ -118,8 +118,7 @@ public class WarXMLReader extends Thread {
 					warControl.addEnemyMissile(tempLauncherId, tempDestination, tempDamage, tempFlyTime);
 
 				} catch (InterruptedException e) {
-					System.out.println("The program is close before expected");
-					//System.out.println(e.getStackTrace());
+				    
 				}
 			}
 		});
@@ -224,7 +223,7 @@ public class WarXMLReader extends Thread {
 						warControl.interceptGivenLauncher(tempLauncherId, tempTargetId);
 					
 				} catch (InterruptedException e) {
-					System.out.println("The program is close before expected");
+					//System.out.println("The program is close before expected");
 					//System.out.println(e.getStackTrace());
 				}
 			}

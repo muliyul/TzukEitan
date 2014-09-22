@@ -176,7 +176,6 @@ public class WarController implements WarEventListener, WarEventUIListener{
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
 		view.showWarHasBeenFinished();
 	}
 
