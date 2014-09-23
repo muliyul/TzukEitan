@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Vector;
 import java.util.logging.Logger;
 
+import TzukEitan.db.TzukEitanDBConnection;
 import TzukEitan.launchers.EnemyLauncher;
 import TzukEitan.launchers.IronDome;
 import TzukEitan.launchers.LauncherDestructor;
@@ -51,6 +52,7 @@ public class War extends Thread {
 	// close all the handlers of the logger
 	WarLogger.closeAllHandlers();
 	WarLogger.closeWarHandler();
+	TzukEitanDBConnection.closeDB();
 	// warHandler.close();
     }// run
 
@@ -373,12 +375,14 @@ public class War extends Thread {
 
     // Event
     private void fireWarHasBeenFinished() {
+    	TzukEitanDBConnection.endWar(name);
 	for (WarEventListener l : allListeners)
 	    l.warHasBeenFinished();
     }
 
     // Event
     private void fireWarHasBeenStarted() {
+    	TzukEitanDBConnection.addNewWar(name);
 	for (WarEventListener l : allListeners)
 	    l.warHasBeenStarted();
     }

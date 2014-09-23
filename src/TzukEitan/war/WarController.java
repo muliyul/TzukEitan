@@ -170,13 +170,15 @@ public class WarController implements WarEventListener, WarEventUIListener{
 	}
 
 	@Override
-	public void warHasBeenFinished() {	
+	public void warHasBeenFinished() {
+		view.showWarHasBeenFinished();
+		
 		try {
 			view.join();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		view.showWarHasBeenFinished();
+		
 	}
 
 	@Override

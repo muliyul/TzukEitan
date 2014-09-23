@@ -36,6 +36,32 @@ public class TzukEitanDBConnection {
 	}
     }
     
+    public static void addNewWar(String warName){
+    	try {
+			statement = connection.prepareStatement("INSERT INTO `WarSim`.`War` (`WarName`, `StartTime`) VALUES ( ?, UTC_TIMESTAMP())");
+			statement.setString(1, warName);
+			statement.executeUpdate();
+    	} catch (SQLException e) {
+			while (e != null) {
+				System.out.println(e.getMessage());
+				e = e.getNextException();
+			}
+    	}   	
+    }
+    
+    public static void endWar(String warName){
+    	try {
+			statement = connection.prepareStatement("UPDATE  `WarSim`.`War` SET  `EndTime` = UTC_TIMESTAMP( ) WHERE  `War`.`WarName` =  ? ");
+			statement.setString(1, warName);
+			statement.executeUpdate();
+    	} catch (SQLException e) {
+			while (e != null) {
+				System.out.println(e.getMessage());
+				e = e.getNextException();
+			}
+    	}   	
+    }
+    
     public static void addLauncher(String launcherId){
 	
     }
