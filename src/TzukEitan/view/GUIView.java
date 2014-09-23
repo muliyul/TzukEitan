@@ -317,6 +317,7 @@ public class GUIView implements AbstractWarView {
 		});
 		refresh.start();
 		mainFrame.setVisible(true);
+		mainFrame.toFront();
 	    }
 	});
 

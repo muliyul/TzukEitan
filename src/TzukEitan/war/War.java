@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
-import java.util.logging.Logger;
-
 import TzukEitan.db.TzukEitanDBConnection;
 import TzukEitan.launchers.EnemyLauncher;
 import TzukEitan.launchers.IronDome;
@@ -154,7 +152,7 @@ public class War extends Thread {
 		synchronized (ironDome) {
 		    ironDome.setMissileToDestroy(missileToDestroy);
 		    ironDome.notify();
-
+		    
 		    return;
 		}// synchronized
 	    }// if
@@ -226,7 +224,7 @@ public class War extends Thread {
 		synchronized (destructor) {
 		    destructor.setEnemyLauncherToDestroy(el);
 		    destructor.notify();
-
+		    
 		    return;
 		}
 	    }
@@ -281,6 +279,7 @@ public class War extends Thread {
 
     public void launchEnemyMissile(String launcherId, String destination,
 	    int damage, int flyTime) {
+	
 	for (EnemyLauncher el : enemyLauncherArr) {
 	    // Check if there is enemy launcher with given id
 	    if (el.getLauncherId().equals(launcherId) && el.isAlive()) {
@@ -314,7 +313,7 @@ public class War extends Thread {
 		statistics);
 	for (WarEventListener l : allListeners)
 	    launcher.registerListeners(l);
-
+	TzukEitanDBConnection.addLauncher(launcherId, name);
 	launcher.start();
 	enemyLauncherArr.add(launcher);
 
@@ -331,14 +330,17 @@ public class War extends Thread {
     // add iron dome with given parameters
     public String addIronDome(String id) {
 	IronDome ironDome = new IronDome(id, name, statistics);
+	
 
 	for (WarEventListener l : allListeners)
 	    ironDome.registerListeners(l);
 
 	ironDome.start();
-
+	
 	ironDomeArr.add(ironDome);
-
+	//add iron dome to db
+	TzukEitanDBConnection.addIronDome(id, name);
+	
 	return id;
     }
 
@@ -356,6 +358,7 @@ public class War extends Thread {
 	destructor.start();
 
 	launcherDestractorArr.add(destructor);
+	TzukEitanDBConnection.addLauncherDestructor(id,type,name);
 
 	return id;
     }
@@ -382,7 +385,6 @@ public class War extends Thread {
 
     // Event
     private void fireWarHasBeenStarted() {
-    	TzukEitanDBConnection.addNewWar(name);
 	for (WarEventListener l : allListeners)
 	    l.warHasBeenStarted();
     }

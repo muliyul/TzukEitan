@@ -1,11 +1,9 @@
-package TzukEitan.view;
+package TzukEitan.utils;
 
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 import org.w3c.dom.NamedNodeMap;
 
-import TzukEitan.utils.IdGenerator;
-import TzukEitan.utils.Utils;
 import TzukEitan.war.WarController;
 
 import javax.xml.parsers.*;

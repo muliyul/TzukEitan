@@ -3,6 +3,7 @@ package TzukEitan.missiles;
 import java.util.LinkedList;
 import java.util.List;
 
+import TzukEitan.db.TzukEitanDBConnection;
 import TzukEitan.listeners.WarEventListener;
 import TzukEitan.utils.Utils;
 import TzukEitan.war.WarStatistics;
@@ -12,7 +13,7 @@ public class DefenseMissile extends Thread {
 	private List<WarEventListener> allListeners;
 
 	private String id;
-	private String whoLunchedMeId;
+	private String whoLaunchedMeId;
 	private EnemyMissile missileToDestroy;
 	private WarStatistics statistics;
 
@@ -22,7 +23,7 @@ public class DefenseMissile extends Thread {
 
 		this.id = id;
 		this.missileToDestroy = missileToDestroy;
-		this.whoLunchedMeId = whoLunchedMeId;
+		this.whoLaunchedMeId = whoLunchedMeId;
 		this.statistics = statistics;
 	}
 
@@ -45,18 +46,20 @@ public class DefenseMissile extends Thread {
 	// Event
 	private void fireHitEvent() {
 		for (WarEventListener l : allListeners) {
-			l.defenseHitInterceptionMissile(whoLunchedMeId, id,
+			l.defenseHitInterceptionMissile(whoLaunchedMeId, id,
 					missileToDestroy.getMissileId());
 		}
 
 		// update statistics
 		statistics.increaseNumOfInterceptMissiles();
+		//update DB
+		TzukEitanDBConnection.interceptedMissile(missileToDestroy.getMissileId(), whoLaunchedMeId, missileToDestroy.getWarName());
 	}
 
 	// Event
 	private void fireMissEvent() {
 		for (WarEventListener l : allListeners) {
-			l.defenseMissInterceptionMissile(whoLunchedMeId, id,
+			l.defenseMissInterceptionMissile(whoLaunchedMeId, id,
 					missileToDestroy.getMissileId(),
 					missileToDestroy.getDamage());
 		}

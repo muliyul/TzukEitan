@@ -18,12 +18,13 @@ public class EnemyMissile extends Thread {
 	private int damage;
 	private WarStatistics statistics;
 	private String launchTime;
+	private String warName;
 	private boolean beenHit = false;
 
 	public EnemyMissile(String id, String destination, int flyTime, int damage,
-			String whoLaunchedMeId, WarStatistics statistics) {
+			String whoLaunchedMeId, WarStatistics statistics, String warName) {
 		allListeners = new LinkedList<WarEventListener>();
-
+		this.warName = warName;
 		this.id = id;
 		this.destination = destination;
 		this.flyTime = flyTime;
@@ -95,6 +96,10 @@ public class EnemyMissile extends Thread {
 	
 	public boolean isBeenHit(){
 		return beenHit;
+	}
+
+	public String getWarName() {
+	    return warName;
 	}
 
 }

@@ -3,6 +3,7 @@ package TzukEitan.launchers;
 import java.util.LinkedList;
 import java.util.List;
 
+import TzukEitan.db.TzukEitanDBConnection;
 import TzukEitan.listeners.WarEventListener;
 import TzukEitan.missiles.EnemyMissile;
 import TzukEitan.utils.IdGenerator;
@@ -116,7 +117,9 @@ public class EnemyLauncher extends Thread implements Munitions{
 
 		// create new missile
 		currentMissile = new EnemyMissile(missileId, destination, flyTime,
-				damage, id, statistics);
+				damage, id, statistics, warName);
+		
+		TzukEitanDBConnection.addMissile(missileId, this.id, destination, damage, flyTime, warName); // add missile to DB
 
 		// register listeners
 		for (WarEventListener l : allListeners)

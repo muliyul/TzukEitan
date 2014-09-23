@@ -4,9 +4,9 @@ import java.util.Vector;
 
 import TzukEitan.listeners.WarEventListener;
 import TzukEitan.listeners.WarEventUIListener;
+import TzukEitan.utils.WarXMLReader;
 import TzukEitan.view.AbstractWarView;
 import TzukEitan.view.ConsoleView;
-import TzukEitan.view.WarXMLReader;
 
 
 public class WarController implements WarEventListener, WarEventUIListener{
