@@ -169,4 +169,8 @@ public class EnemyLauncher extends Thread implements Munitions{
 		currentMissile = null;
 		beenHit = true;
 	}
+	
+	public String getWarName() {
+		return warName;
+	}
 }

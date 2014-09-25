@@ -530,7 +530,7 @@ public class GUIView implements AbstractWarView {
 	statswindow.add(new JTextArea(msg.toString()));
 	statswindow.setLocationRelativeTo(mainFrame);
 	statswindow.pack();
-	statswindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	statswindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	statswindow.setVisible(true);
 
     }

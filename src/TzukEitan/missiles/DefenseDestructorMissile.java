@@ -3,6 +3,7 @@ package TzukEitan.missiles;
 import java.util.LinkedList;
 import java.util.List;
 
+import TzukEitan.db.TzukEitanDBConnection;
 import TzukEitan.listeners.WarEventListener;
 import TzukEitan.launchers.EnemyLauncher;
 import TzukEitan.utils.Utils;
@@ -54,6 +55,9 @@ public class DefenseDestructorMissile extends Thread {
 			l.defenseHitInterceptionLauncher(whoLaunchedMeId,
 					whoLaunchedMeType, id, launcherToDestroy.getLauncherId());
 		}
+		
+		//update DB
+		TzukEitanDBConnection.interceptedLauncher(launcherToDestroy.getLauncherId(), whoLaunchedMeId, launcherToDestroy.getWarName());
 
 		// update statistics
 		statistics.increaseNumOfLauncherDestroyed();

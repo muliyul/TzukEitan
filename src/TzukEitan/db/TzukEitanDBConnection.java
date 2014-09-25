@@ -161,10 +161,11 @@ public class TzukEitanDBConnection {
 		    executer.acquire();
 		    statement =
 			    connection
-				    .prepareStatement("UPDATE  `WarSim`.`Missile` SET `Intercepted` = 'TRUE', `InterceptionTime` =  UTC_TIMESTAMP( ), `InterceptedBy` =  ? WHERE `Missile`.`ID` =  ? AND  `Missile`.`WarName` =  ?");
+				    .prepareStatement("UPDATE  `WarSim`.`Missile` SET `Intercepted` = '1', `InterceptionTime` =  UTC_TIMESTAMP( ), `InterceptedBy` = ? WHERE `Missile`.`ID` = ? AND  `Missile`.`WarName` = ?");
 		    statement.setString(1, idId);
 		    statement.setString(2, mId);
 		    statement.setString(3, warName);
+		    statement.executeUpdate();
 		} catch (SQLException e) {
 		    while (e != null) {
 			System.out.println(e.getMessage());
@@ -179,6 +180,34 @@ public class TzukEitanDBConnection {
 	}.start();
     }
 
+    public static void interceptedLauncher(String lId, String dId,
+    	    String warName) {
+    	new Thread() {
+    	    @Override
+    	    public void run() {
+    		try {
+    		    executer.acquire();
+    		    statement =
+    			    connection
+    				    .prepareStatement("UPDATE  `WarSim`.`EnemyLauncher` SET `Intercepted` = '1', `InterceptionTime` =  UTC_TIMESTAMP( ), `InterceptedBy` = ? WHERE `EnemyLauncher`.`ID` = ? AND  `EnemyLauncher`.`WarName` = ?");
+    		    statement.setString(1, dId);
+    		    statement.setString(2, lId);
+    		    statement.setString(3, warName);
+    		    statement.executeUpdate();
+    		} catch (SQLException e) {
+    		    while (e != null) {
+    			System.out.println(e.getMessage());
+    			e = e.getNextException();
+    		    }
+    		} catch (InterruptedException e) {
+    		    e.printStackTrace();
+    		} finally {
+    		    executer.release();
+    		}
+    	    }
+    	}.start();
+        }
+    
     public static void addIronDome(String idId, String warName) {
 	new Thread() {
 	    @Override
