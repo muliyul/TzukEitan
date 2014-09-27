@@ -32,6 +32,6 @@ public interface AbstractWarView {
 	void showLauncherNotExist(String defenseLauncherId, String launcherId);
 	void showEnemyMissDestination(String whoLaunchedMeId, String id,
 			String destination, String launchTime);
-	String getWarName();
+	String getWarNameFromUser();
 	
 }

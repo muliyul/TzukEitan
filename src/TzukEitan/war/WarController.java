@@ -218,5 +218,4 @@ public class WarController implements WarEventListener, WarEventUIListener{
 	    return warModel.getFriendlyInventory();
 	}
 
-
 }

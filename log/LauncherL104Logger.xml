@@ -1,7 +1,7 @@
-25/09/2014 18:38:32 INFO	L104	is now: visible
-25/09/2014 18:38:33 INFO	L104	Launch: M7			Target: t1
-25/09/2014 18:38:36 INFO	L104	is now: hidden
-25/09/2014 18:38:36 INFO	L104	Target: t1		Status: MISS			Land Time: 25/09/2014 18:38:36
-25/09/2014 18:38:37 INFO	L104	is now: visible
-25/09/2014 18:38:38 INFO	L104	Launch: M9			Target: t7
-25/09/2014 18:38:46 INFO	L104	is now: hidden
+27/09/2014 03:14:38 INFO	L104	is now: visible
+27/09/2014 03:14:39 INFO	L104	Launch: M7			Target: t1
+27/09/2014 03:14:42 INFO	L104	is now: hidden
+27/09/2014 03:14:42 INFO	L104	Target: t1		Status: HIT			Land Time: 27/09/2014 03:14:42			Damage: 2000
+27/09/2014 03:14:43 INFO	L104	is now: visible
+27/09/2014 03:14:44 INFO	L104	Launch: M9			Target: t7
+27/09/2014 03:14:52 INFO	L104	is now: hidden

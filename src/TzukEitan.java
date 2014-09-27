@@ -6,8 +6,6 @@
  * Ben Amir: amir.ben@gmail.com
  */
 
-
-
 import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -29,18 +27,21 @@ public class TzukEitan {
 
 		AbstractWarView guiView = new GUIView();
 		AbstractWarView consoleView = new ConsoleView();
-		
+
 		String warName;
-		War warModel = new War(warName = guiView.getWarName());
+		while (!TzukEitanDBConnection.checkWarName(warName = guiView
+				.getWarNameFromUser()));
+		War warModel = new War(warName);
 
 		WarController warGUIControl = new WarController(warModel, guiView);
-		WarController warConsoleControl = new WarController(warModel, consoleView);
-		
+		WarController warConsoleControl = new WarController(warModel,
+				consoleView);
+
 		try {
 			warXML = new WarXMLReader("warStart.xml", warGUIControl);
 			TzukEitanDBConnection.addNewWar(warName);
 			warXML.start();
-			
+
 			warXML.join();
 
 		} catch (ParserConfigurationException e) {
@@ -54,7 +55,7 @@ public class TzukEitan {
 		}
 
 		warModel.start();
-		((ConsoleView)consoleView).start();
+		((ConsoleView) consoleView).start();
 	}
 
 }
