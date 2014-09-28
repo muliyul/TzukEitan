@@ -13,6 +13,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import TzukEitan.db.TzukEitanDBConnection;
+import TzukEitan.net.Server;
 import TzukEitan.utils.WarXMLReader;
 import TzukEitan.view.AbstractWarView;
 import TzukEitan.view.ConsoleView;
@@ -36,7 +37,8 @@ public class TzukEitan {
 		WarController warGUIControl = new WarController(warModel, guiView);
 		WarController warConsoleControl = new WarController(warModel,
 				consoleView);
-
+		Server warServer = new Server(warGUIControl, 9999);
+		
 		try {
 			warXML = new WarXMLReader("warStart.xml", warGUIControl);
 			TzukEitanDBConnection.addNewWar(warName);
