@@ -1,5 +1,6 @@
 package TzukEitan.net;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -51,24 +52,38 @@ public class ClientController {
 
     @FXML
     protected void addLauncher() {
-	out.writeChars(TzukEitanProtocol.ADD_LAUNCHER);
-	out.writeObject(new EnemyLauncher(IdGenerator
-		.enemyLauncherIdGenerator(), true, in.readUTF(),
-		(WarStatistics) in.readObject()));
+	try {
+	    out.writeChars(TzukEitanProtocol.ADD_LAUNCHER);
+	    out.writeObject(new EnemyLauncher(IdGenerator
+		    .enemyLauncherIdGenerator(), true, in.readUTF(),
+		    (WarStatistics) in.readObject()));
+	} catch (ClassNotFoundException | IOException e) {
+
+	}
     }
 
     @FXML
     protected void fireMissile() {
-	out.writeChars(TzukEitanProtocol.FIRE_MISSILE);
-	out.writeObject(new EnemyMissile(IdGenerator.enemyMissileIdGenerator(),
-		chosenDestination.getValue(), chosenFlytime.getValue(),
-		chosenDamage.getValue(), chosenLauncher.getValue(), statistics,
-		warName));
+	try {
+	    out.writeChars(TzukEitanProtocol.FIRE_MISSILE);
+	    String warName = in.readUTF();
+	    out.writeObject(new EnemyMissile(IdGenerator
+		    .enemyMissileIdGenerator(), chosenDestination.getValue(),
+		    (int) chosenFlytime.getValue(), (int) chosenDamage
+			    .getValue(), chosenLauncher.getValue(), null,
+		    warName));
+	} catch (IOException e) {
+	}
     }
 
     protected void refreshInventory() {
-	if (inventoryPane.isVisible()) {
-	    inventoryTextArea.setText(model.getEnemyInventory());
+	try {
+	    if (inventoryPane.isVisible()) {
+		out.writeChars(TzukEitanProtocol.REQUEST_ENEMY_INVENTORY);
+		String eInv = in.readUTF();
+		inventoryTextArea.setText(eInv);
+	    }
+	} catch (IOException e) {
 	}
     }
 }

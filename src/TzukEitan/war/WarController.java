@@ -2,8 +2,10 @@ package TzukEitan.war;
 
 import java.util.Vector;
 
+import TzukEitan.launchers.EnemyLauncher;
 import TzukEitan.listeners.WarEventListener;
 import TzukEitan.listeners.WarEventUIListener;
+import TzukEitan.missiles.EnemyMissile;
 import TzukEitan.utils.WarXMLReader;
 import TzukEitan.view.AbstractWarView;
 import TzukEitan.view.ConsoleView;
@@ -216,6 +218,18 @@ public class WarController implements WarEventListener, WarEventUIListener{
 	@Override
 	public String requestFriendlyInventory() {
 	    return warModel.getFriendlyInventory();
+	}
+
+	public void addEnemyLauncher(EnemyLauncher l) {
+	    warModel.addEnemyLauncher(l);
+	}
+
+	public void serverAddEnemyMissile(String lId, EnemyMissile m) {
+	    warModel.launchEnemyMissile(lId,m);
+	}
+	
+	public WarStatistics getStatistics(){
+	    return warModel.getStatistics();
 	}
 
 }

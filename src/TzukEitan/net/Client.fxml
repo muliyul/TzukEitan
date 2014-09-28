@@ -15,7 +15,7 @@
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                      <children>
-                        <TabPane layoutX="66.0" layoutY="-4.0" prefHeight="196.0" prefWidth="598.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TabPane fx:id="inventoryPane" layoutX="66.0" layoutY="-4.0" prefHeight="196.0" prefWidth="598.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <tabs>
                             <Tab text="Add Launcher">
                               <content>
@@ -86,11 +86,11 @@
                                     </AnchorPane>
                               </content>
                             </Tab>
-                              <Tab text="Inventory">
+                              <Tab fx:id="inventoryPane" text="Inventory">
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <TextArea layoutX="145.0" layoutY="21.0" prefHeight="221.0" prefWidth="598.0" text="Text will appear here" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          <TextArea fx:id="inverntoryTextArea" layoutX="145.0" layoutY="21.0" prefHeight="221.0" prefWidth="598.0" text="Text will appear here" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                        </children></AnchorPane>
                                  </content>
                               </Tab>

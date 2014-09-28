@@ -1,5 +1,6 @@
 package TzukEitan.missiles;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import TzukEitan.utils.Utils;
 import TzukEitan.war.WarStatistics;
 
 /** Enemy missile, is been created by the Enemy launcher **/
-public class EnemyMissile extends Thread {
+public class EnemyMissile extends Thread implements Serializable{
 	private List<WarEventListener> allListeners;
 
 	private String id;
@@ -101,5 +102,16 @@ public class EnemyMissile extends Thread {
 	public String getWarName() {
 	    return warName;
 	}
+	
+	public String getDestination() {
+	    return destination;
+	}
 
+	public int getFlyTime() {
+	    return flyTime;
+	}
+	
+	public void setStatistics(WarStatistics statistics) {
+	    this.statistics = statistics;
+	}
 }

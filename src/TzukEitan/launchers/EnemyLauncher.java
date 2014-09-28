@@ -1,5 +1,6 @@
 package TzukEitan.launchers;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import TzukEitan.utils.Utils;
 import TzukEitan.war.WarLogger;
 import TzukEitan.war.WarStatistics;
 
-public class EnemyLauncher extends Thread implements Munitions{
+public class EnemyLauncher extends Thread implements Munitions,Serializable{
 	private List<WarEventListener> allListeners;
 
 	private String warName;

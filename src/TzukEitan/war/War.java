@@ -310,15 +310,18 @@ public class War extends Thread {
 
     // add enemy launcher with parameters
     public String addEnemyLauncher(String launcherId, boolean isHidden) {
-	EnemyLauncher launcher = new EnemyLauncher(launcherId, isHidden, name,
-		statistics);
+	return addEnemyLauncher(new EnemyLauncher(launcherId, isHidden, name,
+		statistics));
+	
+    }
+    
+    public String addEnemyLauncher(EnemyLauncher launcher){
 	for (WarEventListener l : allListeners)
 	    launcher.registerListeners(l);
-	TzukEitanDBConnection.addLauncher(launcherId, name);
+	TzukEitanDBConnection.addLauncher(launcher.getLauncherId(), name);
 	launcher.start();
 	enemyLauncherArr.add(launcher);
-
-	return launcherId;
+	return launcher.getLauncherId();
     }
 
     // add iron dome without given parameters
@@ -457,5 +460,9 @@ public class War extends Thread {
 	    for (String ld : getLauncherDestructors())
 		retval.append('\t' + ld + "\r\n");
 	return retval.toString();
+    }
+
+    public void launchEnemyMissile(String lId, EnemyMissile m) {
+	launchEnemyMissile(lId, m.getDestination(), m.getDamage(), m.getFlyTime());
     }
 }

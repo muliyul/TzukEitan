@@ -8,7 +8,9 @@ import java.net.Socket;
 import java.util.List;
 import java.util.Vector;
 
+import TzukEitan.launchers.EnemyLauncher;
 import TzukEitan.listeners.WarEventUIListener;
+import TzukEitan.missiles.EnemyMissile;
 import TzukEitan.view.AbstractWarView;
 import TzukEitan.war.WarController;
 
@@ -71,27 +73,31 @@ public class Server extends Thread {
 	}
 
 	private void parseAndInvokerCommand(String cmd) {
-	    switch (cmd) {
-	    case TzukEitanProtocol.ADD_LAUNCHER: {
-		addLauncher();
-		break;
-	    }
-	    case TzukEitanProtocol.FIRE_MISSILE: {
-		fireMissile();
-		break;
-	    }
+	    try {
+		switch (cmd) {
+		case TzukEitanProtocol.ADD_LAUNCHER: {
+		    addLauncher();
+		    break;
+		}
+		case TzukEitanProtocol.FIRE_MISSILE: {
+		    fireMissile();
+		    break;
+		}
+		}
+	    } catch (ClassNotFoundException | IOException e) {
 	    }
 	    Server.this.notify();
 	}
 
-	private void addLauncher() {
-	    // TODO Auto-generated method stub
-	    
+	private void addLauncher() throws ClassNotFoundException, IOException {
+	    wc.addEnemyLauncher((EnemyLauncher) in.readObject());
 	}
 
-	private void fireMissile() {
-	    // TODO Auto-generated method stub
-	    
+	private void fireMissile() throws ClassNotFoundException, IOException {
+	    String warName = in.readUTF();
+	    EnemyMissile m = (EnemyMissile) in.readObject();
+	    m.setStatistics(wc.getStatistics());
+	    wc.serverAddEnemyMissile(warName , m);
 	}
     }
 }
