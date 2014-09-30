@@ -275,6 +275,35 @@ public class TzukEitanDBConnection {
 			}
 		}.start();
 	}
+	
+	public static void getWarNamesByDate(String startDate, String endDate){
+		
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+					String fixedStartDate = startDate + " 00:00:00";
+					String fixedEndtDate = startDate + " 23:59:59";
+					executer.acquire();
+					statement = connection
+							.prepareStatement("SELECT WarName FROM `WarSim`.`War` WHERE `War`.`StartTime` BETWEEN ? AND ?");
+					statement.setString(1, fixedStartDate);
+					statement.setString(2, fixedEndtDate);
+					
+					statement.executeUpdate();
+				} catch (SQLException e) {
+					while (e != null) {
+						System.out.println(e.getMessage());
+						e = e.getNextException();
+					}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} finally {
+					executer.release();
+				}
+			}
+		}.start();
+	}
 
 	public static void closeDB() {
 		try {
