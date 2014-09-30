@@ -1,4 +1,4 @@
-27/09/2014 03:14:21 INFO	D203	Launch: DM1003			Target: M5
-27/09/2014 03:14:21 INFO	D203	Intercept: M5			Status: FAIL 			Damage: 5000
-27/09/2014 03:14:25 INFO	D203	FAIL: missile M6 does not exist
-27/09/2014 03:14:46 INFO	D203	FAIL: missile M9 does not exist
+01/10/2014 02:02:41 INFO	D203	Launch: DM1003			Target: M5
+01/10/2014 02:02:41 INFO	D203	Intercept: M5			Status: SUCCESS
+01/10/2014 02:02:46 INFO	D203	Launch: DM1005			Target: M6
+01/10/2014 02:02:46 INFO	D203	Intercept: M6			Status: SUCCESS

@@ -1,0 +1,46 @@
+01/10/2014 02:02:28 INFO	====== >	War started	< ======
+01/10/2014 02:02:30 INFO	D201	FAIL: missile M4 does not exist
+01/10/2014 02:02:31 INFO	L101	Launch: M1			Target: Sderot
+01/10/2014 02:02:31 INFO	D202	FAIL: missile M2 does not exist
+01/10/2014 02:02:32 INFO	L102	is now: visible
+01/10/2014 02:02:33 INFO	L102	Launch: M3			Target: Ofakim
+01/10/2014 02:02:33 INFO	D201	Launch: DM1001			Target: M1
+01/10/2014 02:02:33 INFO	D201	Intercept: M1			Status: FAIL 			Damage: 1500
+01/10/2014 02:02:33 INFO	P301	Launch: PM2001			Target: L101
+01/10/2014 02:02:33 INFO	P301	Intercept: L101			Status: SUCCESS
+01/10/2014 02:02:33 INFO	L101	Status: DESTROYED
+01/10/2014 02:02:36 INFO	D201	Launch: DM1002			Target: M3
+01/10/2014 02:02:36 INFO	L102	is now: hidden
+01/10/2014 02:02:36 INFO	L102	Target: Ofakim		Status: HIT			Land Time: 01/10/2014 02:02:36			Damage: 5000
+01/10/2014 02:02:36 INFO	D201	Intercept: M3			Status: SUCCESS
+01/10/2014 02:02:36 INFO	S302	Intercept: L102			Status: FAIL			Reason: Launcher is hidden
+01/10/2014 02:02:36 INFO	P303	Intercept: L103			Status: FAIL			Reason: Launcher is hidden
+01/10/2014 02:02:37 INFO	L102	is now: visible
+01/10/2014 02:02:37 INFO	L104	is now: visible
+01/10/2014 02:02:38 INFO	L103	is now: visible
+01/10/2014 02:02:38 INFO	L102	Launch: M4			Target: Beer-Sheva
+01/10/2014 02:02:38 INFO	L104	Launch: M5			Target: Sderot
+01/10/2014 02:02:39 INFO	L103	Launch: M5			Target: BenAmir
+01/10/2014 02:02:41 INFO	D203	Launch: DM1003			Target: M5
+01/10/2014 02:02:41 INFO	D203	Intercept: M5			Status: SUCCESS
+01/10/2014 02:02:41 INFO	S302	Launch: SM2002			Target: L102
+01/10/2014 02:02:41 INFO	S302	Intercept: L102			Status: SUCCESS
+01/10/2014 02:02:41 INFO	L102	Status: DESTROYED
+01/10/2014 02:02:41 INFO	L105	is now: visible
+01/10/2014 02:02:42 INFO	L103	is now: hidden
+01/10/2014 02:02:42 INFO	L105	Launch: M6			Target: Sderot
+01/10/2014 02:02:43 INFO	L101	Target: Sderot		Status: HIT			Land Time: 01/10/2014 02:02:43			Damage: 1500
+01/10/2014 02:02:44 INFO	D201	Launch: DM1004			Target: M5
+01/10/2014 02:02:44 INFO	D201	Intercept: M5			Status: SUCCESS
+01/10/2014 02:02:45 INFO	L103	is now: visible
+01/10/2014 02:02:45 INFO	L102	Target: Beer-Sheva		Status: MISS			Land Time: 01/10/2014 02:02:45
+01/10/2014 02:02:46 INFO	L103	Launch: M6			Target: GuyEshel
+01/10/2014 02:02:46 INFO	D203	Launch: DM1005			Target: M6
+01/10/2014 02:02:46 INFO	D203	Intercept: M6			Status: SUCCESS
+01/10/2014 02:02:47 INFO	D201	Launch: DM1006			Target: M6
+01/10/2014 02:02:47 INFO	D201	Intercept: M6			Status: SUCCESS
+01/10/2014 02:02:49 INFO	P304	Launch: PM2003			Target: L103
+01/10/2014 02:02:49 INFO	P304	Intercept: L103			Status: SUCCESS
+01/10/2014 02:02:49 INFO	L103	Status: DESTROYED
+01/10/2014 02:02:49 INFO	P301	FAIL: launcher L103 does not exist
+01/10/2014 02:02:58 INFO	====== >	War finished	< ====== 

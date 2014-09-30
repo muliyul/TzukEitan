@@ -1,15 +1,7 @@
-27/09/2014 03:14:16 INFO	P303	Intercept: L103			Status: FAIL			Reason: Launcher is hidden
-27/09/2014 03:14:18 INFO	L103	is now: visible
-27/09/2014 03:14:19 INFO	L103	Launch: M5			Target: BenAmir
-27/09/2014 03:14:22 INFO	L103	is now: hidden
-27/09/2014 03:14:22 INFO	L103	Target: BenAmir		Status: MISS			Land Time: 27/09/2014 03:14:22
-27/09/2014 03:14:25 INFO	L103	is now: visible
-27/09/2014 03:14:26 INFO	L103	Launch: M6			Target: GuyEshel
-27/09/2014 03:14:29 INFO	P304	Launch: PM2003			Target: L103
-27/09/2014 03:14:29 INFO	P304	Intercept: L103			Status: FAIL
-27/09/2014 03:14:33 INFO	L103	is now: hidden
-27/09/2014 03:14:33 INFO	L103	Target: GuyEshel		Status: MISS			Land Time: 27/09/2014 03:14:33
-27/09/2014 03:14:38 INFO	L103	is now: visible
-27/09/2014 03:14:39 INFO	L103	Launch: M8			Target: t2
-27/09/2014 03:14:42 INFO	L103	is now: hidden
-27/09/2014 03:14:42 INFO	L103	Target: t2		Status: HIT			Land Time: 27/09/2014 03:14:42			Damage: 1000
+01/10/2014 02:02:36 INFO	P303	Intercept: L103			Status: FAIL			Reason: Launcher is hidden
+01/10/2014 02:02:38 INFO	L103	is now: visible
+01/10/2014 02:02:39 INFO	L103	Launch: M5			Target: BenAmir
+01/10/2014 02:02:42 INFO	L103	is now: hidden
+01/10/2014 02:02:45 INFO	L103	is now: visible
+01/10/2014 02:02:46 INFO	L103	Launch: M6			Target: GuyEshel
+01/10/2014 02:02:49 INFO	P304	Launch: PM2003			Target: L103

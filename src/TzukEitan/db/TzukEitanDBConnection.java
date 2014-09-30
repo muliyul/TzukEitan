@@ -6,9 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Vector;
 import java.util.concurrent.Semaphore;
-//TODO FIX DATE & TIME
+
 public class TzukEitanDBConnection {
 
 	private static Connection connection;
@@ -16,7 +18,7 @@ public class TzukEitanDBConnection {
 	private static ResultSet rs;
 	private static PreparedStatement statement;
 	private static Semaphore executer;
-
+	
 	static {
 		dbUrl = "jdbc:mysql://104.131.232.248/WarSim";
 
@@ -63,8 +65,9 @@ public class TzukEitanDBConnection {
 				try {
 					executer.acquire();
 					statement = connection
-							.prepareStatement("INSERT INTO `WarSim`.`War` (`WarName`, `StartTime`) VALUES ( ?, UTC_TIMESTAMP())");
+							.prepareStatement("INSERT INTO `WarSim`.`War` (`WarName`, `StartTime`) VALUES ( ?, ?)");
 					statement.setString(1, warName);
+					statement.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
 					statement.executeUpdate();
 				} catch (SQLException e) {
 
@@ -88,8 +91,9 @@ public class TzukEitanDBConnection {
 				try {
 					executer.acquire();
 					statement = connection
-							.prepareStatement("UPDATE  `WarSim`.`War` SET  `EndTime` = UTC_TIMESTAMP( ) WHERE  `War`.`WarName` =  ? ");
-					statement.setString(1, warName);
+							.prepareStatement("UPDATE  `WarSim`.`War` SET  `EndTime` = ? WHERE  `War`.`WarName` =  ? ");
+					statement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+					statement.setString(2, warName);
 					statement.executeUpdate();
 				} catch (SQLException e) {
 					while (e != null) {
@@ -141,13 +145,14 @@ public class TzukEitanDBConnection {
 					executer.acquire();
 					statement = connection
 							.prepareStatement("INSERT INTO `WarSim`.`Missile` (`ID`, `Launcher`, `LaunchTime`,"
-									+ "		`Destination`, `Damage`, `FlyTime`, `WarName`) VALUES (?, ?, UTC_TIMESTAMP( ) , ?, ?, ?, ?)");
+									+ "		`Destination`, `Damage`, `FlyTime`, `WarName`) VALUES (?, ?, ? , ?, ?, ?, ?)");
 					statement.setString(1, mId);
 					statement.setString(2, lId);
-					statement.setString(3, destination);
-					statement.setInt(4, dmg);
-					statement.setInt(5, flyTime);
-					statement.setString(6, warName);
+					statement.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+					statement.setString(4, destination);
+					statement.setInt(5, dmg);
+					statement.setInt(6, flyTime);
+					statement.setString(7, warName);
 					statement.executeUpdate();
 				} catch (SQLException e) {
 					while (e != null) {
@@ -172,10 +177,11 @@ public class TzukEitanDBConnection {
 				try {
 					executer.acquire();
 					statement = connection
-							.prepareStatement("UPDATE  `WarSim`.`Missile` SET `Intercepted` = '1', `InterceptionTime` =  UTC_TIMESTAMP( ), `InterceptedBy` = ? WHERE `Missile`.`ID` = ? AND  `Missile`.`WarName` = ?");
-					statement.setString(1, idId);
-					statement.setString(2, mId);
-					statement.setString(3, warName);
+							.prepareStatement("UPDATE  `WarSim`.`Missile` SET `Intercepted` = '1', `InterceptionTime` =  ? , `InterceptedBy` = ? WHERE `Missile`.`ID` = ? AND  `Missile`.`WarName` = ?");
+					statement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+					statement.setString(2, idId);
+					statement.setString(3, mId);
+					statement.setString(4, warName);
 					statement.executeUpdate();
 				} catch (SQLException e) {
 					while (e != null) {
@@ -199,10 +205,11 @@ public class TzukEitanDBConnection {
 				try {
 					executer.acquire();
 					statement = connection
-							.prepareStatement("UPDATE  `WarSim`.`EnemyLauncher` SET `Intercepted` = '1', `InterceptionTime` =  UTC_TIMESTAMP( ), `InterceptedBy` = ? WHERE `EnemyLauncher`.`ID` = ? AND  `EnemyLauncher`.`WarName` = ?");
-					statement.setString(1, dId);
-					statement.setString(2, lId);
-					statement.setString(3, warName);
+							.prepareStatement("UPDATE  `WarSim`.`EnemyLauncher` SET `Intercepted` = '1', `InterceptionTime` =  ? , `InterceptedBy` = ? WHERE `EnemyLauncher`.`ID` = ? AND  `EnemyLauncher`.`WarName` = ?");
+					statement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+					statement.setString(2, dId);
+					statement.setString(3, lId);
+					statement.setString(4, warName);
 					statement.executeUpdate();
 				} catch (SQLException e) {
 					while (e != null) {
