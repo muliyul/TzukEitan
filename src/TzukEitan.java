@@ -10,19 +10,21 @@ import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import model.War;
+import model.WarController;
+import net.Server;
+
 import org.xml.sax.SAXException;
 
-import TzukEitan.db.TzukEitanDBConnection;
-import TzukEitan.net.Server;
-import TzukEitan.utils.WarXMLReader;
-import TzukEitan.view.AbstractWarView;
-import TzukEitan.view.ConsoleView;
-import TzukEitan.view.GUIView;
-import TzukEitan.war.War;
-import TzukEitan.war.WarController;
+import utils.WarXMLReader;
+import view.AbstractWarView;
+import view.ConsoleView;
+import view.GUIView;
+import db.TzukEitanDBConnection;
 
 public class TzukEitan {
 
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		WarXMLReader warXML;
 
@@ -35,8 +37,7 @@ public class TzukEitan {
 		War warModel = new War(warName);
 
 		WarController warGUIControl = new WarController(warModel, guiView);
-		WarController warConsoleControl = new WarController(warModel,
-				consoleView);
+		//WarController warConsoleControl = new WarController(warModel,consoleView);
 		Server warServer = new Server(warGUIControl, 9999);
 		
 		try {

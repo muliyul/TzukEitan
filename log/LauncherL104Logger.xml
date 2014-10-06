@@ -1,2 +1,6 @@
-01/10/2014 02:02:37 INFO	L104	is now: visible
-01/10/2014 02:02:38 INFO	L104	Launch: M5			Target: Sderot
+07/10/2014 00:43:55 INFO	L104	is now: visible
+07/10/2014 00:43:56 INFO	L104	Launch: M7			Target: t1
+07/10/2014 00:43:59 INFO	L104	is now: hidden
+07/10/2014 00:43:59 INFO	L104	Target: t1		Status: MISS			Land Time: 07/10/2014 00:43:59
+07/10/2014 00:44:00 INFO	L104	is now: visible
+07/10/2014 00:44:01 INFO	L104	Launch: M9			Target: t7
