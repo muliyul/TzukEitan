@@ -1,5 +1,7 @@
-07/10/2014 00:44:03 INFO	P303	Intercept: L103			Status: FAIL			Reason: Launcher is hidden
-07/10/2014 00:44:05 INFO	L103	is now: visible
-07/10/2014 00:44:06 INFO	L103	Launch: M5			Target: BenAmir
-07/10/2014 00:44:09 INFO	L103	is now: hidden
-07/10/2014 00:44:09 INFO	L103	Target: BenAmir		Status: MISS			Land Time: 07/10/2014 00:44:09
+10/10/2014 02:39:23 INFO	P303	Intercept: L103			Status: FAIL			Reason: Launcher is hidden
+10/10/2014 02:39:25 INFO	L103	is now: visible
+10/10/2014 02:39:26 INFO	L103	Launch: M5			Target: BenAmir
+10/10/2014 02:39:29 INFO	L103	is now: hidden
+10/10/2014 02:39:32 INFO	L103	is now: visible
+10/10/2014 02:39:33 INFO	L103	Launch: M6			Target: GuyEshel
+10/10/2014 02:39:36 INFO	P304	Launch: PM2003			Target: L103

@@ -120,8 +120,8 @@ public class Server extends Thread {
 	}
 
 	private void fireMissile(Object[] params) throws InterruptedException {
-	    wc.enemyLaunchMissile((String) params[0], (String) params[1],
-		    (String) params[2], (int) params[3]);
+	    wc.addEnemyMissile((String) params[0], (String) params[1],
+		    (int) params[2], (int) params[3]);
 	}
 
 	public void closeConnection() throws IOException {

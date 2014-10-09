@@ -462,7 +462,4 @@ public class War extends Thread {
 	return retval.toString();
     }
 
-    public void launchEnemyMissile(String lId, EnemyMissile m) {
-	launchEnemyMissile(lId, m.getDestination(), m.getDamage(), m.getFlyTime());
-    }
 }

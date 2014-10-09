@@ -50,7 +50,7 @@ public class Client extends Application {
 		try {
 		    out.writeObject(new Protocol(Protocol.Type.EXIT));
 		} catch (IOException e) {
-		    e.printStackTrace();
+		    System.out.println("Not connected!");
 		}
 	    }
 	});

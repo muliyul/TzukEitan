@@ -10,7 +10,6 @@ import db.DBTask;
 
 
 public class AddNewWarTaskJDBC extends DBTask implements Runnable {
-    private String warName;
 
     public AddNewWarTaskJDBC(Semaphore s, Connection c, String warName) {
 	super(s, c, warName);

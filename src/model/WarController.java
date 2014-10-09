@@ -126,8 +126,7 @@ public class WarController implements WarEventListener, WarEventUIListener{
 
 	@Override
 	public Vector<String> showAllLaunchers() {
-		Vector<String> ids = warModel.getAllLaunchersIds();
-		return ids;
+		return warModel.getAllLaunchersIds();
 	}
 
 	@Override
@@ -137,26 +136,22 @@ public class WarController implements WarEventListener, WarEventUIListener{
 
 	@Override
 	public String addEnemyLauncher(String launcherId, boolean isHidden) {
-		String id = warModel.addEnemyLauncher(launcherId, isHidden);
-		return id;
+		return warModel.addEnemyLauncher(launcherId, isHidden);
 	}
 	
 	@Override
 	public String addEnemyLauncher() {
-		String id = warModel.addEnemyLauncher();
-		return id;
+		return warModel.addEnemyLauncher();
 	}
 
 	@Override
 	public String addIronDome() {
-		String id = warModel.addIronDome();
-		return id;
+		return warModel.addIronDome();
 	}
 	
 	@Override
 	public String addIronDome(String id) {
-		String iId = warModel.addIronDome(id);
-		return iId;
+		return warModel.addIronDome(id);
 	}
 
 	@Override
@@ -222,10 +217,6 @@ public class WarController implements WarEventListener, WarEventUIListener{
 
 	public void addEnemyLauncher(EnemyLauncher l) {
 	    warModel.addEnemyLauncher(l);
-	}
-
-	public void serverAddEnemyMissile(String lId, EnemyMissile m) {
-	    warModel.launchEnemyMissile(lId,m);
 	}
 	
 	public WarStatistics getStatistics(){

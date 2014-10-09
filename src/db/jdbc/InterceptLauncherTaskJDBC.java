@@ -1,10 +1,12 @@
-package db;
+package db.jdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.concurrent.Semaphore;
+
+import db.DBTask;
 
 public class InterceptLauncherTaskJDBC extends DBTask {
 
