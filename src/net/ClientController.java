@@ -11,8 +11,13 @@ import java.util.ResourceBundle;
 import java.util.Vector;
 
 import utils.IdGenerator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -20,6 +25,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
+import javafx.util.Duration;
 
 public class ClientController implements Initializable {
 	@FXML
@@ -33,7 +39,7 @@ public class ClientController implements Initializable {
 
 	@FXML
 	private TextArea inventoryArea;
-	
+
 	@FXML
 	private TextArea operationsTextArea;
 
@@ -112,14 +118,31 @@ public class ClientController implements Initializable {
 					}
 
 				});
-		inventoryArea.visibleProperty().addListener(new ChangeListener<Boolean>() {
+		Timeline refreshInv = new Timeline(new KeyFrame(Duration.seconds(1),
+				ae -> updateInventory()));
+		refreshInv.setCycleCount(Timeline.INDEFINITE);
+		refreshInv.play();
+		inventoryArea.visibleProperty().addListener(
+				new ChangeListener<Boolean>() {
+					public void changed(
+							ObservableValue<? extends Boolean> arg0,
+							Boolean arg1, Boolean arg2) {
+						updateInventory();
+					}
+				});
+	}
 
-			@Override
-			public void changed(ObservableValue<? extends Boolean> arg0,
-					Boolean arg1, Boolean arg2) {
-				// TODO Auto-generated method stub
-				
+	protected void updateInventory() {
+		if (inventoryArea.isVisible())
+			try {
+				out.writeObject(new Protocol(
+						Protocol.Type.REQUEST_ENEMY_INVENTORY));
+				Protocol p = (Protocol) in.readObject();
+				inventoryArea.setText((String) p.getContent()[0]);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
 			}
-		});
 	}
 }
