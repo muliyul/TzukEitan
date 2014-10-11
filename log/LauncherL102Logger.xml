@@ -1,8 +1,9 @@
-11/10/2014 00:24:24 INFO	L102	is now: visible
-11/10/2014 00:24:25 INFO	L102	Launch: M3			Target: Ofakim
-11/10/2014 00:24:28 INFO	L102	is now: hidden
-11/10/2014 00:24:28 INFO	L102	Target: Ofakim		Status: HIT			Land Time: 11/10/2014 00:24:28			Damage: 5000
-11/10/2014 00:24:28 INFO	S302	Intercept: L102			Status: FAIL			Reason: Launcher is hidden
-11/10/2014 00:24:29 INFO	L102	is now: visible
-11/10/2014 00:24:30 INFO	L102	Launch: M4			Target: Beer-Sheva
-11/10/2014 00:24:33 INFO	S302	Launch: SM2002			Target: L102
+11/10/2014 18:20:57 INFO	L102	is now: visible
+11/10/2014 18:20:58 INFO	L102	Launch: M3			Target: Ofakim
+11/10/2014 18:21:01 INFO	L102	is now: hidden
+11/10/2014 18:21:01 INFO	L102	Target: Ofakim		Status: MISS			Land Time: 11/10/2014 18:21:01
+11/10/2014 18:21:01 INFO	S302	Intercept: L102			Status: FAIL			Reason: Launcher is hidden
+11/10/2014 18:21:02 INFO	L102	is now: visible
+11/10/2014 18:21:03 INFO	L102	Launch: M4			Target: Beer-Sheva
+11/10/2014 18:21:06 INFO	S302	Launch: SM2002			Target: L102
+11/10/2014 18:21:06 INFO	S302	Intercept: L102			Status: SUCCESS

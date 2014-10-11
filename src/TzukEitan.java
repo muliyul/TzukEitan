@@ -16,6 +16,7 @@ import net.Server;
 
 import org.xml.sax.SAXException;
 
+import servlet.WarServlet;
 import utils.WarXMLReader;
 import view.AbstractWarView;
 import view.ConsoleView;
@@ -37,6 +38,7 @@ public class TzukEitan {
 		War warModel = new War(warName);
 
 		WarController warGUIControl = new WarController(warModel, guiView);
+		
 		//WarController warConsoleControl = new WarController(warModel,consoleView);
 		Server warServer = new Server(warGUIControl, 9999);
 		

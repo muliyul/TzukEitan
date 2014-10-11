@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+<title>War Page</title>
+</head>
+<body>
+	<h1>War - the friendly side</h1>
+	<form name="warForm" action="/TzukEitan/WarServlet"
+		method="POST">
+		<div>&nbsp;</div>
+
+		<div>
+
+			<p>
+				<input name="RequestType" type="radio" value="0" />Add Iron Dome
+			</p>
+		</div>
+
+		<p>
+			<input name="RequestType" type="radio" value="1" />Add Launcher
+			Destructor
+		</p>
+
+		<p style="margin-left: 40px;">
+			Type:&nbsp;<select name="DestType"><option
+					selected="selected" value="ship">ship</option>
+				<option value="plane">plane</option></select>
+		</p>
+
+		<p>
+			<input name="RequestType" type="radio" value="2" />Intercept Missile
+		</p>
+
+		<p style="margin-left: 40px;">
+			Missile id:&nbsp;<input name="Mid" type="text" />
+		</p>
+
+		<p>
+			<input name="RequestType" type="radio" value="3" />Intercept
+			Launcher
+		</p>
+
+		<p style="margin-left: 40px;">
+			Launcher id:&nbsp;<input name="lid" type="text" />
+		</p>
+
+		<p>
+			<input name="Submit" type="submit" />
+			
+		</p>
+	</form>
+</body>
+</html>
