@@ -3,6 +3,7 @@ package launchers;
 import java.util.LinkedList;
 import java.util.List;
 
+import db.DBConnection;
 import utils.IdGenerator;
 import utils.Utils;
 import listeners.WarEventListener;
@@ -13,7 +14,6 @@ import model.WarStatistics;
 
 public class IronDome extends Thread implements Munitions {
     private List<WarEventListener> allListeners;
-    @SuppressWarnings("unused")
     private String warName;
     private String id;
     private transient boolean isRunning = true;
@@ -21,13 +21,14 @@ public class IronDome extends Thread implements Munitions {
     private transient EnemyMissile toDestroy;
     private transient WarStatistics statistics;
     private transient DefenseMissile currentMissile;
+    private DBConnection db;
     
     public IronDome() {
     }
 
-    public IronDome(String id, String warName, WarStatistics statistics) {
+    public IronDome(String id, String warName, WarStatistics statistics, DBConnection db) {
 	allListeners = new LinkedList<WarEventListener>();
-
+	this.db = db;
 	this.statistics = statistics;
 	this.id = id;
 	this.warName = warName;
@@ -104,7 +105,7 @@ public class IronDome extends Thread implements Munitions {
 	String missieId = IdGenerator.defensMissileIdGenerator();
 
 	// create new missile
-	currentMissile = new DefenseMissile(missieId, toDestroy, id, statistics);
+	currentMissile = new DefenseMissile(missieId, toDestroy, this, statistics, db);
 
 	// register listeners
 	for (WarEventListener l : allListeners)
@@ -141,6 +142,10 @@ public class IronDome extends Thread implements Munitions {
 	currentMissile = null;
 	toDestroy = null;
 	isRunning = false;
+    }
+
+    public String getWarName() {
+	return warName;
     }
 
 }

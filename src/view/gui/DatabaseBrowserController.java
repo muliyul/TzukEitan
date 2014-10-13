@@ -2,7 +2,6 @@ package view.gui;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -18,6 +17,7 @@ import javafx.stage.Stage;
 
 public class DatabaseBrowserController implements Initializable {
     
+    private DBConnection db;
     @SuppressWarnings("unused")
     private Stage window;
     
@@ -30,8 +30,9 @@ public class DatabaseBrowserController implements Initializable {
     @FXML
     private DatePicker toDate;
 
-    public DatabaseBrowserController(Stage s) {
+    public DatabaseBrowserController(Stage s,DBConnection db) {
 	window = s;
+	this.db = db;
     }
 
     @Override
@@ -40,14 +41,13 @@ public class DatabaseBrowserController implements Initializable {
     }
     
     public void submit() {
-	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	LocalDate from = fromDate.getValue(), to = toDate.getValue();
-	Future<String[]> fwarNames = DBConnection.getWarNamesByDate(from.format(dtf), to.format(dtf));
+	Future<String[]> fwarNames = db.getWarNamesByDate(from, to);
 	Set<Future<long[]>> set = new HashSet<Future<long[]>>();
 	try {
 	    String[] warNames = fwarNames.get();
 	    for(String war : warNames){
-		set.add(DBConnection.getWarStats(war));
+		set.add(db.getWarStats(war));
 	    }
 	    
 	    int i=0;

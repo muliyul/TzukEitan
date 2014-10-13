@@ -7,7 +7,7 @@ import java.util.concurrent.Semaphore;
 
 import db.DBTask;
 
-public class AddLauncherTask extends DBTask {
+public class AddLauncherTask extends DBTask<Void> {
 
     private String launcherId;
 
@@ -16,8 +16,7 @@ public class AddLauncherTask extends DBTask {
 	this.launcherId = lId;
     }
     
-    @Override
-    public void run() {
+    public Void call() {
 	try {
 		executer.acquire();
 		PreparedStatement statement = connection
@@ -35,6 +34,7 @@ public class AddLauncherTask extends DBTask {
 	} finally {
 		executer.release();
 	}
+	return null;
     }
 
 }

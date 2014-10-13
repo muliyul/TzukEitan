@@ -1,10 +1,11 @@
 package db;
 
 import java.sql.Connection;
+import java.util.concurrent.Callable;
 import java.util.concurrent.Semaphore;
 
 
-public class DBTask implements Runnable {
+public class DBTask<T> implements Callable<T> {
 
     protected Semaphore executer;
     protected Connection connection;
@@ -15,8 +16,10 @@ public class DBTask implements Runnable {
 	this.connection = c;
 	this.warName = warName;
     }
-    
+
     @Override
-    public void run() {}
+    public T call() throws Exception {
+	return null;
+    }
 
 }

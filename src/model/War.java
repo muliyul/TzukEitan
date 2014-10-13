@@ -22,18 +22,18 @@ public class War extends Thread {
     private WarStatistics statistics;
     private String[] targetCities = { "Sderot", "Ofakim", "Beer-Sheva",
 	    "Netivot", "Tel-Aviv", "Re'ut" };
-    private boolean logToDB;
+    private DBConnection db;
 
     public War() {
     }
-    
-    public War(String warName, boolean logToDB) {
+
+    public War(String warName, DBConnection db) {
 	allListeners = new LinkedList<>();
 	statistics = new WarStatistics();
 	this.name = warName;
 	registerListeners(new WarLogger());
 	WarLogger.addWarLoggerHandler(warName);
-	this.logToDB = logToDB;
+	this.db = db;
     }
 
     public void run() {
@@ -56,8 +56,6 @@ public class War extends Thread {
 	// close all the handlers of the logger
 	WarLogger.closeAllHandlers();
 	WarLogger.closeWarHandler();
-	if (logToDB)
-	    DBConnection.closeDB();
 	// warHandler.close();
     }// run
 
@@ -317,15 +315,14 @@ public class War extends Thread {
     // add enemy launcher with parameters
     public String addEnemyLauncher(String launcherId, boolean isHidden) {
 	return addEnemyLauncher(new EnemyLauncher(launcherId, isHidden, name,
-		statistics));
+		statistics, db));
 
     }
 
     public String addEnemyLauncher(EnemyLauncher launcher) {
 	for (WarEventListener l : allListeners)
 	    launcher.registerListeners(l);
-	if (logToDB)
-	    DBConnection.addLauncher(launcher.getLauncherId(), name);
+	db.addLauncher(launcher);
 	launcher.start();
 	enemyLauncherArr.add(launcher);
 	return launcher.getLauncherId();
@@ -340,7 +337,7 @@ public class War extends Thread {
 
     // add iron dome with given parameters
     public String addIronDome(String id) {
-	IronDome ironDome = new IronDome(id, name, statistics);
+	IronDome ironDome = new IronDome(id, name, statistics, db);
 
 	for (WarEventListener l : allListeners)
 	    ironDome.registerListeners(l);
@@ -349,8 +346,7 @@ public class War extends Thread {
 
 	ironDomeArr.add(ironDome);
 	// add iron dome to db
-	if (logToDB)
-	    DBConnection.addIronDome(id, name);
+	db.addIronDome(ironDome);
 
 	return id;
     }
@@ -362,7 +358,7 @@ public class War extends Thread {
 			.defenseLauncherDestractorIdGenerator(type.charAt(0));
 
 	LauncherDestructor destructor =
-		new LauncherDestructor(type, id, name, statistics);
+		new LauncherDestructor(type, id, name, statistics, db);
 
 	for (WarEventListener l : allListeners)
 	    destructor.registerListeners(l);
@@ -370,8 +366,7 @@ public class War extends Thread {
 	destructor.start();
 
 	launcherDestractorArr.add(destructor);
-	if (logToDB)
-	    DBConnection.addLauncherDestructor(id, type, name);
+	db.addLauncherDestructor(destructor);
 
 	return id;
     }
@@ -391,8 +386,7 @@ public class War extends Thread {
 
     // Event
     private void fireWarHasBeenFinished() {
-	if (logToDB)
-	    DBConnection.endWar(name);
+	db.endWar(this);
 	for (WarEventListener l : allListeners)
 	    l.warHasBeenFinished();
     }

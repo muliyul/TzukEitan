@@ -9,14 +9,14 @@ import java.util.concurrent.Semaphore;
 import db.DBTask;
 
 
-public class AddNewWarTask extends DBTask implements Runnable {
+public class AddNewWarTask extends DBTask<Void>{
 
     public AddNewWarTask(Semaphore s, Connection c, String warName) {
 	super(s, c, warName);
     }
 
     @Override
-    public void run() {
+    public Void call() {
 	try {
 	    executer.acquire();
 	    PreparedStatement statement =
@@ -37,5 +37,6 @@ public class AddNewWarTask extends DBTask implements Runnable {
 	} finally {
 	    executer.release();
 	}
+	return null;
     }
 }

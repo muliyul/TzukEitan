@@ -116,4 +116,8 @@ public class EnemyMissile extends Thread implements Serializable{
 	public void setStatistics(WarStatistics statistics) {
 	    this.statistics = statistics;
 	}
+
+	public String getLauncher() {
+	    return whoLaunchedMeId;
+	}
 }

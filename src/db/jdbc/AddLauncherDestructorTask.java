@@ -7,7 +7,7 @@ import java.util.concurrent.Semaphore;
 
 import db.DBTask;
 
-public class AddLauncherDestructorTask extends DBTask {
+public class AddLauncherDestructorTask extends DBTask<Void> {
 
     private String id;
     private String type;
@@ -19,7 +19,7 @@ public class AddLauncherDestructorTask extends DBTask {
 	this.type = type;
     }
 
-    public void run() {
+    public Void call() {
 	try {
 	    executer.acquire();
 	    PreparedStatement statement =
@@ -39,6 +39,7 @@ public class AddLauncherDestructorTask extends DBTask {
 	} finally {
 	    executer.release();
 	}
+	return null;
     }
 
 }

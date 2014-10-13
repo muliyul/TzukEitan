@@ -8,7 +8,7 @@ import java.util.concurrent.Semaphore;
 
 import db.DBTask;
 
-public class InterceptMissileTask extends DBTask {
+public class InterceptMissileTask extends DBTask<Void> {
 
     private String mId;
     private String idId;
@@ -20,7 +20,7 @@ public class InterceptMissileTask extends DBTask {
 	this.idId = idId;
     }
 
-    public void run() {
+    public Void call() {
 	try {
 	    executer.acquire();
 	    PreparedStatement statement =
@@ -42,5 +42,6 @@ public class InterceptMissileTask extends DBTask {
 	} finally {
 	    executer.release();
 	}
+	return null;
     }
 }

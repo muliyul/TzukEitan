@@ -8,7 +8,7 @@ import java.util.concurrent.Semaphore;
 
 import db.DBTask;
 
-public class EndWarTask extends DBTask {
+public class EndWarTask extends DBTask<Void> {
     private String warName;
 
     public EndWarTask(Semaphore s, Connection c, String warName) {
@@ -16,7 +16,7 @@ public class EndWarTask extends DBTask {
     }
 
     @Override
-    public void run() {
+    public Void call() {
 	try {
 		executer.acquire();
 		PreparedStatement statement = connection
@@ -34,5 +34,6 @@ public class EndWarTask extends DBTask {
 	} finally {
 		executer.release();
 	}
+	return null;
     }
 }

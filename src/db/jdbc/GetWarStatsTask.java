@@ -1,11 +1,15 @@
 package db.jdbc;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Semaphore;
+
+import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
 public class GetWarStatsTask implements Callable<long[]> {
 
@@ -30,7 +34,8 @@ public class GetWarStatsTask implements Callable<long[]> {
 	    statement.setString(1, warName);
 	    executer.acquire();
 	    ResultSet res = statement.executeQuery();
-	    stats[0] = res.getInt(0);
+	    if (res.getTimestamp("EndTime") != null)
+		stats[0] = 1;
 	    statement =
 		    connection
 			    .prepareStatement("SELECT COUNT(`ID`) FROM `Missile` WHERE `WarName` = ?");

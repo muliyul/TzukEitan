@@ -7,7 +7,7 @@ import java.util.concurrent.Semaphore;
 
 import db.DBTask;
 
-public class AddIronDomeTask extends DBTask {
+public class AddIronDomeTask extends DBTask<Void> {
 
     private String idId;
 
@@ -17,7 +17,7 @@ public class AddIronDomeTask extends DBTask {
 	this.idId = idId;
     }
 
-    public void run() {
+    public Void Call() {
 	try {
 	    executer.acquire();
 	    PreparedStatement statement =
@@ -36,5 +36,6 @@ public class AddIronDomeTask extends DBTask {
 	} finally {
 	    executer.release();
 	}
+	return null;
     }
 }

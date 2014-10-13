@@ -1,10 +1,12 @@
 package db.jdbc;
 
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Vector;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Semaphore;
 
@@ -12,11 +14,11 @@ public class WarNamesQueryByDateTask implements Callable<String[]> {
 
     private Semaphore executer;
     private Connection connection;
-    private String startDate;
-    private String endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
-    public WarNamesQueryByDateTask(Semaphore s, Connection c, String startDate,
-	    String endDate) {
+    public WarNamesQueryByDateTask(Semaphore s, Connection c, LocalDate startDate,
+	    LocalDate endDate) {
 	this.executer = s;
 	this.connection = c;
 	this.startDate = startDate;
@@ -27,8 +29,9 @@ public class WarNamesQueryByDateTask implements Callable<String[]> {
     public String[] call() throws Exception {
 	String[] warNames = null;
 	try {
-	    String fixedStartDate = startDate + " 00:00:00";
-	    String fixedEndtDate = endDate + " 23:59:59";
+	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	    String fixedStartDate = startDate.format(dtf) + " 00:00:00";
+	    String fixedEndtDate = endDate.format(dtf) + " 23:59:59";
 	    PreparedStatement statement =
 		    connection
 			    .prepareStatement("SELECT WarName FROM `WarSim`.`War` WHERE `War`.`StartTime` BETWEEN ? AND ?");
@@ -36,9 +39,11 @@ public class WarNamesQueryByDateTask implements Callable<String[]> {
 	    statement.setString(2, fixedEndtDate);
 	    executer.acquire();
 	    ResultSet res = statement.executeQuery();
-	    System.out.println(warNames);
-	    Array arr = res.getArray("WarName");
-	    warNames = (String[]) arr.getArray();
+	    Vector<String> names = new Vector<String>();
+	    while(res.next()){
+		names.add(res.getString("WarName"));
+	    }
+	    warNames = (String[]) names.toArray(new String[names.size()]);
 	} catch (SQLException e) {
 	    while (e != null) {
 		System.out.println(e.getMessage());

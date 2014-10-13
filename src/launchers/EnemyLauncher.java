@@ -25,13 +25,15 @@ public class EnemyLauncher extends Thread implements Munitions, Serializable {
     private boolean beenHit = false;
     private WarStatistics statistics;
     private EnemyMissile currentMissile;
+    private DBConnection db;
 
     public EnemyLauncher(String id, boolean isHidden, String warName,
-	    WarStatistics statistics) {
+	    WarStatistics statistics, DBConnection db) {
 	this.id = id;
 	this.isHidden = isHidden;
 	this.statistics = statistics;
 	this.warName = warName;
+	this.db = db;
 	allListeners = new LinkedList<WarEventListener>();
 	firstHiddenState = isHidden;
 	WarLogger.addLoggerHandler("Launcher", id);
@@ -122,8 +124,7 @@ public class EnemyLauncher extends Thread implements Munitions, Serializable {
 		new EnemyMissile(missileId, destination, flyTime, damage, id,
 			statistics, warName);
 
-	DBConnection.addMissile(missileId, this.id, destination, damage,
-		flyTime, warName); // add missile to DB
+	db.addMissile(currentMissile); // add missile to DB
 
 	// register listeners
 	for (WarEventListener l : allListeners)
@@ -176,35 +177,5 @@ public class EnemyLauncher extends Thread implements Munitions, Serializable {
 
     public String getWarName() {
 	return warName;
-    }
-
-    // TODO: JPA METHODS FOR DOA
-
-    public void setWarName(String warName) {
-	this.warName = warName;
-    }
-
-    public void setId(String id) {
-	this.id = id;
-    }
-
-    public void setDestination(String destination) {
-	this.destination = destination;
-    }
-
-    public void setDamage(int damage) {
-	this.damage = damage;
-    }
-
-    public void setFlyTime(int flyTime) {
-	this.flyTime = flyTime;
-    }
-
-    public void setHidden(boolean isHidden) {
-	this.isHidden = isHidden;
-    }
-
-    public void setBeenHit(boolean beenHit) {
-	this.beenHit = beenHit;
     }
 }

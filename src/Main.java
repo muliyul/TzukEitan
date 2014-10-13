@@ -20,6 +20,7 @@ import view.AbstractWarView;
 import view.ConsoleView;
 import view.GUIView;
 import db.DBConnection;
+import db.DBFactory;
 
 public class Main {
 
@@ -31,14 +32,14 @@ public class Main {
 	AbstractWarView consoleView = new ConsoleView();
 
 	boolean startWar = guiView.showFirstDialog();
+	// DECIDE WHICH DBDRIVER TO USE
+	DBConnection db = DBFactory.get(DBFactory.Type.JDBC);
+
 	if (startWar) {
+	    String warName = guiView.getWarNameFromUser();
+	    while (!db.checkWarName(warName));
 
-	    String warName;
-	    while (!DBConnection.checkWarName(warName =
-		    guiView.getWarNameFromUser()))
-		;
-
-	    War warModel = new War(warName, true);
+	    War warModel = new War(warName, db);
 	    WarController warGUIControl = new WarController(warModel, guiView);
 	    // WarController warConsoleControl = new
 	    // WarController(warModel,consoleView);
@@ -46,11 +47,9 @@ public class Main {
 
 	    try {
 		warXML = new WarXMLReader("warStart.xml", warGUIControl);
-		DBConnection.addNewWar(warName);
+		db.addNewWar(warModel);
 		warXML.start();
-
 		warXML.join();
-
 	    } catch (ParserConfigurationException e) {
 		e.printStackTrace();
 	    } catch (SAXException e) {
@@ -63,7 +62,7 @@ public class Main {
 
 	    warModel.start();
 	    ((ConsoleView) consoleView).start();
-	    ((JFrame)guiView).setVisible(true);
+	    ((JFrame) guiView).setVisible(true);
 	} else {
 	    guiView.showDBDialog();
 	}

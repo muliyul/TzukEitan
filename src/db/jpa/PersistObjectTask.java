@@ -9,21 +9,21 @@ import javax.persistence.Persistence;
 
 import db.DBTask;
 
-public class PersistObjectTask extends DBTask {
+public class PersistObjectTask extends DBTask<Void> {
 
     private Object toPersist;
 
-    public PersistObjectTask(Semaphore s, Connection c, String warName) {
+    public PersistObjectTask(Semaphore s, Connection c) {
 	super(s, c, null);
     }
 
-    public PersistObjectTask(Semaphore s, Connection c, String warName, Object toPersist) {
-	super(s, c, warName);
+    public PersistObjectTask(Semaphore s, Connection c, Object toPersist) {
+	this(s, c);
 	this.toPersist = toPersist;
     }
 
     @Override
-    public void run() {
+    public Void call() {
 	EntityManagerFactory emf =
 		Persistence.createEntityManagerFactory("YoniMuli");
 	EntityManager em = emf.createEntityManager();
@@ -37,6 +37,7 @@ public class PersistObjectTask extends DBTask {
 	} finally {
 	    em.close();
 	}
+	return null;
     }
 
 }
