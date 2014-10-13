@@ -6,7 +6,7 @@ import java.util.List;
 import utils.Utils;
 import listeners.WarEventListener;
 import model.WarStatistics;
-import db.TzukEitanDBConnection;
+import db.DBConnection;
 
 /** Missile for iron dome **/
 public class DefenseMissile extends Thread {
@@ -53,7 +53,7 @@ public class DefenseMissile extends Thread {
 		// update statistics
 		statistics.increaseNumOfInterceptMissiles();
 		//update DB
-		TzukEitanDBConnection.interceptedMissile(missileToDestroy.getMissileId(), whoLaunchedMeId, missileToDestroy.getWarName());
+		DBConnection.interceptedMissile(missileToDestroy.getMissileId(), whoLaunchedMeId, missileToDestroy.getWarName());
 	}
 
 	// Event

@@ -7,11 +7,11 @@ import java.util.concurrent.Semaphore;
 
 import db.DBTask;
 
-public class AddLauncherTaskJDBC extends DBTask {
+public class AddLauncherTask extends DBTask {
 
     private String launcherId;
 
-    public AddLauncherTaskJDBC(Semaphore s, Connection c, String warName, String lId) {
+    public AddLauncherTask(Semaphore s, Connection c, String warName, String lId) {
 	super(s, c, warName);
 	this.launcherId = lId;
     }

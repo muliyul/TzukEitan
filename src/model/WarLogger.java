@@ -26,7 +26,7 @@ public class WarLogger implements WarEventListener {
 	//Handler for the war
 	public static void addWarLoggerHandler(String fileName) {
 		try {
-			warHandler = new FileHandler("log\\" + fileName + "Logger.xml", false);
+			warHandler = new FileHandler("log\\WarLogger.xml", false);
 
 			warHandler.setFilter(new Filter() {
 				public boolean isLoggable(LogRecord rec) {

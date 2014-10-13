@@ -223,4 +223,8 @@ public class WarController implements WarEventListener, WarEventUIListener{
 	    return warModel.getStatistics();
 	}
 
+	public String getWarName() {
+	    return warModel.getWarName();
+	}
+
 }

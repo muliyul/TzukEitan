@@ -387,4 +387,16 @@ public class ConsoleView extends Thread implements AbstractWarView{
 	    return input.nextLine();
 	}
 
+	@Override
+	public boolean showFirstDialog() {
+	    // TODO Auto-generated method stub
+	    return false;
+	}
+
+	@Override
+	public void showDBDialog() {
+	    // TODO Auto-generated method stub
+	    
+	}
+
 }

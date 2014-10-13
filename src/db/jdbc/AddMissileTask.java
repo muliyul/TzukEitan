@@ -8,7 +8,7 @@ import java.util.concurrent.Semaphore;
 
 import db.DBTask;
 
-public class AddMissileTaskJDBC extends DBTask {
+public class AddMissileTask extends DBTask {
 
     private String mId;
     private String lId;
@@ -16,7 +16,7 @@ public class AddMissileTaskJDBC extends DBTask {
     private int dmg;
     private int flyTime;
 
-    public AddMissileTaskJDBC(Semaphore s, Connection c, String warName,
+    public AddMissileTask(Semaphore s, Connection c, String warName,
 	    String mId, String lId, String destination, int dmg, int flyTime) {
 	super(s, c, warName);
 	this.mId = mId;

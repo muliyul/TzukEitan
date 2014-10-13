@@ -5,14 +5,13 @@
 </head>
 <body>
 	<h1>War - the friendly side</h1>
-	<form name="warForm" action="/TzukEitan/WarServlet"
+	<form name="warForm" action="/WarServlet/HandleRequest"
 		method="POST">
 		<div>&nbsp;</div>
 
 		<div>
-
 			<p>
-				<input name="RequestType" type="radio" value="0" />Add Iron Dome
+				<input name="RequestType" type="radio" value="0" checked="checked"/>Add Iron Dome
 			</p>
 		</div>
 
@@ -31,19 +30,10 @@
 			<input name="RequestType" type="radio" value="2" />Intercept Missile
 		</p>
 
-		<p style="margin-left: 40px;">
-			Missile id:&nbsp;<input name="Mid" type="text" />
-		</p>
-
 		<p>
 			<input name="RequestType" type="radio" value="3" />Intercept
 			Launcher
 		</p>
-
-		<p style="margin-left: 40px;">
-			Launcher id:&nbsp;<input name="lid" type="text" />
-		</p>
-
 		<p>
 			<input name="Submit" type="submit" />
 			

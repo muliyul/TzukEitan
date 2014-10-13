@@ -11,7 +11,7 @@ import launchers.IronDome;
 import launchers.LauncherDestructor;
 import listeners.WarEventListener;
 import missiles.EnemyMissile;
-import db.TzukEitanDBConnection;
+import db.DBConnection;
 
 public class War extends Thread {
     private List<WarEventListener> allListeners;
@@ -22,13 +22,15 @@ public class War extends Thread {
     private WarStatistics statistics;
     private String[] targetCities = { "Sderot", "Ofakim", "Beer-Sheva",
 	    "Netivot", "Tel-Aviv", "Re'ut" };
+    private boolean logToDB;
 
-    public War(String warName) {
+    public War(String warName, boolean logToDB) {
 	allListeners = new LinkedList<>();
 	statistics = new WarStatistics();
 	this.name = warName;
 	registerListeners(new WarLogger());
 	WarLogger.addWarLoggerHandler(warName);
+	this.logToDB = logToDB;
     }
 
     public void run() {
@@ -51,7 +53,8 @@ public class War extends Thread {
 	// close all the handlers of the logger
 	WarLogger.closeAllHandlers();
 	WarLogger.closeWarHandler();
-	TzukEitanDBConnection.closeDB();
+	if (logToDB)
+	    DBConnection.closeDB();
 	// warHandler.close();
     }// run
 
@@ -153,7 +156,7 @@ public class War extends Thread {
 		synchronized (ironDome) {
 		    ironDome.setMissileToDestroy(missileToDestroy);
 		    ironDome.notify();
-		    
+
 		    return;
 		}// synchronized
 	    }// if
@@ -225,7 +228,7 @@ public class War extends Thread {
 		synchronized (destructor) {
 		    destructor.setEnemyLauncherToDestroy(el);
 		    destructor.notify();
-		    
+
 		    return;
 		}
 	    }
@@ -280,7 +283,7 @@ public class War extends Thread {
 
     public void launchEnemyMissile(String launcherId, String destination,
 	    int damage, int flyTime) {
-	
+
 	for (EnemyLauncher el : enemyLauncherArr) {
 	    // Check if there is enemy launcher with given id
 	    if (el.getLauncherId().equals(launcherId) && el.isAlive()) {
@@ -312,13 +315,14 @@ public class War extends Thread {
     public String addEnemyLauncher(String launcherId, boolean isHidden) {
 	return addEnemyLauncher(new EnemyLauncher(launcherId, isHidden, name,
 		statistics));
-	
+
     }
-    
-    public String addEnemyLauncher(EnemyLauncher launcher){
+
+    public String addEnemyLauncher(EnemyLauncher launcher) {
 	for (WarEventListener l : allListeners)
 	    launcher.registerListeners(l);
-	TzukEitanDBConnection.addLauncher(launcher.getLauncherId(), name);
+	if (logToDB)
+	    DBConnection.addLauncher(launcher.getLauncherId(), name);
 	launcher.start();
 	enemyLauncherArr.add(launcher);
 	return launcher.getLauncherId();
@@ -334,27 +338,28 @@ public class War extends Thread {
     // add iron dome with given parameters
     public String addIronDome(String id) {
 	IronDome ironDome = new IronDome(id, name, statistics);
-	
 
 	for (WarEventListener l : allListeners)
 	    ironDome.registerListeners(l);
 
 	ironDome.start();
-	
+
 	ironDomeArr.add(ironDome);
-	//add iron dome to db
-	TzukEitanDBConnection.addIronDome(id, name);
-	
+	// add iron dome to db
+	if (logToDB)
+	    DBConnection.addIronDome(id, name);
+
 	return id;
     }
 
     // add defense launcher destructor
     public String addDefenseLauncherDestructor(String type) {
-	String id = IdGenerator.defenseLauncherDestractorIdGenerator(type
-		.charAt(0));
+	String id =
+		IdGenerator
+			.defenseLauncherDestractorIdGenerator(type.charAt(0));
 
-	LauncherDestructor destructor = new LauncherDestructor(type, id, name,
-		statistics);
+	LauncherDestructor destructor =
+		new LauncherDestructor(type, id, name, statistics);
 
 	for (WarEventListener l : allListeners)
 	    destructor.registerListeners(l);
@@ -362,7 +367,8 @@ public class War extends Thread {
 	destructor.start();
 
 	launcherDestractorArr.add(destructor);
-	TzukEitanDBConnection.addLauncherDestructor(id,type,name);
+	if (logToDB)
+	    DBConnection.addLauncherDestructor(id, type, name);
 
 	return id;
     }
@@ -382,7 +388,8 @@ public class War extends Thread {
 
     // Event
     private void fireWarHasBeenFinished() {
-    	TzukEitanDBConnection.endWar(name);
+	if (logToDB)
+	    DBConnection.endWar(name);
 	for (WarEventListener l : allListeners)
 	    l.warHasBeenFinished();
     }
@@ -460,6 +467,10 @@ public class War extends Thread {
 	    for (String ld : getLauncherDestructors())
 		retval.append('\t' + ld + "\r\n");
 	return retval.toString();
+    }
+
+    public String getWarName() {
+	return name;
     }
 
 }

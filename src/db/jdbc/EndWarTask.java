@@ -8,10 +8,10 @@ import java.util.concurrent.Semaphore;
 
 import db.DBTask;
 
-public class EndWarTaskJDBC extends DBTask {
+public class EndWarTask extends DBTask {
     private String warName;
 
-    public EndWarTaskJDBC(Semaphore s, Connection c, String warName) {
+    public EndWarTask(Semaphore s, Connection c, String warName) {
 	super(s, c, warName);
     }
 

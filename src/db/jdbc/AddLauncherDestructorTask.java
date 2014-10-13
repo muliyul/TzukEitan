@@ -7,12 +7,12 @@ import java.util.concurrent.Semaphore;
 
 import db.DBTask;
 
-public class AddLauncherDestructorTaskJDBC extends DBTask {
+public class AddLauncherDestructorTask extends DBTask {
 
     private String id;
     private String type;
 
-    public AddLauncherDestructorTaskJDBC(Semaphore s, Connection c,
+    public AddLauncherDestructorTask(Semaphore s, Connection c,
 	    String warName, String id, String type) {
 	super(s, c, warName);
 	this.id = id;

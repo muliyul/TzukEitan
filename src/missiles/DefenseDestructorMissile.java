@@ -7,7 +7,7 @@ import utils.Utils;
 import launchers.EnemyLauncher;
 import listeners.WarEventListener;
 import model.WarStatistics;
-import db.TzukEitanDBConnection;
+import db.DBConnection;
 
 /** Missile for Plane or Ship **/
 public class DefenseDestructorMissile extends Thread {
@@ -57,7 +57,7 @@ public class DefenseDestructorMissile extends Thread {
 		}
 		
 		//update DB
-		TzukEitanDBConnection.interceptedLauncher(launcherToDestroy.getLauncherId(), whoLaunchedMeId, launcherToDestroy.getWarName());
+		DBConnection.interceptedLauncher(launcherToDestroy.getLauncherId(), whoLaunchedMeId, launcherToDestroy.getWarName());
 
 		// update statistics
 		statistics.increaseNumOfLauncherDestroyed();

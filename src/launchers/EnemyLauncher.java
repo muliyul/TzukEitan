@@ -10,7 +10,7 @@ import listeners.WarEventListener;
 import missiles.EnemyMissile;
 import model.WarLogger;
 import model.WarStatistics;
-import db.TzukEitanDBConnection;
+import db.DBConnection;
 
 public class EnemyLauncher extends Thread implements Munitions,Serializable{
 	private List<WarEventListener> allListeners;
@@ -120,7 +120,7 @@ public class EnemyLauncher extends Thread implements Munitions,Serializable{
 		currentMissile = new EnemyMissile(missileId, destination, flyTime,
 				damage, id, statistics, warName);
 		
-		TzukEitanDBConnection.addMissile(missileId, this.id, destination, damage, flyTime, warName); // add missile to DB
+		DBConnection.addMissile(missileId, this.id, destination, damage, flyTime, warName); // add missile to DB
 
 		// register listeners
 		for (WarEventListener l : allListeners)

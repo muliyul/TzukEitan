@@ -8,12 +8,12 @@ import java.util.concurrent.Semaphore;
 
 import db.DBTask;
 
-public class InterceptLauncherTaskJDBC extends DBTask {
+public class InterceptLauncherTask extends DBTask {
 
     private String lId;
     private String dId;
 
-    public InterceptLauncherTaskJDBC(Semaphore s, Connection c,
+    public InterceptLauncherTask(Semaphore s, Connection c,
 	    String warName, String lId, String dId) {
 	super(s, c, warName);
 	this.lId = lId;

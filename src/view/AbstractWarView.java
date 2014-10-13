@@ -33,5 +33,7 @@ public interface AbstractWarView {
 	void showEnemyMissDestination(String whoLaunchedMeId, String id,
 			String destination, String launchTime);
 	String getWarNameFromUser();
+	boolean showFirstDialog();
+	void showDBDialog();
 	
 }

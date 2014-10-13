@@ -9,15 +9,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -28,12 +36,14 @@ import javax.swing.Timer;
 
 import utils.ImageUtils;
 import utils.Utils;
+import view.gui.DBDialog;
+import view.gui.DatabaseBrowserController;
 import view.gui.forms.FormPanel;
 import view.gui.forms.FormPanelFactory;
 import listeners.WarEventUIListener;
 import model.WarController;
 
-public class GUIView implements AbstractWarView {
+public class GUIView extends JFrame implements AbstractWarView {
     private List<WarEventUIListener> listeners;
 
     private String[] enemyImgsString = { "launcher.png", "missile.png" };
@@ -44,7 +54,6 @@ public class GUIView implements AbstractWarView {
 	    "Add Launcher Destructor", "Intercept Missile",
 	    "Intercept Launcher" };
 
-    private JFrame mainFrame;
     private JPanel mainPanel;
     private JPanel enemyPanel;
     private JPanel friendlyPanel;
@@ -74,11 +83,11 @@ public class GUIView implements AbstractWarView {
     private JTextArea logsTxtArea;
 
     public GUIView() {
+	listeners = new LinkedList<WarEventUIListener>();
 	SwingUtilities.invokeLater(new Runnable() {
 	    public void run() {
-		listeners = new LinkedList<WarEventUIListener>();
-		mainFrame = new JFrame("WarSim");
-		mainFrame.addWindowListener(new WindowListener() {
+		 GUIView.this.setTitle("WarSim");
+		 GUIView.this.addWindowListener(new WindowListener() {
 		    public void windowOpened(WindowEvent e) {
 		    }
 
@@ -108,7 +117,7 @@ public class GUIView implements AbstractWarView {
 		    public void windowActivated(WindowEvent e) {
 		    }
 		});
-		mainFrame.setSize(1300, 800);
+		setSize(1300, 800);
 		mainPanel = new JPanel(new BorderLayout());
 		JPanel logsPanel = new JPanel();
 		logsPanel.add(new JScrollPane(logsTxtArea =
@@ -118,8 +127,6 @@ public class GUIView implements AbstractWarView {
 		logsTxtArea.setEditable(false);
 		animationPanel = new AnimationPanel();
 
-		animationPanel.addMissile(10, 120, 10);
-
 		centerPanel = new JPanel(new BorderLayout());
 		JPanel enemyActionsPanel, friendlyActionPanel;
 		enemyActionBtnArray =
@@ -128,7 +135,7 @@ public class GUIView implements AbstractWarView {
 		friendlyActionBtnArray =
 			createButtonsArray(friendlyImgsString,
 				friendlyActionString);
-		mainFrame.setLocationRelativeTo(null);
+		setLocationRelativeTo(null);
 
 		enemyPanel =
 			createSidePanels(enemyInventory = new JTextArea(),
@@ -165,7 +172,7 @@ public class GUIView implements AbstractWarView {
 		mainPanel.add(enemyPanel, BorderLayout.WEST);
 		mainPanel.add(centerPanel, BorderLayout.CENTER);
 		mainPanel.add(friendlyPanel, BorderLayout.EAST);
-		mainFrame.setContentPane(mainPanel);
+		setContentPane(mainPanel);
 
 		friendlyApplyBtn.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
@@ -321,8 +328,7 @@ public class GUIView implements AbstractWarView {
 		    }
 		});
 		refresh.start();
-		mainFrame.setVisible(true);
-		mainFrame.toFront();
+		toFront();
 	    }
 	});
 
@@ -540,7 +546,7 @@ public class GUIView implements AbstractWarView {
 	msg.append("\ttotal damage: " + array[4] + "\n");
 	msg.append("==========================================\n");
 	statswindow.add(new JTextArea(msg.toString()));
-	statswindow.setLocationRelativeTo(mainFrame);
+	statswindow.setLocationRelativeTo(null);
 	statswindow.pack();
 	statswindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	statswindow.setVisible(true);
@@ -593,5 +599,19 @@ public class GUIView implements AbstractWarView {
     public String getWarNameFromUser() {
 	String s = JOptionPane.showInputDialog("Enter war name:");
 	return s;
+    }
+
+    @Override
+    public boolean showFirstDialog() {
+	Object[] options = new Object[] { "Start war", "Show database view" };
+	return JOptionPane.showOptionDialog(null,
+		"Start war or show database view?", "Select an Option",
+		JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+		options, options[0]) == 0;
+    }
+
+    @Override
+    public void showDBDialog() {
+	Application.launch(DBDialog.class, "");
     }
 }

@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Graphics;
+import java.awt.Polygon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Arc2D;
@@ -20,13 +21,16 @@ import view.gui.polygons.GUIMissile;
 public class AnimationPanel extends JPanel implements ActionListener {
     private Arc2D arc;
     private List<GUIMissile> missiles = new Vector<>();
+    private List<Polygon> polygons = new Vector<>();
     private Timer refresh = new Timer(200, this);
-    private int flyTime;
 
-    public void addMissile(int x, int y, int flyTime) {
-	missiles.add(new GUIMissile(x, y));
-	this.flyTime = flyTime;
+    public AnimationPanel() {
+	refresh.start();
+    }
 
+    public void addMissile() {
+	int lastMissileY = missiles.get(missiles.size() - 1).getY();
+	missiles.add(new GUIMissile(0, lastMissileY + 50));
     }
 
     protected void paintComponent(Graphics g) {
@@ -38,11 +42,9 @@ public class AnimationPanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+	polygons.clear();
 	for (GUIMissile m : missiles) {
-	    m.getAngledMissile(
-		    m.xpoints[0] * Math.cos(Math.toRadians(m.getAngle() + 1)),
-		    m.ypoints[0] * Math.sin(Math.toRadians(m.getAngle() + 1)),
-		    m.getAngle() + 1);
+	    polygons.add(m.getAngledMissile(m.getAngle()));
 	}
 	repaint();
     }

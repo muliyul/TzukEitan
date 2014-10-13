@@ -3,20 +3,17 @@ package db.jdbc;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.concurrent.Semaphore;
 
 import db.DBTask;
 
-public class InterceptMissileTaskJDBC extends DBTask {
+public class AddIronDomeTask extends DBTask {
 
-    private String mId;
     private String idId;
 
-    public InterceptMissileTaskJDBC(Semaphore s, Connection c,
-	    String warName, String mId, String idId) {
+    public AddIronDomeTask(Semaphore s, Connection c,
+	    String warName, String idId) {
 	super(s, c, warName);
-	this.mId = mId;
 	this.idId = idId;
     }
 
@@ -25,12 +22,9 @@ public class InterceptMissileTaskJDBC extends DBTask {
 	    executer.acquire();
 	    PreparedStatement statement =
 		    connection
-			    .prepareStatement("UPDATE  `WarSim`.`Missile` SET `Intercepted` = '1', `InterceptionTime` =  ? , `InterceptedBy` = ? WHERE `Missile`.`ID` = ? AND  `Missile`.`WarName` = ?");
-	    statement.setTimestamp(1,
-		    new Timestamp(System.currentTimeMillis()));
-	    statement.setString(2, idId);
-	    statement.setString(3, mId);
-	    statement.setString(4, warName);
+			    .prepareStatement("INSERT INTO `WarSim`.`IronDome` (`ID`, `WarName`) VALUES (?, ?)");
+	    statement.setString(1, idId);
+	    statement.setString(2, warName);
 	    statement.executeUpdate();
 	} catch (SQLException e) {
 	    while (e != null) {
