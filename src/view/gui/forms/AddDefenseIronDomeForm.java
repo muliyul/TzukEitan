@@ -4,13 +4,11 @@ import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
 import listeners.WarEventUIListener;
 
 public class AddDefenseIronDomeForm extends FormPanel {
-	
+    private static final long serialVersionUID = 6891886905372180446L;
+
 	public AddDefenseIronDomeForm(WarEventUIListener l) {
 		// TODO Auto-generated constructor stub
 		JLabel tempLbl1 = new JLabel("Press Apply to add");

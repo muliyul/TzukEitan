@@ -6,12 +6,11 @@ import java.awt.Font;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import listeners.WarEventUIListener;
 
 public class InterceptEnemyMissileForm extends FormPanel {
+    private static final long serialVersionUID = 5039010649169919758L;
 	private JComboBox<String> missileComboBox;
 
 	public InterceptEnemyMissileForm(WarEventUIListener l) {

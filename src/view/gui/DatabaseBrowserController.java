@@ -13,12 +13,12 @@ import db.DBConnection;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 public class DatabaseBrowserController implements Initializable {
     
+    @SuppressWarnings("unused")
     private Stage window;
     
     @FXML

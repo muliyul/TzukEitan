@@ -24,6 +24,9 @@ public class War extends Thread {
 	    "Netivot", "Tel-Aviv", "Re'ut" };
     private boolean logToDB;
 
+    public War() {
+    }
+    
     public War(String warName, boolean logToDB) {
 	allListeners = new LinkedList<>();
 	statistics = new WarStatistics();

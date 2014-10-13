@@ -21,6 +21,7 @@ public class LauncherDestructor extends Thread implements Munitions{
 	private EnemyLauncher toDestroy;
 	private WarStatistics statistics;
 	private DefenseDestructorMissile currentMissile;
+	@SuppressWarnings("unused")
 	private String warName;
 
 	public LauncherDestructor(String type, String id, String warName, WarStatistics statistics) {

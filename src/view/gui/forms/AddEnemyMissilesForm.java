@@ -7,13 +7,11 @@ import java.awt.GridLayout;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JSlider;
-import javax.swing.JTextField;
-
 import listeners.WarEventUIListener;
 
 public class AddEnemyMissilesForm extends FormPanel {
+    private static final long serialVersionUID = -7491201950228025075L;
 	private JComboBox<String> launcherCombo;
 	private JComboBox<String> destinationCombo;
 	private JSlider damageSlider;

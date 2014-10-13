@@ -13,14 +13,17 @@ import model.WarStatistics;
 
 public class IronDome extends Thread implements Munitions {
     private List<WarEventListener> allListeners;
-
+    @SuppressWarnings("unused")
     private String warName;
     private String id;
-    private boolean isRunning = true;
-    private boolean isBusy = false;
-    private EnemyMissile toDestroy;
-    private WarStatistics statistics;
-    private DefenseMissile currentMissile;
+    private transient boolean isRunning = true;
+    private transient boolean isBusy = false;
+    private transient EnemyMissile toDestroy;
+    private transient WarStatistics statistics;
+    private transient DefenseMissile currentMissile;
+    
+    public IronDome() {
+    }
 
     public IronDome(String id, String warName, WarStatistics statistics) {
 	allListeners = new LinkedList<WarEventListener>();

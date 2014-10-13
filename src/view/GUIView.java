@@ -9,23 +9,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.IOException;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -37,13 +29,14 @@ import javax.swing.Timer;
 import utils.ImageUtils;
 import utils.Utils;
 import view.gui.DBDialog;
-import view.gui.DatabaseBrowserController;
 import view.gui.forms.FormPanel;
 import view.gui.forms.FormPanelFactory;
 import listeners.WarEventUIListener;
 import model.WarController;
 
 public class GUIView extends JFrame implements AbstractWarView {
+    private static final long serialVersionUID = -5779778943760585343L;
+
     private List<WarEventUIListener> listeners;
 
     private String[] enemyImgsString = { "launcher.png", "missile.png" };
@@ -85,6 +78,7 @@ public class GUIView extends JFrame implements AbstractWarView {
     public GUIView() {
 	listeners = new LinkedList<WarEventUIListener>();
 	SwingUtilities.invokeLater(new Runnable() {
+	    @SuppressWarnings("unused")
 	    public void run() {
 		 GUIView.this.setTitle("WarSim");
 		 GUIView.this.addWindowListener(new WindowListener() {

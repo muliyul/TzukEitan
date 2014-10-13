@@ -5,11 +5,6 @@ import java.awt.Polygon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Arc2D;
-import java.awt.geom.CubicCurve2D;
-import java.awt.geom.FlatteningPathIterator;
-import java.awt.geom.Path2D;
-import java.awt.geom.PathIterator;
-import java.awt.geom.QuadCurve2D;
 import java.util.List;
 import java.util.Vector;
 
@@ -19,6 +14,7 @@ import javax.swing.Timer;
 import view.gui.polygons.GUIMissile;
 
 public class AnimationPanel extends JPanel implements ActionListener {
+    private static final long serialVersionUID = 5350244391632396656L;
     private Arc2D arc;
     private List<GUIMissile> missiles = new Vector<>();
     private List<Polygon> polygons = new Vector<>();
@@ -30,7 +26,7 @@ public class AnimationPanel extends JPanel implements ActionListener {
 
     public void addMissile() {
 	int lastMissileY = missiles.get(missiles.size() - 1).getY();
-	missiles.add(new GUIMissile(0, lastMissileY + 50));
+	missiles.add(new GUIMissile(lastMissileY + 50));
     }
 
     protected void paintComponent(Graphics g) {

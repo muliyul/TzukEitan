@@ -4,11 +4,9 @@ import java.util.Vector;
 
 import utils.WarXMLReader;
 import view.AbstractWarView;
-import view.ConsoleView;
 import launchers.EnemyLauncher;
 import listeners.WarEventListener;
 import listeners.WarEventUIListener;
-import missiles.EnemyMissile;
 
 
 public class WarController implements WarEventListener, WarEventUIListener{

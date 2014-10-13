@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Semaphore;
 
-import db.DBTask;
-
 public class WarNamesQueryByDateTask implements Callable<String[]> {
 
     private Semaphore executer;

@@ -3,11 +3,9 @@ package view.gui.polygons;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Arc2D;
-
-import com.sun.org.apache.xpath.internal.operations.And;
 
 public class GUIMissile extends Polygon {
+    private static final long serialVersionUID = -2205075519558059716L;
     public static Polygon FLAT_MISSILE;
 
     static {
@@ -28,12 +26,11 @@ public class GUIMissile extends Polygon {
 
 
 
-    private int x;
     private int y;
     private int angle;
     
-    public GUIMissile(int x, int y) {
-	this.x = x;
+    public GUIMissile(int y) {
+	int x = 5;
 	this.y = y;
 	addPoint(x, y);
 	addPoint(x += 15, y += 5);

@@ -10,6 +10,8 @@ import model.WarStatistics;
 
 /** Enemy missile, is been created by the Enemy launcher **/
 public class EnemyMissile extends Thread implements Serializable{
+    private static final long serialVersionUID = 6981536134355062254L;
+
 	private List<WarEventListener> allListeners;
 
 	private String id;

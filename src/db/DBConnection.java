@@ -21,7 +21,6 @@ public class DBConnection {
 
     static {
 	dbUrl = "jdbc:mysql://104.131.232.248/WarSim";
-
 	try {
 	    Class.forName("com.mysql.jdbc.Driver").newInstance();
 	    connection =
