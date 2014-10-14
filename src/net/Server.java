@@ -9,18 +9,18 @@ import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.Semaphore;
 
-import model.WarController;
+import model.War;
 
 public class Server extends Thread {
 	private List<ClientHandler> ch;
 	private ServerSocket ss;
 	private boolean isRunning;
 	private Semaphore semaphore;
-	private WarController wc;
+	private War model;
 
-	public Server(WarController wc, int port) {
+	public Server(War w, int port) {
 		ch = new Vector<>();
-		this.wc = wc;
+		this.model = w;
 		semaphore = new Semaphore(1, true);
 		try {
 			ss = new ServerSocket(port);
@@ -108,29 +108,29 @@ public class Server extends Thread {
 
 		private void sendEnemyInventory() throws IOException {
 			out.writeObject(new Protocol(Protocol.Type.REQUEST_ENEMY_INVENTORY,
-					wc.requestEnemyInventory()));
+					model.getEnemyInventory()));
 		}
 
 		private void sendDestinations() throws IOException,
 				InterruptedException {
 			out.writeObject(new Protocol(
-					Protocol.Type.REQUEST_AVAILABLE_DESTINATIONS, (Object) wc
-							.getAllWarDestinations()));
+					Protocol.Type.REQUEST_AVAILABLE_DESTINATIONS, (Object) model
+							.getAllTargetCities()));
 		}
 
 		private void sendAvailableLaunchers() throws IOException,
 				InterruptedException {
 			out.writeObject(new Protocol(
-					Protocol.Type.REQUEST_AVAILABLE_LAUNCHERS, wc
-							.showAllLaunchers()));
+					Protocol.Type.REQUEST_AVAILABLE_LAUNCHERS, model
+							.getAllLaunchersIds()));
 		}
 
 		private void addLauncher() throws InterruptedException {
-			wc.addEnemyLauncher();
+			model.addEnemyLauncher();
 		}
 
 		private void fireMissile(Object[] params) throws InterruptedException {
-			wc.addEnemyMissile((String) params[0], (String) params[1],
+			model.launchEnemyMissile((String) params[0], (String) params[1],
 					(int) params[2], (int) params[3]);
 		}
 

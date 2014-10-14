@@ -1,7 +1,6 @@
 package utils;
 
-import model.WarController;
-
+import model.War;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 import org.w3c.dom.NamedNodeMap;
@@ -16,11 +15,11 @@ public class WarXMLReader extends Thread {
 	private Document document;
 	private Element root;
 	private static ThreadGroup threadGroup = new ThreadGroup("group");
-	private WarController warControl;
+	private War war;
 
-	public WarXMLReader(String fileName, WarController warControl)
+	public WarXMLReader(String fileName, War w)
 			throws ParserConfigurationException, SAXException, IOException {
-		this.warControl = warControl;
+		this.war = w;
 
 		factory = DocumentBuilderFactory.newInstance();
 		builder = factory.newDocumentBuilder();
@@ -46,7 +45,7 @@ public class WarXMLReader extends Thread {
 					.getAttribute("isHidden"));
 
 			// add to the war
-			warControl.addEnemyLauncher(idLauncher, isHidden);
+			war.addEnemyLauncher(idLauncher, isHidden);
 			IdGenerator.updateEnemyLauncherId(idLauncher);
 
 			NodeList missiles = tempLauncher.getElementsByTagName("missile");
@@ -113,7 +112,7 @@ public class WarXMLReader extends Thread {
 					IdGenerator.updateEnemyMissileId(tempMissileId);
 					
 					// add to the war
-					warControl.addEnemyMissile(tempLauncherId, tempDestination, tempDamage, tempFlyTime);
+					war.launchEnemyMissile(tempLauncherId, tempDestination, tempDamage, tempFlyTime);
 
 				} catch (InterruptedException e) {
 				    
@@ -155,7 +154,7 @@ public class WarXMLReader extends Thread {
 			// update id's in the war
 			IdGenerator.updateIronDomeId(id);
 			// add to war
-			warControl.addIronDome(id);
+			war.addIronDome(id);
 
 			NodeList destructdMissiles = destructor.getElementsByTagName("destructdMissile");
 			readDefensDestructoreMissiles(destructdMissiles, id);
@@ -166,7 +165,7 @@ public class WarXMLReader extends Thread {
 				type = attr.getNodeValue();
 				
 				// add to war
-				id = warControl.addDefenseLauncherDestructor(type);
+				id = war.addDefenseLauncherDestructor(type);
 
 				NodeList destructedLanuchers = destructor.getElementsByTagName("destructedLanucher");
 				readDefensDestructoreMissiles(destructedLanuchers, id);
@@ -216,9 +215,9 @@ public class WarXMLReader extends Thread {
 					
 					// update the war
 					if (tempLauncherId.charAt(0) == 'D') {
-						warControl.interceptGivenMissile(tempLauncherId, tempTargetId);
+						war.interceptGivenMissile(tempLauncherId, tempTargetId);
 					} else
-						warControl.interceptGivenLauncher(tempLauncherId, tempTargetId);
+						war.interceptGivenLauncher(tempLauncherId, tempTargetId);
 					
 				} catch (InterruptedException e) {
 					//System.out.println("The program is close before expected");

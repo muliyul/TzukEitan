@@ -3,7 +3,10 @@ package launchers;
 import java.util.LinkedList;
 import java.util.List;
 
-import db.DBConnection;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
 import utils.IdGenerator;
 import utils.Utils;
 import listeners.WarEventListener;
@@ -12,23 +15,25 @@ import missiles.EnemyMissile;
 import model.WarLogger;
 import model.WarStatistics;
 
+@Entity
 public class IronDome extends Thread implements Munitions {
     private List<WarEventListener> allListeners;
     private String warName;
+    @Id
     private String id;
-    private transient boolean isRunning = true;
-    private transient boolean isBusy = false;
-    private transient EnemyMissile toDestroy;
-    private transient WarStatistics statistics;
-    private transient DefenseMissile currentMissile;
-    private DBConnection db;
+    private boolean isRunning = true;
+    private boolean isBusy = false;
+    @OneToOne
+    private EnemyMissile toDestroy;
+    private WarStatistics statistics;
+    @OneToOne
+    private DefenseMissile currentMissile;
     
     public IronDome() {
     }
 
-    public IronDome(String id, String warName, WarStatistics statistics, DBConnection db) {
+    public IronDome(String id, String warName, WarStatistics statistics) {
 	allListeners = new LinkedList<WarEventListener>();
-	this.db = db;
 	this.statistics = statistics;
 	this.id = id;
 	this.warName = warName;
@@ -105,7 +110,7 @@ public class IronDome extends Thread implements Munitions {
 	String missieId = IdGenerator.defensMissileIdGenerator();
 
 	// create new missile
-	currentMissile = new DefenseMissile(missieId, toDestroy, this, statistics, db);
+	currentMissile = new DefenseMissile(missieId, toDestroy, this, statistics);
 
 	// register listeners
 	for (WarEventListener l : allListeners)

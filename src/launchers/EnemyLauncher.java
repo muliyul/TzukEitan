@@ -4,18 +4,24 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
 import utils.IdGenerator;
 import utils.Utils;
 import listeners.WarEventListener;
 import missiles.EnemyMissile;
 import model.WarLogger;
 import model.WarStatistics;
-import db.DBConnection;
+import db.DBFactory;
 
+@Entity
 public class EnemyLauncher extends Thread implements Munitions, Serializable {
     private static final long serialVersionUID = -5934215378852248255L;
     private List<WarEventListener> allListeners;
     private String warName;
+    @Id
     private String id;
     private String destination;
     private int damage;
@@ -24,16 +30,18 @@ public class EnemyLauncher extends Thread implements Munitions, Serializable {
     private boolean firstHiddenState;
     private boolean beenHit = false;
     private WarStatistics statistics;
+    @OneToOne
     private EnemyMissile currentMissile;
-    private DBConnection db;
+    
+    protected EnemyLauncher() {
+    }
 
     public EnemyLauncher(String id, boolean isHidden, String warName,
-	    WarStatistics statistics, DBConnection db) {
+	    WarStatistics statistics) {
 	this.id = id;
 	this.isHidden = isHidden;
 	this.statistics = statistics;
 	this.warName = warName;
-	this.db = db;
 	allListeners = new LinkedList<WarEventListener>();
 	firstHiddenState = isHidden;
 	WarLogger.addLoggerHandler("Launcher", id);
@@ -124,7 +132,7 @@ public class EnemyLauncher extends Thread implements Munitions, Serializable {
 		new EnemyMissile(missileId, destination, flyTime, damage, id,
 			statistics, warName);
 
-	db.addMissile(currentMissile); // add missile to DB
+	DBFactory.getInstance().addMissile(currentMissile); // add missile to DB
 
 	// register listeners
 	for (WarEventListener l : allListeners)
@@ -149,7 +157,7 @@ public class EnemyLauncher extends Thread implements Munitions, Serializable {
     // Event
     private void fireLaunchMissileEvent(String missileId) {
 	for (WarEventListener l : allListeners) {
-	    l.enemyLaunchMissile(id, missileId, destination, damage);
+	    l.enemyLaunchMissile(id, missileId, destination,flyTime, damage);
 	}
 
 	// update statistics

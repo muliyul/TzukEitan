@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javafx.application.Application;
+
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -26,13 +27,13 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import controller.WarController;
 import utils.ImageUtils;
 import utils.Utils;
 import view.gui.DBDialog;
 import view.gui.forms.FormPanel;
 import view.gui.forms.FormPanelFactory;
 import listeners.WarEventUIListener;
-import model.WarController;
 
 public class GUIView extends JFrame implements AbstractWarView {
     private static final long serialVersionUID = -5779778943760585343L;
@@ -75,13 +76,22 @@ public class GUIView extends JFrame implements AbstractWarView {
 
     private JTextArea logsTxtArea;
 
+    public static void main(String[] args) throws InterruptedException {
+	GUIView gv = new GUIView();
+	gv.setVisible(true);
+	
+	Thread.sleep(2000);
+	gv.animationPanel.addMissile(15);
+	gv.animationPanel.addMissile(20);
+    }
+    
     public GUIView() {
 	listeners = new LinkedList<WarEventUIListener>();
 	SwingUtilities.invokeLater(new Runnable() {
 	    @SuppressWarnings("unused")
 	    public void run() {
-		 GUIView.this.setTitle("WarSim");
-		 GUIView.this.addWindowListener(new WindowListener() {
+		GUIView.this.setTitle("WarSim");
+		GUIView.this.addWindowListener(new WindowListener() {
 		    public void windowOpened(WindowEvent e) {
 		    }
 
@@ -111,7 +121,7 @@ public class GUIView extends JFrame implements AbstractWarView {
 		    public void windowActivated(WindowEvent e) {
 		    }
 		});
-		setSize(1300, 800);
+		setSize(1280, 900);
 		mainPanel = new JPanel(new BorderLayout());
 		JPanel logsPanel = new JPanel();
 		logsPanel.add(new JScrollPane(logsTxtArea =
@@ -325,7 +335,6 @@ public class GUIView extends JFrame implements AbstractWarView {
 		toFront();
 	    }
 	});
-
     }
 
     public JButton[] createButtonsArray(String[] imgNames, String[] actionName) {
@@ -463,11 +472,12 @@ public class GUIView extends JFrame implements AbstractWarView {
     }
 
     public void showEnemyLaunchMissile(String MunitionsId, String missileId,
-	    String destination, int damage) {
+	    String destination, int flyTime, int damage) {
 	logsTxtArea.append("[" + Utils.getCurrentTime() + "] Launcher: "
 		+ MunitionsId + " just launched missile: " + missileId
 		+ " towards: " + destination + " is about to cause damage of: "
 		+ damage + "\r\n");
+	animationPanel.addMissile(flyTime);
     }
 
     public void showLauncherIsVisible(String id, boolean visible) {
@@ -596,16 +606,20 @@ public class GUIView extends JFrame implements AbstractWarView {
     }
 
     @Override
-    public boolean showFirstDialog() {
+    public int showFirstDialog() {
 	Object[] options = new Object[] { "Start war", "Show database view" };
 	return JOptionPane.showOptionDialog(null,
 		"Start war or show database view?", "Select an Option",
 		JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-		options, options[0]) == 0;
+		options, options[0]);
     }
 
     @Override
     public void showDBDialog() {
 	Application.launch(DBDialog.class, "");
+    }
+
+    @Override
+    public void flushBuffers() {
     }
 }

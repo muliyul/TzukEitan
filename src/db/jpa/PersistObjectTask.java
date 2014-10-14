@@ -11,13 +11,13 @@ import db.DBTask;
 
 public class PersistObjectTask extends DBTask<Void> {
 
-    private Object toPersist;
+    private Object[] toPersist;
 
-    public PersistObjectTask(Semaphore s, Connection c) {
+    private PersistObjectTask(Semaphore s, Connection c) {
 	super(s, c, null);
     }
 
-    public PersistObjectTask(Semaphore s, Connection c, Object toPersist) {
+    public PersistObjectTask(Semaphore s, Connection c, Object... toPersist) {
 	this(s, c);
 	this.toPersist = toPersist;
     }
@@ -30,7 +30,8 @@ public class PersistObjectTask extends DBTask<Void> {
 
 	em.getTransaction().begin();
 	try {
-	    em.persist(toPersist);
+	    for (Object o : toPersist)
+		em.persist(o);
 	    em.getTransaction().commit();
 	} catch (Exception e) {
 	    em.getTransaction().rollback();

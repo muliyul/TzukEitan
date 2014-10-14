@@ -11,7 +11,7 @@ import launchers.IronDome;
 import launchers.LauncherDestructor;
 import listeners.WarEventListener;
 import missiles.EnemyMissile;
-import db.DBConnection;
+import db.DBFactory;
 
 public class War extends Thread {
     private List<WarEventListener> allListeners;
@@ -22,18 +22,16 @@ public class War extends Thread {
     private WarStatistics statistics;
     private String[] targetCities = { "Sderot", "Ofakim", "Beer-Sheva",
 	    "Netivot", "Tel-Aviv", "Re'ut" };
-    private DBConnection db;
 
-    public War() {
+    protected War() {
     }
 
-    public War(String warName, DBConnection db) {
+    public War(String warName) {
 	allListeners = new LinkedList<>();
 	statistics = new WarStatistics();
 	this.name = warName;
 	registerListeners(new WarLogger());
 	WarLogger.addWarLoggerHandler(warName);
-	this.db = db;
     }
 
     public void run() {
@@ -315,14 +313,14 @@ public class War extends Thread {
     // add enemy launcher with parameters
     public String addEnemyLauncher(String launcherId, boolean isHidden) {
 	return addEnemyLauncher(new EnemyLauncher(launcherId, isHidden, name,
-		statistics, db));
+		statistics));
 
     }
 
     public String addEnemyLauncher(EnemyLauncher launcher) {
 	for (WarEventListener l : allListeners)
 	    launcher.registerListeners(l);
-	db.addLauncher(launcher);
+	DBFactory.getInstance().addLauncher(launcher);
 	launcher.start();
 	enemyLauncherArr.add(launcher);
 	return launcher.getLauncherId();
@@ -337,7 +335,7 @@ public class War extends Thread {
 
     // add iron dome with given parameters
     public String addIronDome(String id) {
-	IronDome ironDome = new IronDome(id, name, statistics, db);
+	IronDome ironDome = new IronDome(id, name, statistics);
 
 	for (WarEventListener l : allListeners)
 	    ironDome.registerListeners(l);
@@ -346,7 +344,7 @@ public class War extends Thread {
 
 	ironDomeArr.add(ironDome);
 	// add iron dome to db
-	db.addIronDome(ironDome);
+	DBFactory.getInstance().addIronDome(ironDome);
 
 	return id;
     }
@@ -358,7 +356,7 @@ public class War extends Thread {
 			.defenseLauncherDestractorIdGenerator(type.charAt(0));
 
 	LauncherDestructor destructor =
-		new LauncherDestructor(type, id, name, statistics, db);
+		new LauncherDestructor(type, id, name, statistics);
 
 	for (WarEventListener l : allListeners)
 	    destructor.registerListeners(l);
@@ -366,7 +364,7 @@ public class War extends Thread {
 	destructor.start();
 
 	launcherDestractorArr.add(destructor);
-	db.addLauncherDestructor(destructor);
+	DBFactory.getInstance().addLauncherDestructor(destructor);
 
 	return id;
     }
@@ -386,7 +384,7 @@ public class War extends Thread {
 
     // Event
     private void fireWarHasBeenFinished() {
-	db.endWar(this);
+	DBFactory.getInstance().endWar(this);
 	for (WarEventListener l : allListeners)
 	    l.warHasBeenFinished();
     }

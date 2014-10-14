@@ -1,6 +1,6 @@
 package view;
 
-import model.WarController;
+import controller.WarController;
 
 public interface AbstractWarView {
 	void registerListener(WarController controller);
@@ -9,7 +9,7 @@ public interface AbstractWarView {
 	void showDefenseLaunchMissile(String myMunitionsId, String type,
 			String missileId, String enemyLauncherId);
 	void showEnemyLaunchMissile(String myMunitionsId, String missileId,
-			String destination, int damage);
+			String destination,int flyTime, int damage);
 	void showLauncherIsVisible(String id, boolean visible);
 	void showMissInterceptionMissile(String whoLaunchedMeId, String missileId,
 			String enemyMissileId);
@@ -33,7 +33,8 @@ public interface AbstractWarView {
 	void showEnemyMissDestination(String whoLaunchedMeId, String id,
 			String destination, String launchTime);
 	String getWarNameFromUser();
-	boolean showFirstDialog();
+	int showFirstDialog();
 	void showDBDialog();
+	void flushBuffers();
 	
 }

@@ -1,0 +1,39 @@
+14/10/2014 18:48:05 INFO	====== >	War started	< ======
+14/10/2014 18:48:07 INFO	D201	FAIL: missile M4 does not exist
+14/10/2014 18:48:08 INFO	L101	Launch: M1			Target: Sderot
+14/10/2014 18:48:08 INFO	D202	FAIL: missile M2 does not exist
+14/10/2014 18:48:09 INFO	L102	is now: visible
+14/10/2014 18:48:10 INFO	L102	Launch: M3			Target: Ofakim
+14/10/2014 18:48:10 INFO	D201	Launch: DM1001			Target: M1
+14/10/2014 18:48:10 INFO	D201	Intercept: M1			Status: FAIL 			Damage: 1500
+14/10/2014 18:48:10 INFO	P301	Launch: PM2001			Target: L101
+14/10/2014 18:48:10 INFO	P301	Intercept: L101			Status: FAIL
+14/10/2014 18:48:13 INFO	L102	is now: hidden
+14/10/2014 18:48:13 INFO	L102	Target: Ofakim		Status: HIT			Land Time: 14/10/2014 18:48:13			Damage: 5000
+14/10/2014 18:48:13 INFO	D201	FAIL: missile M3 does not exist
+14/10/2014 18:48:13 INFO	S302	Intercept: L102			Status: FAIL			Reason: Launcher is hidden
+14/10/2014 18:48:13 INFO	P303	Intercept: L103			Status: FAIL			Reason: Launcher is hidden
+14/10/2014 18:48:14 INFO	L102	is now: visible
+14/10/2014 18:48:15 INFO	L102	Launch: M4			Target: Beer-Sheva
+14/10/2014 18:48:15 INFO	L103	is now: visible
+14/10/2014 18:48:16 INFO	L103	Launch: M5			Target: BenAmir
+14/10/2014 18:48:18 INFO	D203	Launch: DM1003			Target: M5
+14/10/2014 18:48:18 INFO	D203	Intercept: M5			Status: FAIL 			Damage: 5000
+14/10/2014 18:48:18 INFO	S302	Launch: SM2002			Target: L102
+14/10/2014 18:48:18 INFO	S302	Intercept: L102			Status: SUCCESS
+14/10/2014 18:48:18 INFO	L102	Status: DESTROYED
+14/10/2014 18:48:19 INFO	L103	is now: hidden
+14/10/2014 18:48:19 INFO	L103	Target: BenAmir		Status: HIT			Land Time: 14/10/2014 18:48:19			Damage: 5000
+14/10/2014 18:48:22 INFO	L103	is now: visible
+14/10/2014 18:48:22 INFO	L102	Target: Beer-Sheva		Status: MISS			Land Time: 14/10/2014 18:48:22
+14/10/2014 18:48:22 INFO	D203	FAIL: missile M6 does not exist
+14/10/2014 18:48:23 INFO	L103	Launch: M6			Target: GuyEshel
+14/10/2014 18:48:26 INFO	P304	Launch: PM2003			Target: L103
+14/10/2014 18:48:26 INFO	P304	Intercept: L103			Status: SUCCESS
+14/10/2014 18:48:26 INFO	L103	Status: DESTROYED
+14/10/2014 18:48:30 INFO	L103	Target: GuyEshel		Status: MISS			Land Time: 14/10/2014 18:48:30
+14/10/2014 18:48:35 INFO	L104	is now: visible
+14/10/2014 18:48:36 INFO	L104	Launch: M7			Target: t1
+14/10/2014 18:48:39 INFO	L104	is now: hidden
+14/10/2014 18:48:39 INFO	L104	Target: t1		Status: HIT			Land Time: 14/10/2014 18:48:39			Damage: 2000
+14/10/2014 18:48:40 INFO	====== >	War finished	< ====== 

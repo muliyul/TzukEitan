@@ -2,8 +2,6 @@ package db.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.concurrent.ExecutorService;
@@ -56,22 +54,8 @@ public class JDBCConnection implements DBConnection {
 	executer = new Semaphore(1, true);
     }
 
-    public boolean checkWarName(String warName) {
-	try {
-	    PreparedStatement statement =
-		    connection
-			    .prepareStatement("SELECT WarName FROM `WarSim`.`War` WHERE `War`.`WarName` =  ?");
-	    statement.setString(1, warName);
-	    ResultSet rs = statement.executeQuery();
-	    return !rs.first();
-	} catch (SQLException e) {
-	    while (e != null) {
-		System.out.println(e.getMessage());
-		e = e.getNextException();
-	    }
-	    return true;
-	}
-
+    public Future<Boolean> checkWarName(String warName) {
+	return es.submit(new CheckWarNameExistsTask(executer,connection,warName));
     }
 
     public void addNewWar(War w) {
@@ -119,7 +103,7 @@ public class JDBCConnection implements DBConnection {
 
     public Future<String[]> getWarNamesByDate(LocalDate startDate,
 	    LocalDate endDate) {
-	return es.submit(new WarNamesQueryByDateTask(executer, connection,
+	return es.submit(new GetWarNamesByDateTask(executer, connection,
 		startDate, endDate));
     }
 

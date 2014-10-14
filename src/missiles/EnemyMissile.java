@@ -4,16 +4,20 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import utils.Utils;
 import listeners.WarEventListener;
 import model.WarStatistics;
 
 /** Enemy missile, is been created by the Enemy launcher **/
+@Entity
 public class EnemyMissile extends Thread implements Serializable{
     private static final long serialVersionUID = 6981536134355062254L;
 
 	private List<WarEventListener> allListeners;
-
+	@Id
 	private String id;
 	private String whoLaunchedMeId;
 	private String destination;
@@ -23,6 +27,9 @@ public class EnemyMissile extends Thread implements Serializable{
 	private String launchTime;
 	private String warName;
 	private boolean beenHit = false;
+	
+	protected EnemyMissile() {
+	}
 
 	public EnemyMissile(String id, String destination, int flyTime, int damage,
 			String whoLaunchedMeId, WarStatistics statistics, String warName) {

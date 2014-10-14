@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import db.jdbc.JDBCConnection;
+import db.DBFactory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,7 +19,7 @@ public class DBDialog extends Application implements Initializable {
 		new FXMLLoader(getClass().getResource("DatabaseBrowser.fxml"));
 	primaryStage.setTitle("Database Browser");
 	loader.setController(new DatabaseBrowserController(primaryStage,
-		JDBCConnection.getInstance()));
+		DBFactory.getInstance()));
 	try {
 	    primaryStage.setScene(new Scene(loader.load()));
 	} catch (IOException e) {

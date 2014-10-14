@@ -5,7 +5,7 @@ public interface WarEventListener {
 
 	/** Enemy Launch missile **/
 	public void enemyLaunchMissile(String myMunitionsId, String missileId,
-			String destination, int damage);
+			String destination,int flyTime, int damage);
 
 	/** Enemy is now visible **/
 	public void enemyLauncherIsVisible(String id, boolean visible);

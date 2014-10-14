@@ -3,7 +3,10 @@ package launchers;
 import java.util.LinkedList;
 import java.util.List;
 
-import db.DBConnection;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
 import utils.IdGenerator;
 import utils.Utils;
 import listeners.WarEventListener;
@@ -12,23 +15,26 @@ import model.WarLogger;
 import model.WarStatistics;
 
 /** Plane or Ship **/
+@Entity
 public class LauncherDestructor extends Thread implements Munitions {
     private List<WarEventListener> allListeners;
-
+    @Id
     private String id;
     private String type; // plane or ship
     private boolean isRunning = true;
     private boolean isBusy = false;
+    @OneToOne
     private EnemyLauncher toDestroy;
     private WarStatistics statistics;
     private DefenseDestructorMissile currentMissile;
     private String warName;
-    private DBConnection db;
+    
+    protected LauncherDestructor() {
+    }
 
     public LauncherDestructor(String type, String id, String warName,
-	    WarStatistics statistics, DBConnection db) {
+	    WarStatistics statistics) {
 	allListeners = new LinkedList<WarEventListener>();
-	this.db = db;
 	this.id = id;
 	this.type = Utils.capitalize(type);
 	this.statistics = statistics;
@@ -121,7 +127,7 @@ public class LauncherDestructor extends Thread implements Munitions {
 	// create new missile
 	currentMissile =
 		new DefenseDestructorMissile(MissileId, toDestroy, this,
-			statistics, db);
+			statistics);
 
 	// register all listeners
 	for (WarEventListener l : allListeners)

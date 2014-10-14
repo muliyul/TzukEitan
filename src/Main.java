@@ -5,16 +5,17 @@
  */
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
-import javax.swing.JFrame;
 import javax.xml.parsers.ParserConfigurationException;
 
 import model.War;
-import model.WarController;
 import net.Server;
 
 import org.xml.sax.SAXException;
 
+import controller.WarController;
 import utils.WarXMLReader;
 import view.AbstractWarView;
 import view.ConsoleView;
@@ -26,28 +27,35 @@ public class Main {
 
     @SuppressWarnings("unused")
     public static void main(String[] args) {
-	WarXMLReader warXML;
+	
+	AbstractWarView view = new GUIView();
 
-	AbstractWarView guiView = new GUIView();
-	AbstractWarView consoleView = new ConsoleView();
+	int startWar = view.showFirstDialog();
 
-	boolean startWar = guiView.showFirstDialog();
-	// DECIDE WHICH DBDRIVER TO USE
-	DBConnection db = DBFactory.get(DBFactory.Type.JDBC);
+	view.flushBuffers();
 
-	if (startWar) {
-	    String warName = guiView.getWarNameFromUser();
-	    while (!db.checkWarName(warName));
+	if (startWar == 0) {
+	    String warName = null;
+	    Future<Boolean> fWarExists;
+	    // DECIDE WHICH DB DRIVER TO USE
+	    DBConnection db = DBFactory.setInstance(DBFactory.Type.JDBC);
+	    try {
+		do {
+		    warName = view.getWarNameFromUser();
+		    fWarExists = db.checkWarName(warName);
+		} while (!fWarExists.get());
+	    } catch (InterruptedException | ExecutionException e1) {
+		e1.printStackTrace();
+	    }
 
-	    War warModel = new War(warName, db);
-	    WarController warGUIControl = new WarController(warModel, guiView);
-	    // WarController warConsoleControl = new
-	    // WarController(warModel,consoleView);
-	    Server warServer = new Server(warGUIControl, 9999);
+	    War war = new War(warName);
+	    WarController warGUIControl = new WarController(war, view);
+	    // WarController warConsoleControl = new WarController(war, view);
+	    Server warServer = new Server(war, 9999);
 
 	    try {
-		warXML = new WarXMLReader("warStart.xml", warGUIControl);
-		db.addNewWar(warModel);
+		WarXMLReader warXML = new WarXMLReader("warStart.xml", war);
+		db.addNewWar(war);
 		warXML.start();
 		warXML.join();
 	    } catch (ParserConfigurationException e) {
@@ -60,11 +68,15 @@ public class Main {
 		e.printStackTrace();
 	    }
 
-	    warModel.start();
-	    ((ConsoleView) consoleView).start();
-	    ((JFrame) guiView).setVisible(true);
+	    war.start();
+	    if (view instanceof ConsoleView)
+		((ConsoleView) view).start();
+	    else if (view instanceof GUIView)
+		((GUIView) view).setVisible(true);
+	} else if (startWar == 1) {
+	    view.showDBDialog();
 	} else {
-	    guiView.showDBDialog();
+	    System.exit(0);
 	}
     }
 }

@@ -10,9 +10,14 @@ import missiles.DefenseDestructorMissile;
 import missiles.EnemyMissile;
 import model.War;
 
+/**
+ * Class representing a database connection.
+ * @author Muli
+ *
+ */
 public interface DBConnection {
     
-    public boolean checkWarName(String warName);
+    public Future<Boolean> checkWarName(String warName);
 
     public void addNewWar(War w);
 

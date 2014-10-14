@@ -1,11 +1,8 @@
 package view;
 
 import java.awt.Graphics;
-import java.awt.Polygon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Arc2D;
-import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JPanel;
@@ -15,18 +12,20 @@ import view.gui.polygons.GUIMissile;
 
 public class AnimationPanel extends JPanel implements ActionListener {
     private static final long serialVersionUID = 5350244391632396656L;
-    private Arc2D arc;
-    private List<GUIMissile> missiles = new Vector<>();
-    private List<Polygon> polygons = new Vector<>();
-    private Timer refresh = new Timer(200, this);
+    private Vector<GUIMissile> missiles;
+    private Timer refresh;
+    private final static int DIFF_HEIGHT = 50;
+    private static int missY;
 
     public AnimationPanel() {
+	missiles = new Vector<>();
+	refresh = new Timer(10, this);
+	missY = 0;
 	refresh.start();
     }
 
-    public void addMissile() {
-	int lastMissileY = missiles.get(missiles.size() - 1).getY();
-	missiles.add(new GUIMissile(lastMissileY + 50));
+    protected void addMissile(int flyTime) {
+	missiles.add(new GUIMissile(10, missY += DIFF_HEIGHT, flyTime));
     }
 
     protected void paintComponent(Graphics g) {
@@ -38,19 +37,14 @@ public class AnimationPanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-	polygons.clear();
 	for (GUIMissile m : missiles) {
-	    polygons.add(m.getAngledMissile(m.getAngle()));
+	    m.move((int) ( ((getWidth() - 10) / m.getFlyTime()) * refresh
+		    .getDelay()));
 	}
 	repaint();
     }
 
-    protected Arc2D getArcPath() {
-	if (arc == null) {
-	    arc = new Arc2D.Double();
-	    arc.setArcByCenter(getWidth() / 2, getHeight() / 2, getWidth() / 2,
-		    0, 180, Arc2D.OPEN);
-	}
-	return arc;
+    protected void stop() {
+	refresh.stop();
     }
 }

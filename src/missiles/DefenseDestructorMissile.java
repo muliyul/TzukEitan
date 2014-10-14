@@ -3,29 +3,36 @@ package missiles;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
 import utils.Utils;
 import launchers.EnemyLauncher;
 import launchers.LauncherDestructor;
 import listeners.WarEventListener;
 import model.WarStatistics;
-import db.DBConnection;
+import db.DBFactory;
 
 /** Missile for Plane or Ship **/
+@Entity
 public class DefenseDestructorMissile extends Thread {
     private List<WarEventListener> allListeners;
-
+    @Id
     private String id;
+    @OneToOne
     private LauncherDestructor whoLaunchedMe;
+    @OneToOne
     private EnemyLauncher launcherToDestroy;
     private WarStatistics statistics;
-    private DBConnection db;
+    
+    protected DefenseDestructorMissile() {
+    }
 
     public DefenseDestructorMissile(String id, EnemyLauncher LauncherToDestroy,
-	    LauncherDestructor whoLaunchedMe, WarStatistics statistics,
-	    DBConnection db) {
+	    LauncherDestructor whoLaunchedMe, WarStatistics statistics) {
 
 	allListeners = new LinkedList<WarEventListener>();
-	this.db = db;
 	this.id = id;
 	this.launcherToDestroy = LauncherToDestroy;
 	this.whoLaunchedMe = whoLaunchedMe;
@@ -57,7 +64,7 @@ public class DefenseDestructorMissile extends Thread {
 	}
 
 	// update DB
-	db.interceptLauncher(launcherToDestroy, this);
+	DBFactory.getInstance().interceptLauncher(launcherToDestroy, this);
 
 	// update statistics
 	statistics.increaseNumOfLauncherDestroyed();
