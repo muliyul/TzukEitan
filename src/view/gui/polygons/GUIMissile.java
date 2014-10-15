@@ -5,6 +5,7 @@ import java.awt.Polygon;
 public class GUIMissile extends Polygon {
     private static final long serialVersionUID = -8586460405991855658L;
 
+    private float xmath;
     private int flyTime;
 
     public GUIMissile(int x, int y, int flyTime) {
@@ -14,6 +15,7 @@ public class GUIMissile extends Polygon {
 
     private GUIMissile(int x, int y) {
 	super();
+	this.xmath = x;
 	addPoint(x, y);
 	addPoint(x += 15, y += 5);
 	addPoint(x -= 15, y);
@@ -28,8 +30,10 @@ public class GUIMissile extends Polygon {
 	addPoint(x, y -= 20);
     }
 
-    public void move(int dx) {
-	translate(dx, 0);
+    public void move(float dx) {
+	xmath += dx;
+	int temp = Math.round(xmath);
+	translate(temp - xpoints[0], 0);
     }
 
     public int getFlyTime() {

@@ -72,18 +72,9 @@ public class GUIView extends JFrame implements AbstractWarView {
     private JButton enemyCancelBtn;
     private JButton friendlyCancelBtn;
 
-    private Timer refresh;
+    private Timer refreshInv;
 
     private JTextArea logsTxtArea;
-
-    public static void main(String[] args) throws InterruptedException {
-	GUIView gv = new GUIView();
-	gv.setVisible(true);
-	
-	Thread.sleep(2000);
-	gv.animationPanel.addMissile(15);
-	gv.animationPanel.addMissile(20);
-    }
     
     public GUIView() {
 	listeners = new LinkedList<WarEventUIListener>();
@@ -111,10 +102,12 @@ public class GUIView extends JFrame implements AbstractWarView {
 		    public void windowClosing(WindowEvent e) {
 			for (WarEventUIListener l : listeners)
 			    l.finishWar();
+			refreshInv.stop();
 		    }
 
 		    @Override
 		    public void windowClosed(WindowEvent e) {
+			
 		    }
 
 		    @Override
@@ -318,7 +311,7 @@ public class GUIView extends JFrame implements AbstractWarView {
 		enemyInventory.setEditable(false);
 		friendlyInventory.setEditable(false);
 
-		refresh = new Timer(Utils.SECOND, new ActionListener() {
+		refreshInv = new Timer(Utils.SECOND, new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 			for (WarEventUIListener l : listeners) {
 			    String inv;
@@ -331,7 +324,7 @@ public class GUIView extends JFrame implements AbstractWarView {
 			}
 		    }
 		});
-		refresh.start();
+		refreshInv.start();
 		toFront();
 	    }
 	});
@@ -552,7 +545,36 @@ public class GUIView extends JFrame implements AbstractWarView {
 	statswindow.add(new JTextArea(msg.toString()));
 	statswindow.setLocationRelativeTo(null);
 	statswindow.pack();
-	statswindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	statswindow.addWindowListener(new WindowListener() {
+	    public void windowOpened(WindowEvent e) {
+	    }
+	    
+	    @Override
+	    public void windowIconified(WindowEvent e) {
+	    }
+	    
+	    @Override
+	    public void windowDeiconified(WindowEvent e) {
+	    }
+	    
+	    @Override
+	    public void windowDeactivated(WindowEvent e) {
+	    }
+	    
+	    @Override
+	    public void windowClosing(WindowEvent e) {
+		//TODO handle closing server
+	    }
+	    
+	    @Override
+	    public void windowClosed(WindowEvent e) {
+		
+	    }
+	    
+	    @Override
+	    public void windowActivated(WindowEvent e) {
+	    }
+	});
 	statswindow.setVisible(true);
 
     }

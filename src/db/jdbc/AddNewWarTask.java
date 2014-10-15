@@ -27,7 +27,6 @@ public class AddNewWarTask extends DBTask<Void>{
 		    .setTimestamp(2, new Timestamp(System.currentTimeMillis()));
 	    statement.executeUpdate();
 	} catch (SQLException e) {
-
 	    while (e != null) {
 		System.out.println(e.getMessage());
 		e = e.getNextException();

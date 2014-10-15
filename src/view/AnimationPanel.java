@@ -19,7 +19,7 @@ public class AnimationPanel extends JPanel implements ActionListener {
 
     public AnimationPanel() {
 	missiles = new Vector<>();
-	refresh = new Timer(10, this);
+	refresh = new Timer(20, this);
 	missY = 0;
 	refresh.start();
     }
@@ -38,8 +38,8 @@ public class AnimationPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 	for (GUIMissile m : missiles) {
-	    m.move((int) ( ((getWidth() - 10) / m.getFlyTime()) * refresh
-		    .getDelay()));
+	    m.move(((getWidth() - 10) / (m.getFlyTime() * (1000.f / refresh
+		    .getDelay()))));
 	}
 	repaint();
     }
