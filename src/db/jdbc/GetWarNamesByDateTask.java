@@ -26,15 +26,15 @@ public class GetWarNamesByDateTask extends DBTask<String[]> {
     public String[] call() throws Exception {
 	String[] warNames = null;
 	try {
+	    executer.acquire();
 	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	    String fixedStartDate = startDate.format(dtf) + " 00:00:00";
 	    String fixedEndtDate = endDate.format(dtf) + " 23:59:59";
-	    PreparedStatement statement = //TODO this statement doesn't work! check SQL
+	    PreparedStatement statement =
 		    connection
 			    .prepareStatement("SELECT `WarName` FROM `WarSim`.`War` WHERE `War`.`StartTime` BETWEEN ? AND ?");
 	    statement.setString(1, fixedStartDate);
 	    statement.setString(2, fixedEndtDate);
-	    executer.acquire();
 	    ResultSet res = statement.executeQuery();
 	    Vector<String> names = new Vector<String>();
 	    while(res.next())

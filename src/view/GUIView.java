@@ -563,7 +563,8 @@ public class GUIView extends JFrame implements AbstractWarView {
 	    
 	    @Override
 	    public void windowClosing(WindowEvent e) {
-		//TODO handle closing server
+		animationPanel.stop();
+		refreshInv.stop();
 	    }
 	    
 	    @Override

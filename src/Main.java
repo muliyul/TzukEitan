@@ -24,10 +24,9 @@ import db.DBConnection;
 import db.DBFactory;
 
 public class Main {
-
+    
     @SuppressWarnings("unused")
     public static void main(String[] args) {
-	
 	AbstractWarView view = new GUIView();
 
 	int startWar = view.showFirstDialog();
@@ -51,7 +50,7 @@ public class Main {
 	    War war = new War(warName);
 	    WarController warGUIControl = new WarController(war, view);
 	    // WarController warConsoleControl = new WarController(war, view);
-	    Server warServer = new Server(war, 9999);
+	    war.setServer(new Server(war, 9999));
 
 	    try {
 		WarXMLReader warXML = new WarXMLReader("warStart.xml", war);

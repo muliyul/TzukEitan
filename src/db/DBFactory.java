@@ -1,5 +1,8 @@
 package db;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import db.jdbc.JDBCConnection;
 import db.jpa.JPAConnection;
 
@@ -24,6 +27,8 @@ public class DBFactory {
      *         <code>setInstance()</code>.
      */
     public static DBConnection getInstance() {
+	ApplicationContext ac = new ClassPathXmlApplicationContext("");
+
 	if (instance == null) {
 	    return setInstance(Type.JDBC);
 	}

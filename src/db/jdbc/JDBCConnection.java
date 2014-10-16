@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -50,12 +51,13 @@ public class JDBCConnection implements DBConnection {
 		e = e.getNextException();
 	    }
 	}
-	es = Executors.newFixedThreadPool(1);
+	es = Executors.newSingleThreadExecutor();
 	executer = new Semaphore(1, true);
     }
 
     public Future<Boolean> checkWarName(String warName) {
-	return es.submit(new CheckWarNameExistsTask(executer,connection,warName));
+	return es.submit(new CheckWarNameExistsTask(executer, connection,
+		warName));
     }
 
     public void addNewWar(War w) {
@@ -63,8 +65,11 @@ public class JDBCConnection implements DBConnection {
     }
 
     public void endWar(War w) {
-	es.submit(new EndWarTask(executer, connection, w.getWarName()));
-
+	try {
+	    es.submit(new EndWarTask(executer, connection, w.getWarName())).get();
+	} catch (InterruptedException | ExecutionException e) {
+	    e.printStackTrace();
+	}
     }
 
     public void addLauncher(EnemyLauncher l) {

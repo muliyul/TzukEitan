@@ -43,16 +43,11 @@ public class DatabaseBrowserController implements Initializable {
     public void submit() {
 	LocalDate from = fromDate.getValue(), to = toDate.getValue();
 	Future<String[]> fwarNames = db.getWarNamesByDate(from, to);
-	Set<Future<long[]>> set = new HashSet<Future<long[]>>();
 	try {
 	    String[] warNames = fwarNames.get();
-	    for(String war : warNames){
-		set.add(db.getWarStats(war));
-	    }
-	    
 	    int i=0;
-	    for(Future<long[]> fl : set){
-		long[] stats = fl.get();
+	    for(String war : warNames){
+		long[] stats = db.getWarStats(war).get();
 		dbTextArea.appendText("\t" + warNames[i++] + " Statistics\n");
 		dbTextArea.appendText("=========================================\n");
 		dbTextArea.appendText('\t' + stats[0]==0? "War is still running":"War has ended\n");

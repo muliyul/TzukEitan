@@ -9,7 +9,6 @@ import java.util.concurrent.Semaphore;
 import db.DBTask;
 
 public class EndWarTask extends DBTask<Void> {
-    private String warName;
 
     public EndWarTask(Semaphore s, Connection c, String warName) {
 	super(s, c, warName);

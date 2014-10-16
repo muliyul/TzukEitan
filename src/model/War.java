@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
+import net.Server;
 import utils.IdGenerator;
 import launchers.EnemyLauncher;
 import launchers.IronDome;
@@ -22,10 +23,11 @@ public class War extends Thread {
     private WarStatistics statistics;
     private String[] targetCities = { "Sderot", "Ofakim", "Beer-Sheva",
 	    "Netivot", "Tel-Aviv", "Re'ut" };
+    private Server warServer;
 
     protected War() {
     }
-
+    
     public War(String warName) {
 	allListeners = new LinkedList<>();
 	statistics = new WarStatistics();
@@ -385,6 +387,9 @@ public class War extends Thread {
     // Event
     private void fireWarHasBeenFinished() {
 	DBFactory.getInstance().endWar(this);
+	DBFactory.getInstance().closeDB();
+	if(warServer != null)
+	    warServer.stopServer();
 	for (WarEventListener l : allListeners)
 	    l.warHasBeenFinished();
     }
@@ -466,6 +471,10 @@ public class War extends Thread {
 
     public String getWarName() {
 	return name;
+    }
+
+    public void setServer(Server server) {
+	this.warServer = server;
     }
 
 }
