@@ -23,7 +23,7 @@ public class CheckWarNameExistsTask extends DBTask<Boolean> {
 			    .prepareStatement("SELECT WarName FROM `WarSim`.`War` WHERE `War`.`WarName` =  ?");
 	    statement.setString(1, warName);
 	    ResultSet rs = statement.executeQuery();
-	    return !rs.first();
+	    return rs.first();
 	} catch (SQLException e) {
 	    while (e != null) {
 		System.out.println(e.getMessage());

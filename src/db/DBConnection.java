@@ -17,7 +17,7 @@ import model.War;
  */
 public interface DBConnection {
     
-    public Future<Boolean> checkWarName(String warName);
+    public boolean checkWarName(String warName);
 
     public void addNewWar(War w);
 

@@ -387,11 +387,11 @@ public class War extends Thread {
     // Event
     private void fireWarHasBeenFinished() {
 	DBFactory.getInstance().endWar(this);
-	DBFactory.getInstance().closeDB();
 	if(warServer != null)
 	    warServer.stopServer();
 	for (WarEventListener l : allListeners)
 	    l.warHasBeenFinished();
+	DBFactory.getInstance().closeDB();
     }
 
     // Event

@@ -9,6 +9,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 import launchers.EnemyLauncher;
 import launchers.IronDome;
@@ -51,17 +52,27 @@ public class JDBCConnection implements DBConnection {
 		e = e.getNextException();
 	    }
 	}
-	es = Executors.newSingleThreadExecutor();
+	es = Executors.newCachedThreadPool();
 	executer = new Semaphore(1, true);
     }
 
-    public Future<Boolean> checkWarName(String warName) {
-	return es.submit(new CheckWarNameExistsTask(executer, connection,
-		warName));
+    public boolean checkWarName(String warName) {
+	try {
+	    return es.submit(new CheckWarNameExistsTask(executer, connection,
+	    	warName)).get();
+	} catch (InterruptedException | ExecutionException e) {
+	    e.printStackTrace();
+	}
+	return true;
     }
 
     public void addNewWar(War w) {
-	es.submit(new AddNewWarTask(executer, connection, w.getWarName()));
+	try {
+	    es.submit(new AddNewWarTask(executer, connection, w.getWarName())).get();
+	} catch (InterruptedException | ExecutionException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
     }
 
     public void endWar(War w) {
@@ -97,8 +108,10 @@ public class JDBCConnection implements DBConnection {
     }
 
     public void addIronDome(IronDome id) {
-	es.submit(new AddIronDomeTask(executer, connection, id.getWarName(), id
-		.getIronDomeId()));
+	
+	    es.submit(new AddIronDomeTask(executer, connection, id.getWarName(), id
+	    	.getIronDomeId()));
+	
     }
 
     public void addLauncherDestructor(LauncherDestructor ld) {
@@ -121,10 +134,13 @@ public class JDBCConnection implements DBConnection {
 	    if (connection != null) {
 		connection.close();
 	    }
+	    es.awaitTermination(2, TimeUnit.SECONDS);
+	    es.shutdown();
 	} catch (Exception e) {
 	    System.out.println("Could not close the current connection.");
 	    e.printStackTrace();
 	}
+	
     }
 
 }

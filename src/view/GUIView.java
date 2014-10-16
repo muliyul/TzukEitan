@@ -544,40 +544,11 @@ public class GUIView extends JFrame implements AbstractWarView {
 	msg.append("==========================================\n");
 	statswindow.add(new JTextArea(msg.toString()));
 	statswindow.setLocationRelativeTo(null);
+	statswindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	statswindow.pack();
-	statswindow.addWindowListener(new WindowListener() {
-	    public void windowOpened(WindowEvent e) {
-	    }
-	    
-	    @Override
-	    public void windowIconified(WindowEvent e) {
-	    }
-	    
-	    @Override
-	    public void windowDeiconified(WindowEvent e) {
-	    }
-	    
-	    @Override
-	    public void windowDeactivated(WindowEvent e) {
-	    }
-	    
-	    @Override
-	    public void windowClosing(WindowEvent e) {
-		animationPanel.stop();
-		refreshInv.stop();
-	    }
-	    
-	    @Override
-	    public void windowClosed(WindowEvent e) {
-		
-	    }
-	    
-	    @Override
-	    public void windowActivated(WindowEvent e) {
-	    }
-	});
 	statswindow.setVisible(true);
-
+	animationPanel.stop();
+	refreshInv.stop();
     }
 
     public void showWarHasBeenFinished() {

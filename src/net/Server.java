@@ -26,6 +26,7 @@ public class Server extends Thread {
 	    ss = new ServerSocket(port);
 	    ss.setSoTimeout(1000);
 	} catch (IOException e) {
+	    e.printStackTrace();
 	}
 	start();
     }
@@ -39,7 +40,8 @@ public class Server extends Thread {
 	    while (isRunning) {
 		try {
 		    Socket client = ss.accept();
-		    ch.add(new ClientHandler(client));
+		    if (client != null)
+			ch.add(new ClientHandler(client));
 		} catch (IOException e) {
 		}
 	    }
