@@ -29,7 +29,7 @@ public class Main {
     @SuppressWarnings("unused")
     public static void main(String[] args) throws ExecutionException {
 	ApplicationContext ac = // JDBCBean.xml
-		new ClassPathXmlApplicationContext("JPABean.xml"); // JPABean.xml
+		new ClassPathXmlApplicationContext("JDBCBean.xml"); // JPABean.xml
 	DBConnection db = (DBConnection) ac.getBean("DatabaseConnection");
 
 	DBFactory.setInstance(db);

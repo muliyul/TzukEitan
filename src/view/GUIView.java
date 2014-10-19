@@ -30,6 +30,7 @@ import javax.swing.Timer;
 import controller.WarController;
 import utils.ImageUtils;
 import utils.Utils;
+import view.gui.AnimationPanel;
 import view.gui.DBDialog;
 import view.gui.forms.FormPanel;
 import view.gui.forms.FormPanelFactory;
@@ -470,7 +471,7 @@ public class GUIView extends JFrame implements AbstractWarView {
 		+ MunitionsId + " just launched missile: " + missileId
 		+ " towards: " + destination + " is about to cause damage of: "
 		+ damage + "\r\n");
-	animationPanel.addMissile(flyTime);
+	animationPanel.addMissile(missileId,flyTime);
     }
 
     public void showLauncherIsVisible(String id, boolean visible) {
@@ -492,6 +493,7 @@ public class GUIView extends JFrame implements AbstractWarView {
 		+ whoLaunchedMeId + " fired missile: " + id
 		+ " and intercept succesfully the missile: " + enemyMissileId
 		+ "\r\n");
+	animationPanel.intercept(enemyMissileId);
     }
 
     public void showEnemyHitDestination(String whoLaunchedMeId, String id,

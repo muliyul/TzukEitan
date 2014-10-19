@@ -28,7 +28,7 @@ public class EnemyLauncher extends Thread implements Munitions, Serializable {
     private String warName;  
     private String destination;
     private int damage;
-    private int flyTime;
+    private transient int flyTime;
     private boolean isHidden;
     private boolean firstHiddenState;
     private boolean beenHit = false;

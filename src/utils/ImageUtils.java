@@ -7,7 +7,6 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 
 public class ImageUtils {
-
 	
 	public static Image getImage(String name) {
 		if (name == null || name.isEmpty()) {
