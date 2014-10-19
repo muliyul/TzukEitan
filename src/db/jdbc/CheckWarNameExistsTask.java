@@ -19,7 +19,7 @@ public class CheckWarNameExistsTask extends DBTask<Boolean> {
     public Boolean call() throws Exception {
 	try {
 	    PreparedStatement statement =
-		    connection
+		    ((Connection) connection)
 			    .prepareStatement("SELECT WarName FROM `WarSim`.`War` WHERE `War`.`WarName` =  ?");
 	    statement.setString(1, warName);
 	    ResultSet rs = statement.executeQuery();

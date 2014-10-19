@@ -19,7 +19,7 @@ public class AddLauncherTask extends DBTask<Void> {
     public Void call() {
 	try {
 		executer.acquire();
-		PreparedStatement statement = connection
+		PreparedStatement statement = ((Connection) connection)
 				.prepareStatement("INSERT INTO `WarSim`.`EnemyLauncher` (`ID`, `WarName`) VALUES (?, ?)");
 		statement.setString(1, launcherId);
 		statement.setString(2, warName);

@@ -91,14 +91,14 @@ public class JDBCConnection implements DBConnection {
 
     public void addMissile(EnemyMissile m) {
 	es.submit(new AddMissileTask(executer, connection, m.getWarName(), m
-		.getMissileId(), m.getLauncher(), m.getDestination(), m
+		.getMId(), m.getLauncher().getLauncherId(), m.getDestination(), m
 		.getDamage(), m.getFlyTime()));
 
     }
 
     public void interceptMissile(EnemyMissile m, IronDome id) {
 	es.submit(new InterceptMissileTask(executer, connection,
-		m.getWarName(), m.getMissileId(), id.getIronDomeId()));
+		m.getWarName(), m.getMId(), id.getIronDomeId()));
     }
 
     public void interceptLauncher(EnemyLauncher l, DefenseDestructorMissile m) {

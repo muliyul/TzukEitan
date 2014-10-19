@@ -31,7 +31,7 @@ public class GetWarNamesByDateTask extends DBTask<String[]> {
 	    String fixedStartDate = startDate.format(dtf) + " 00:00:00";
 	    String fixedEndtDate = endDate.format(dtf) + " 23:59:59";
 	    PreparedStatement statement =
-		    connection
+		    ((Connection) connection)
 			    .prepareStatement("SELECT `WarName` FROM `WarSim`.`War` WHERE `War`.`StartTime` BETWEEN ? AND ?");
 	    statement.setString(1, fixedStartDate);
 	    statement.setString(2, fixedEndtDate);

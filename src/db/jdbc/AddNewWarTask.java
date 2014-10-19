@@ -20,7 +20,7 @@ public class AddNewWarTask extends DBTask<Void>{
 	try {
 	    executer.acquire();
 	    PreparedStatement statement =
-		    connection
+		    ((Connection) connection)
 			    .prepareStatement("INSERT INTO `WarSim`.`War` (`WarName`, `StartTime`) VALUES ( ?, ?)");
 	    statement.setString(1, warName);
 	    statement

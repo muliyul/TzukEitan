@@ -12,7 +12,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class DBDialog extends Application implements Initializable {
-
+    
     @Override
     public void start(Stage primaryStage) throws Exception {
 	FXMLLoader loader =
@@ -30,7 +30,6 @@ public class DBDialog extends Application implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
     }
 
 }

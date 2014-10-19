@@ -1,9 +1,15 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import net.Server;
 import utils.IdGenerator;
@@ -14,16 +20,25 @@ import listeners.WarEventListener;
 import missiles.EnemyMissile;
 import db.DBFactory;
 
-public class War extends Thread {
-    private List<WarEventListener> allListeners;
-    private String name;
+@Entity
+public class War extends Thread implements Serializable{
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 6577935402829490515L;
+    private transient List<WarEventListener> allListeners;
+    @Id
+    private String warName;
+    @OneToMany
     private List<IronDome> ironDomeArr = new ArrayList<>();
+    @OneToMany
     private List<LauncherDestructor> launcherDestractorArr = new ArrayList<>();
+    @OneToMany
     private List<EnemyLauncher> enemyLauncherArr = new ArrayList<>();
-    private WarStatistics statistics;
+    private transient WarStatistics statistics;
     private String[] targetCities = { "Sderot", "Ofakim", "Beer-Sheva",
 	    "Netivot", "Tel-Aviv", "Re'ut" };
-    private Server warServer;
+    private transient Server warServer;
 
     protected War() {
     }
@@ -31,7 +46,7 @@ public class War extends Thread {
     public War(String warName) {
 	allListeners = new LinkedList<>();
 	statistics = new WarStatistics();
-	this.name = warName;
+	this.warName = warName;
 	registerListeners(new WarLogger());
 	WarLogger.addWarLoggerHandler(warName);
     }
@@ -111,7 +126,7 @@ public class War extends Thread {
 
 	for (EnemyLauncher el : enemyLauncherArr) {
 	    if (el.getCurrentMissile() != null)
-		missileIds.add(el.getCurrentMissile().getMissileId());
+		missileIds.add(el.getCurrentMissile().getMId());
 	}
 
 	if (missileIds.size() == 0)
@@ -153,7 +168,7 @@ public class War extends Thread {
 	    missileToDestroy = el.getCurrentMissile();
 
 	    if (missileToDestroy != null
-		    && missileToDestroy.getMissileId().equals(missileId)) {
+		    && missileToDestroy.getMId().equals(missileId)) {
 		synchronized (ironDome) {
 		    ironDome.setMissileToDestroy(missileToDestroy);
 		    ironDome.notify();
@@ -314,7 +329,7 @@ public class War extends Thread {
 
     // add enemy launcher with parameters
     public String addEnemyLauncher(String launcherId, boolean isHidden) {
-	return addEnemyLauncher(new EnemyLauncher(launcherId, isHidden, name,
+	return addEnemyLauncher(new EnemyLauncher(launcherId, isHidden, this,
 		statistics));
 
     }
@@ -337,7 +352,7 @@ public class War extends Thread {
 
     // add iron dome with given parameters
     public String addIronDome(String id) {
-	IronDome ironDome = new IronDome(id, name, statistics);
+	IronDome ironDome = new IronDome(id, this, statistics);
 
 	for (WarEventListener l : allListeners)
 	    ironDome.registerListeners(l);
@@ -358,7 +373,7 @@ public class War extends Thread {
 			.defenseLauncherDestractorIdGenerator(type.charAt(0));
 
 	LauncherDestructor destructor =
-		new LauncherDestructor(type, id, name, statistics);
+		new LauncherDestructor(type, id, this, statistics);
 
 	for (WarEventListener l : allListeners)
 	    destructor.registerListeners(l);
@@ -470,11 +485,70 @@ public class War extends Thread {
     }
 
     public String getWarName() {
-	return name;
+	return warName;
     }
 
     public void setServer(Server server) {
 	this.warServer = server;
+    }
+
+    public List<WarEventListener> getAllListeners() {
+        return allListeners;
+    }
+
+    public void setAllListeners(List<WarEventListener> allListeners) {
+        this.allListeners = allListeners;
+    }
+    
+    //JPA STUFF
+
+    public void setWarName(String name) {
+        this.warName = name;
+    }
+
+    public List<IronDome> getIronDomeArr() {
+        return ironDomeArr;
+    }
+
+    public void setIronDomeArr(List<IronDome> ironDomeArr) {
+        this.ironDomeArr = ironDomeArr;
+    }
+
+    public List<LauncherDestructor> getLauncherDestractorArr() {
+        return launcherDestractorArr;
+    }
+
+    public void setLauncherDestractorArr(
+    	List<LauncherDestructor> launcherDestractorArr) {
+        this.launcherDestractorArr = launcherDestractorArr;
+    }
+
+    public List<EnemyLauncher> getEnemyLauncherArr() {
+        return enemyLauncherArr;
+    }
+
+    public void setEnemyLauncherArr(List<EnemyLauncher> enemyLauncherArr) {
+        this.enemyLauncherArr = enemyLauncherArr;
+    }
+
+    public String[] getTargetCities() {
+        return targetCities;
+    }
+
+    public void setTargetCities(String[] targetCities) {
+        this.targetCities = targetCities;
+    }
+
+    public Server getWarServer() {
+        return warServer;
+    }
+
+    public void setWarServer(Server warServer) {
+        this.warServer = warServer;
+    }
+
+    public void setStatistics(WarStatistics statistics) {
+        this.statistics = statistics;
     }
 
 }

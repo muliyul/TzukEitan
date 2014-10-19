@@ -1,13 +1,15 @@
 package db.jpa;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.Semaphore;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 import launchers.EnemyLauncher;
 import launchers.IronDome;
@@ -16,15 +18,11 @@ import missiles.DefenseDestructorMissile;
 import missiles.EnemyMissile;
 import model.War;
 import db.DBConnection;
-import db.jdbc.CheckWarNameExistsTask;
-import db.jdbc.GetWarNamesByDateTask;
-import db.jdbc.GetWarStatsTask;
 
 public class JPAConnection implements DBConnection {
 
     private static JPAConnection instance;
-    private Connection connection;
-    private String dbUrl;
+    private EntityManager connection;
     private Semaphore executer;
     private ExecutorService es;
 
@@ -35,7 +33,7 @@ public class JPAConnection implements DBConnection {
     }
 
     private JPAConnection() {
-	dbUrl = "jdbc:mysql://104.131.232.248/WarSimJPA";
+	/**dbUrl = "jdbc:mysql://104.131.232.248/WarSimJPA";
 	try {
 	    Class.forName("com.mysql.jdbc.Driver").newInstance();
 	    connection =
@@ -51,78 +49,83 @@ public class JPAConnection implements DBConnection {
 		System.out.println(e.getMessage());
 		e = e.getNextException();
 	    }
-	}
+	}*/
+	EntityManagerFactory emf = Persistence.createEntityManagerFactory("config");
+	connection = emf.createEntityManager();
 	es = Executors.newFixedThreadPool(1);
 	executer = new Semaphore(1, true);
     }
 
     @Override
-    public Future<Boolean> checkWarName(String warName) {
-	return es.submit(new CheckWarNameExistsTask(executer, connection, warName));
+    public boolean checkWarName(String warName) {
+	try {
+	    return es.submit(new CheckWarNameExistsTask(executer, connection, warName)).get();
+	} catch (InterruptedException | ExecutionException e) {
+	    e.printStackTrace();
+	}
+	return false;
     }
 
     @Override
     public void addNewWar(War w) {
-	persistObjects(w);
+	persistObject(w);
     }
 
     @Override
     public void endWar(War w) {
-	persistObjects(w);
+	es.submit(new MergeObjectTask(executer, connection, w));
     }
 
     @Override
     public void addLauncher(EnemyLauncher l) {
-	persistObjects(l);
+	persistObject(l);
     }
 
     @Override
     public void addMissile(EnemyMissile m) {
-	persistObjects(m);
+	persistObject(m);
     }
 
     @Override
     public void interceptMissile(EnemyMissile m, IronDome id) {
-	persistObjects(m, id);
+	es.submit(new MergeObjectTask(executer, connection, m));
+	es.submit(new MergeObjectTask(executer, connection, id));
     }
 
     @Override
     public void interceptLauncher(EnemyLauncher l, DefenseDestructorMissile dm) {
-	persistObjects(l, dm);
+	es.submit(new MergeObjectTask(executer, connection, l));
+	es.submit(new MergeObjectTask(executer, connection, dm));
     }
 
     @Override
     public void addIronDome(IronDome id) {
-	persistObjects(id);
+	persistObject(id);
     }
 
     @Override
     public void addLauncherDestructor(LauncherDestructor ld) {
-	persistObjects(ld);
+	persistObject(ld);
     }
 
     @Override
     public Future<String[]> getWarNamesByDate(LocalDate startDate,
 	    LocalDate endDate) {
-	return es.submit(new GetWarNamesByDateTask(executer, connection, startDate, endDate));
+	return null;//es.submit(new GetWarNamesByDateTask(executer, connection, startDate, endDate));
     }
 
     @Override
     public Future<long[]> getWarStats(String warName) {
-	return es.submit(new GetWarStatsTask(executer, connection, warName));
+	return null;//es.submit(new GetWarStatsTask(executer, connection, warName));
     }
 
-    private void persistObjects(Object... objects) {
-	es.submit(new PersistObjectTask(executer, connection, objects));
+    private void persistObject(Object o) {
+	es.submit(new PersistObjectTask(executer, connection, o));
     }
 
     @Override
     public void closeDB() {
-	try {
-	    connection.close();
-	} catch (SQLException e) {
-	    e.printStackTrace();
-	}
+	connection.close();
     }
 
 }

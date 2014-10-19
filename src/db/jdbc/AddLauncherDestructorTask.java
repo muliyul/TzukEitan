@@ -23,7 +23,7 @@ public class AddLauncherDestructorTask extends DBTask<Void> {
 	try {
 	    executer.acquire();
 	    PreparedStatement statement =
-		    connection
+		    ((Connection) connection)
 			    .prepareStatement("INSERT INTO `WarSim`.`LauncherDestructor` (`ID`, `Type`, `WarName`) VALUES (?, ?, ?)");
 	    statement.setString(1, id);
 	    statement.setString(2, type);

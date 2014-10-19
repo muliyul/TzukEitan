@@ -21,7 +21,7 @@ public class AddIronDomeTask extends DBTask<Void> {
 	try {
 	    executer.acquire();
 	    PreparedStatement statement =
-		    connection
+		    ((Connection) connection)
 			    .prepareStatement("INSERT INTO `IronDome` (`ID`, `WarName`) VALUES (?, ?)");
 	    statement.setString(1, idId);
 	    statement.setString(2, warName);

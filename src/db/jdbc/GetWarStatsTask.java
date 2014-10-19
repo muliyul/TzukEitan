@@ -21,7 +21,7 @@ public class GetWarStatsTask extends DBTask<long[]> {
 	try {
 	    executer.acquire();
 	    PreparedStatement statement =
-		    connection
+		    ((Connection) connection)
 			    .prepareStatement("SELECT `EndTime` FROM `War` WHERE `WarName` = ?");
 	    statement.setString(1, warName);
 	    ResultSet res = statement.executeQuery();
@@ -30,14 +30,14 @@ public class GetWarStatsTask extends DBTask<long[]> {
 	    if (ts != null)
 		stats[0] = 1;
 	    statement =
-		    connection
+		    ((Connection) connection)
 			    .prepareStatement("SELECT COUNT(`ID`) AS MissileLaunched FROM `Missile` WHERE `WarName` = ?");
 	    statement.setString(1, warName);
 	    res = statement.executeQuery();
 	    res.next();
 	    stats[1] = res.getInt("MissileLaunched");
 	    statement =
-		    connection
+		    ((Connection) connection)
 			    .prepareStatement("SELECT COUNT(`ID`) AS MissileIntercepted FROM `Missile` WHERE `WarName` =  ?  AND `Intercepted` = '1'");
 	    statement.setString(1, warName);
 	    res = statement.executeQuery();
@@ -45,14 +45,14 @@ public class GetWarStatsTask extends DBTask<long[]> {
 	    stats[2] = res.getInt("MissileIntercepted");
 	    stats[3] = stats[1] - stats[2];
 	    statement =
-		    connection
+		    ((Connection) connection)
 			    .prepareStatement("SELECT COUNT(`ID`) AS LauncherIntercepted FROM `EnemyLauncher` WHERE `WarName` = ? AND `Intercepted` = '1'");
 	    statement.setString(1, warName);
 	    res = statement.executeQuery();
 	    res.next();
 	    stats[4] = res.getInt("LauncherIntercepted");
 	    statement =
-		    connection
+		    ((Connection) connection)
 			    .prepareStatement("SELECT SUM(`Damage`) AS TotalDamage FROM `Missile` WHERE `WarName` =  ? AND `Intercepted` = '0'");
 	    statement.setString(1, warName);
 	    res = statement.executeQuery();

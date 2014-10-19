@@ -15,14 +15,10 @@ import model.WarStatistics;
 import db.DBFactory;
 
 /** Missile for Plane or Ship **/
-@Entity
 public class DefenseDestructorMissile extends Thread {
     private List<WarEventListener> allListeners;
-    @Id
     private String id;
-    @OneToOne
     private LauncherDestructor whoLaunchedMe;
-    @OneToOne
     private EnemyLauncher launcherToDestroy;
     private WarStatistics statistics;
     

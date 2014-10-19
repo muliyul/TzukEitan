@@ -24,7 +24,7 @@ public class InterceptMissileTask extends DBTask<Void> {
 	try {
 	    executer.acquire();
 	    PreparedStatement statement =
-		    connection
+		    ((Connection) connection)
 			    .prepareStatement("UPDATE  `WarSim`.`Missile` SET `Intercepted` = '1', `InterceptionTime` =  ? , `InterceptedBy` = ? WHERE `Missile`.`ID` = ? AND  `Missile`.`WarName` = ?");
 	    statement.setTimestamp(1,
 		    new Timestamp(System.currentTimeMillis()));

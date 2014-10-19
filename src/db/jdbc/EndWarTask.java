@@ -18,7 +18,7 @@ public class EndWarTask extends DBTask<Void> {
     public Void call() {
 	try {
 		executer.acquire();
-		PreparedStatement statement = connection
+		PreparedStatement statement = ((Connection) connection)
 				.prepareStatement("UPDATE  `WarSim`.`War` SET  `EndTime` = ? WHERE  `War`.`WarName` =  ? ");
 		statement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
 		statement.setString(2, warName);

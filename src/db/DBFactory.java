@@ -24,9 +24,8 @@ public class DBFactory {
      *         <code>setInstance()</code>.
      */
     public static DBConnection getInstance() {
-
 	if (instance == null) {
-	    return setInstance(Type.JDBC);
+	    instance = setInstance(Type.JDBC);
 	}
 	return instance;
     }
@@ -55,7 +54,7 @@ public class DBFactory {
     }
 
     public static DBConnection setInstance(DBConnection db) {
-	if(instance != null){
+	if(instance == null){
 	    instance = db;
 	}
 	return instance;

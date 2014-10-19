@@ -1,44 +1,56 @@
 package launchers;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.OneToOne;
 
+import db.jpa.CompositeDestructorKey;
 import utils.IdGenerator;
 import utils.Utils;
 import listeners.WarEventListener;
 import missiles.DefenseDestructorMissile;
+import model.War;
 import model.WarLogger;
 import model.WarStatistics;
 
 /** Plane or Ship **/
 @Entity
-public class LauncherDestructor extends Thread implements Munitions {
-    private List<WarEventListener> allListeners;
+//@IdClass(CompositeDestructorKey.class)
+public class LauncherDestructor extends Thread implements Munitions,
+	Serializable {
+    private static final long serialVersionUID = 4233050750050993350L;
+    private transient List<WarEventListener> allListeners;
     @Id
     private String id;
+    
+    private String warName;
+    
     private String type; // plane or ship
     private boolean isRunning = true;
     private boolean isBusy = false;
-    @OneToOne
-    private EnemyLauncher toDestroy;
-    private WarStatistics statistics;
-    private DefenseDestructorMissile currentMissile;
-    private String warName;
-    
+    private transient EnemyLauncher toDestroy;
+    private transient WarStatistics statistics;
+    private transient DefenseDestructorMissile currentMissile;
+ //   @OneToOne
+    private transient War w;
+
     protected LauncherDestructor() {
     }
 
-    public LauncherDestructor(String type, String id, String warName,
+    public LauncherDestructor(String type, String id, War w,
 	    WarStatistics statistics) {
 	allListeners = new LinkedList<WarEventListener>();
 	this.id = id;
 	this.type = Utils.capitalize(type);
 	this.statistics = statistics;
-	this.warName = warName;
+	this.warName = w.getWarName();
+	this.w = w;
 	WarLogger.addLoggerHandler(this.type, id);
     }
 
@@ -185,5 +197,61 @@ public class LauncherDestructor extends Thread implements Munitions {
 
     public String getType() {
 	return type;
+    }
+
+    public List<WarEventListener> getAllListeners() {
+	return allListeners;
+    }
+
+    public void setAllListeners(List<WarEventListener> allListeners) {
+	this.allListeners = allListeners;
+    }
+
+    public String getLid() {
+	return id;
+    }
+
+    public void setId(String id) {
+	this.id = id;
+    }
+
+    public boolean isRunning() {
+	return isRunning;
+    }
+
+    public void setRunning(boolean isRunning) {
+	this.isRunning = isRunning;
+    }
+
+    public EnemyLauncher getToDestroy() {
+	return toDestroy;
+    }
+
+    public void setToDestroy(EnemyLauncher toDestroy) {
+	this.toDestroy = toDestroy;
+    }
+
+    public WarStatistics getStatistics() {
+	return statistics;
+    }
+
+    public void setStatistics(WarStatistics statistics) {
+	this.statistics = statistics;
+    }
+
+    public void setType(String type) {
+	this.type = type;
+    }
+
+    public void setBusy(boolean isBusy) {
+	this.isBusy = isBusy;
+    }
+
+    public void setCurrentMissile(DefenseDestructorMissile currentMissile) {
+	this.currentMissile = currentMissile;
+    }
+
+    public void setWarName(String warName) {
+	this.warName = warName;
     }
 }

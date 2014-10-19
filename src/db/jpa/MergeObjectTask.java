@@ -3,28 +3,24 @@ package db.jpa;
 import java.util.concurrent.Semaphore;
 
 import javax.persistence.EntityManager;
+
 import db.DBTask;
 
-public class PersistObjectTask extends DBTask<Void> {
+public class MergeObjectTask extends DBTask<Void> {
+    private Object toMerge;
 
-    private Object toPersist;
-
-    private PersistObjectTask(Semaphore s, EntityManager c) {
+    public MergeObjectTask(Semaphore s, Object c, Object toMerge) {
 	super(s, c, null);
-    }
-
-    public PersistObjectTask(Semaphore s, EntityManager c, Object toPersist) {
-	this(s, c);
-	this.toPersist = toPersist;
+	this.toMerge = toMerge;
     }
 
     @Override
-    public Void call() {
+    public Void call() throws Exception {
 	EntityManager em = (EntityManager) connection;
 	try {
 	    executer.acquire();
 	    em.getTransaction().begin();
-	    em.persist(toPersist);
+	    em.merge(toMerge);
 	    em.getTransaction().commit();
 	} catch (Exception e) {
 	    e.printStackTrace();
@@ -34,5 +30,4 @@ public class PersistObjectTask extends DBTask<Void> {
 	}
 	return null;
     }
-
 }

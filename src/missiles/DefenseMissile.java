@@ -15,14 +15,10 @@ import db.DBConnection;
 import db.DBFactory;
 
 /** Missile for iron dome **/
-@Entity
 public class DefenseMissile extends Thread {
 	private List<WarEventListener> allListeners;
-	@Id
 	private String id;
-	@OneToOne
 	private IronDome whoLaunchedMe;
-	@OneToOne
 	private EnemyMissile missileToDestroy;
 	private WarStatistics statistics;
 	
@@ -58,7 +54,7 @@ public class DefenseMissile extends Thread {
 	private void fireHitEvent() {
 		for (WarEventListener l : allListeners) {
 			l.defenseHitInterceptionMissile(whoLaunchedMe.getIronDomeId(), id,
-					missileToDestroy.getMissileId());
+					missileToDestroy.getMId());
 		}
 
 		// update statistics
@@ -71,7 +67,7 @@ public class DefenseMissile extends Thread {
 	private void fireMissEvent() {
 		for (WarEventListener l : allListeners) {
 			l.defenseMissInterceptionMissile(whoLaunchedMe.getIronDomeId(), id,
-					missileToDestroy.getMissileId(),
+					missileToDestroy.getMId(),
 					missileToDestroy.getDamage());
 		}
 	}

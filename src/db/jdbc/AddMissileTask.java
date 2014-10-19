@@ -31,7 +31,7 @@ public class AddMissileTask extends DBTask<Void> {
 	try {
 	    executer.acquire();
 	    PreparedStatement statement =
-		    connection
+		    ((Connection) connection)
 			    .prepareStatement("INSERT INTO `WarSim`.`Missile` (`ID`, `Launcher`, `LaunchTime`,"
 				    + "		`Destination`, `Damage`, `FlyTime`, `WarName`) VALUES (?, ?, ? , ?, ?, ?, ?)");
 	    statement.setString(1, mId);

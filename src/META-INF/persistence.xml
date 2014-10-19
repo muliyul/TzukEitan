@@ -9,6 +9,7 @@
 		<class>missiles.EnemyMissile</class>
 		<class>model.War</class>
 		<class>launchers.EnemyLauncher</class>
+		<class>db.jpa.CompositeKey</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://104.131.232.248:3306/WarSimJPA"/>
 			<property name="javax.persistence.jdbc.user" value="YoniMuli"/>

@@ -1,42 +1,53 @@
 package launchers;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import db.jpa.CompositeIronKey;
 import utils.IdGenerator;
 import utils.Utils;
 import listeners.WarEventListener;
 import missiles.DefenseMissile;
 import missiles.EnemyMissile;
+import model.War;
 import model.WarLogger;
 import model.WarStatistics;
 
 @Entity
-public class IronDome extends Thread implements Munitions {
-    private List<WarEventListener> allListeners;
-    private String warName;
+//@IdClass(CompositeIronKey.class)
+public class IronDome extends Thread implements Munitions, Serializable {
+    private static final long serialVersionUID = 4072250089090881271L;
+    private transient List<WarEventListener> allListeners;
     @Id
     private String id;
+   
+    private String warName;
+    
     private boolean isRunning = true;
     private boolean isBusy = false;
-    @OneToOne
-    private EnemyMissile toDestroy;
-    private WarStatistics statistics;
-    @OneToOne
-    private DefenseMissile currentMissile;
-    
+    private transient EnemyMissile toDestroy;
+    private transient WarStatistics statistics;
+    private transient DefenseMissile currentMissile;
+  //  @OneToOne
+    private transient War w;
+
     public IronDome() {
     }
 
-    public IronDome(String id, String warName, WarStatistics statistics) {
+    public IronDome(String id, War w, WarStatistics statistics) {
 	allListeners = new LinkedList<WarEventListener>();
 	this.statistics = statistics;
 	this.id = id;
-	this.warName = warName;
+	this.warName = w.getWarName();
+	this.w = w;
 	WarLogger.addLoggerHandler("IronDome", id);
     }
 
@@ -96,7 +107,7 @@ public class IronDome extends Thread implements Munitions {
 	    currentMissile.start();
 	    currentMissile.join();
 	} else {
-	    fireMissileNotExist(toDestroy.getMissileId());
+	    fireMissileNotExist(toDestroy.getMId());
 	}
     }
 
@@ -110,7 +121,8 @@ public class IronDome extends Thread implements Munitions {
 	String missieId = IdGenerator.defensMissileIdGenerator();
 
 	// create new missile
-	currentMissile = new DefenseMissile(missieId, toDestroy, this, statistics);
+	currentMissile =
+		new DefenseMissile(missieId, toDestroy, this, statistics);
 
 	// register listeners
 	for (WarEventListener l : allListeners)
@@ -124,7 +136,7 @@ public class IronDome extends Thread implements Munitions {
     // Event
     private void fireLaunchMissileEvent(String missileId) {
 	for (WarEventListener l : allListeners) {
-	    l.defenseLaunchMissile(id, missileId, toDestroy.getMissileId());
+	    l.defenseLaunchMissile(id, missileId, toDestroy.getMId());
 	}
     }
 
@@ -151,6 +163,58 @@ public class IronDome extends Thread implements Munitions {
 
     public String getWarName() {
 	return warName;
+    }
+
+    public List<WarEventListener> getAllListeners() {
+	return allListeners;
+    }
+
+    public void setAllListeners(List<WarEventListener> allListeners) {
+	this.allListeners = allListeners;
+    }
+
+    public String getIdId() {
+	return id;
+    }
+
+    public void setId(String id) {
+	this.id = id;
+    }
+
+    public boolean isRunning() {
+	return isRunning;
+    }
+
+    public void setRunning(boolean isRunning) {
+	this.isRunning = isRunning;
+    }
+
+    public EnemyMissile getToDestroy() {
+	return toDestroy;
+    }
+
+    public void setToDestroy(EnemyMissile toDestroy) {
+	this.toDestroy = toDestroy;
+    }
+
+    public WarStatistics getStatistics() {
+	return statistics;
+    }
+
+    public void setStatistics(WarStatistics statistics) {
+	this.statistics = statistics;
+    }
+
+    public void setWarName(String warName) {
+	this.warName = warName;
+    }
+
+    public void setBusy(boolean isBusy) {
+	this.isBusy = isBusy;
+    }
+
+    public void setCurrentMissile(DefenseMissile currentMissile) {
+	this.currentMissile = currentMissile;
     }
 
 }

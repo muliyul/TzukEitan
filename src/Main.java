@@ -6,7 +6,6 @@
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -17,11 +16,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.xml.sax.SAXException;
 
-import controller.WarController;
 import utils.WarXMLReader;
 import view.AbstractWarView;
 import view.ConsoleView;
 import view.GUIView;
+import controller.WarController;
 import db.DBConnection;
 import db.DBFactory;
 
@@ -29,8 +28,8 @@ public class Main {
 
     @SuppressWarnings("unused")
     public static void main(String[] args) throws ExecutionException {
-	ApplicationContext ac =
-		new ClassPathXmlApplicationContext("/JDBCBean.xml");
+	ApplicationContext ac = // JDBCBean.xml
+		new ClassPathXmlApplicationContext("JPABean.xml"); // JPABean.xml
 	DBConnection db = (DBConnection) ac.getBean("DatabaseConnection");
 
 	DBFactory.setInstance(db);
@@ -46,9 +45,9 @@ public class Main {
 
 	    // DECIDE WHICH DB DRIVER TO USE
 	    // DBFactory.setInstance(DBFactory.Type.JDBC);
-	    
+
 	    do {
-	        warName = view.getWarNameFromUser();
+		warName = view.getWarNameFromUser();
 	    } while (db.checkWarName(warName));
 
 	    War war = new War(warName);

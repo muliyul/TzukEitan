@@ -4,44 +4,52 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.OneToOne;
 
-import utils.IdGenerator;
-import utils.Utils;
 import listeners.WarEventListener;
 import missiles.EnemyMissile;
+import model.War;
 import model.WarLogger;
 import model.WarStatistics;
+import utils.IdGenerator;
+import utils.Utils;
 import db.DBFactory;
+import db.jpa.CompositeLauncherKey;
 
 @Entity
+//@IdClass(CompositeLauncherKey.class)
 public class EnemyLauncher extends Thread implements Munitions, Serializable {
     private static final long serialVersionUID = -5934215378852248255L;
-    private List<WarEventListener> allListeners;
-    private String warName;
+    private transient List<WarEventListener> allListeners;
     @Id
     private String id;
+    
+    private String warName;  
     private String destination;
     private int damage;
     private int flyTime;
     private boolean isHidden;
     private boolean firstHiddenState;
     private boolean beenHit = false;
-    private WarStatistics statistics;
-    @OneToOne
-    private EnemyMissile currentMissile;
-    
+    private transient WarStatistics statistics;
+    private EnemyMissile currentMissile; 
+  //  @OneToOne
+    private transient War w;
+
     protected EnemyLauncher() {
     }
 
-    public EnemyLauncher(String id, boolean isHidden, String warName,
+    public EnemyLauncher(String id, boolean isHidden, War w,
 	    WarStatistics statistics) {
 	this.id = id;
 	this.isHidden = isHidden;
 	this.statistics = statistics;
-	this.warName = warName;
+	this.warName = w.getWarName();
+	this.w = w;
 	allListeners = new LinkedList<WarEventListener>();
 	firstHiddenState = isHidden;
 	WarLogger.addLoggerHandler("Launcher", id);
@@ -104,7 +112,7 @@ public class EnemyLauncher extends Thread implements Munitions, Serializable {
 	sleep(Utils.LAUNCH_DURATION);
 
 	// throw event
-	fireLaunchMissileEvent(currentMissile.getMissileId());
+	fireLaunchMissileEvent(currentMissile.getMId());
 
 	currentMissile.start();
 
@@ -129,7 +137,7 @@ public class EnemyLauncher extends Thread implements Munitions, Serializable {
 
 	// create new missile
 	currentMissile =
-		new EnemyMissile(missileId, destination, flyTime, damage, id,
+		new EnemyMissile(missileId, destination, flyTime, damage, this,
 			statistics, warName);
 
 	DBFactory.getInstance().addMissile(currentMissile); // add missile to DB
@@ -157,7 +165,7 @@ public class EnemyLauncher extends Thread implements Munitions, Serializable {
     // Event
     private void fireLaunchMissileEvent(String missileId) {
 	for (WarEventListener l : allListeners) {
-	    l.enemyLaunchMissile(id, missileId, destination,flyTime, damage);
+	    l.enemyLaunchMissile(id, missileId, destination, flyTime, damage);
 	}
 
 	// update statistics
@@ -185,5 +193,81 @@ public class EnemyLauncher extends Thread implements Munitions, Serializable {
 
     public String getWarName() {
 	return warName;
+    }
+
+    public List<WarEventListener> getAllListeners() {
+	return allListeners;
+    }
+
+    public void setAllListeners(List<WarEventListener> allListeners) {
+	this.allListeners = allListeners;
+    }
+
+    public String getlId() {
+	return id;
+    }
+
+    public void setId(String id) {
+	this.id = id;
+    }
+
+    public String getDestination() {
+	return destination;
+    }
+
+    public void setDestination(String destination) {
+	this.destination = destination;
+    }
+
+    public int getDamage() {
+	return damage;
+    }
+
+    public void setDamage(int damage) {
+	this.damage = damage;
+    }
+
+    public int getFlyTime() {
+	return flyTime;
+    }
+
+    public void setFlyTime(int flyTime) {
+	this.flyTime = flyTime;
+    }
+
+    public boolean isFirstHiddenState() {
+	return firstHiddenState;
+    }
+
+    public void setFirstHiddenState(boolean firstHiddenState) {
+	this.firstHiddenState = firstHiddenState;
+    }
+
+    public boolean isBeenHit() {
+	return beenHit;
+    }
+
+    public void setBeenHit(boolean beenHit) {
+	this.beenHit = beenHit;
+    }
+
+    public WarStatistics getStatistics() {
+	return statistics;
+    }
+
+    public void setStatistics(WarStatistics statistics) {
+	this.statistics = statistics;
+    }
+
+    public void setWarName(String warName) {
+	this.warName = warName;
+    }
+
+    public void setHidden(boolean isHidden) {
+	this.isHidden = isHidden;
+    }
+
+    public void setCurrentMissile(EnemyMissile currentMissile) {
+	this.currentMissile = currentMissile;
     }
 }
