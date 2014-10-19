@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.OneToOne;
 
-import db.jpa.CompositeDestructorKey;
 import utils.IdGenerator;
 import utils.Utils;
 import listeners.WarEventListener;
@@ -21,7 +20,7 @@ import model.WarStatistics;
 
 /** Plane or Ship **/
 @Entity
-//@IdClass(CompositeDestructorKey.class)
+
 public class LauncherDestructor extends Thread implements Munitions,
 	Serializable {
     private static final long serialVersionUID = 4233050750050993350L;
@@ -37,10 +36,21 @@ public class LauncherDestructor extends Thread implements Munitions,
     private transient EnemyLauncher toDestroy;
     private transient WarStatistics statistics;
     private transient DefenseDestructorMissile currentMissile;
- //   @OneToOne
-    private transient War w;
+    @OneToOne
+    private War w;
 
-    protected LauncherDestructor() {
+    public War getW() {
+		return w;
+	}
+
+	public void setW(War w) {
+		this.w = w;
+		if(this.w != null){
+			w.addLauncherDestructor(this);
+		}
+	}
+
+	protected LauncherDestructor() {
     }
 
     public LauncherDestructor(String type, String id, War w,

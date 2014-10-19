@@ -33,23 +33,8 @@ public class JPAConnection implements DBConnection {
     }
 
     private JPAConnection() {
-	/**dbUrl = "jdbc:mysql://104.131.232.248/WarSimJPA";
-	try {
-	    Class.forName("com.mysql.jdbc.Driver").newInstance();
-	    connection =
-		    DriverManager.getConnection(dbUrl, "YoniMuli", "123456");
-	} catch (InstantiationException e) {
-	    e.printStackTrace();
-	} catch (IllegalAccessException e) {
-	    e.printStackTrace();
-	} catch (ClassNotFoundException e) {
-	    e.printStackTrace();
-	} catch (SQLException e) {
-	    while (e != null) {
-		System.out.println(e.getMessage());
-		e = e.getNextException();
-	    }
-	}*/
+	
+	
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("config");
 	connection = emf.createEntityManager();
 	es = Executors.newFixedThreadPool(1);
@@ -68,43 +53,46 @@ public class JPAConnection implements DBConnection {
 
     @Override
     public void addNewWar(War w) {
+    if(connection.find(War.class, w.getWarName()) == null)
 	persistObject(w);
     }
 
     @Override
-    public void endWar(War w) {
-	es.submit(new MergeObjectTask(executer, connection, w));
+    public void endWar(War w) { //not needed in JPA
+	
     }
 
     @Override
     public void addLauncher(EnemyLauncher l) {
+    if(connection.find(EnemyLauncher.class, l.getLauncherId()) == null)
 	persistObject(l);
     }
 
     @Override
     public void addMissile(EnemyMissile m) {
+    if(connection.find(EnemyMissile.class, m.getMId()) == null)
 	persistObject(m);
     }
 
     @Override
-    public void interceptMissile(EnemyMissile m, IronDome id) {
-	es.submit(new MergeObjectTask(executer, connection, m));
-	es.submit(new MergeObjectTask(executer, connection, id));
+    public void interceptMissile(EnemyMissile m, IronDome id) { //not needed in JPA
+
     }
 
     @Override
-    public void interceptLauncher(EnemyLauncher l, DefenseDestructorMissile dm) {
-	es.submit(new MergeObjectTask(executer, connection, l));
-	es.submit(new MergeObjectTask(executer, connection, dm));
+    public void interceptLauncher(EnemyLauncher l, DefenseDestructorMissile dm) { //not needed in JPA
+
     }
 
     @Override
     public void addIronDome(IronDome id) {
+    if(connection.find(IronDome.class, id.getIdId()) == null)
 	persistObject(id);
     }
 
     @Override
     public void addLauncherDestructor(LauncherDestructor ld) {
+    if(connection.find(LauncherDestructor.class, ld.getLid()) == null)
 	persistObject(ld);
     }
 

@@ -1,6 +1,7 @@
 package utils;
 
 import model.War;
+
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 import org.w3c.dom.NamedNodeMap;
@@ -29,6 +30,12 @@ public class WarXMLReader extends Thread {
 	}
 
 	public void run() {
+		try {
+			sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		readEnemyLaunchers();
 		readDefenseDestructors();
 	}

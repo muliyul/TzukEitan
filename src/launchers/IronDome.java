@@ -11,7 +11,6 @@ import javax.persistence.IdClass;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import db.jpa.CompositeIronKey;
 import utils.IdGenerator;
 import utils.Utils;
 import listeners.WarEventListener;
@@ -22,7 +21,7 @@ import model.WarLogger;
 import model.WarStatistics;
 
 @Entity
-//@IdClass(CompositeIronKey.class)
+
 public class IronDome extends Thread implements Munitions, Serializable {
     private static final long serialVersionUID = 4072250089090881271L;
     private transient List<WarEventListener> allListeners;
@@ -36,8 +35,9 @@ public class IronDome extends Thread implements Munitions, Serializable {
     private transient EnemyMissile toDestroy;
     private transient WarStatistics statistics;
     private transient DefenseMissile currentMissile;
-  //  @OneToOne
-    private transient War w;
+ 
+    @OneToOne
+    private War w;
 
     public IronDome() {
     }
@@ -51,7 +51,18 @@ public class IronDome extends Thread implements Munitions, Serializable {
 	WarLogger.addLoggerHandler("IronDome", id);
     }
 
-    public void run() {
+    public War getW() {
+		return w;
+	}
+
+	public void setW(War w) {
+		this.w = w;
+		if(this.w != null){
+			w.addIronDone(this);
+		}
+	}
+	
+	public void run() {
 	// this thread will be alive until the war is over
 	while (isRunning) {
 	    synchronized (this) {

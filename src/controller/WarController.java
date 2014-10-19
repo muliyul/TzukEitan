@@ -35,7 +35,7 @@ public class WarController implements WarEventListener, WarEventUIListener{
 	}
 
 	public void addEnemyLauncher(EnemyLauncher l) {
-	    warModel.addEnemyLauncher(l);
+	    warModel.addLauncher(l);
 	}
 
 	@Override

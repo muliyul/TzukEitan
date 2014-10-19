@@ -18,16 +18,13 @@ import model.WarStatistics;
 import utils.IdGenerator;
 import utils.Utils;
 import db.DBFactory;
-import db.jpa.CompositeLauncherKey;
 
 @Entity
-//@IdClass(CompositeLauncherKey.class)
 public class EnemyLauncher extends Thread implements Munitions, Serializable {
     private static final long serialVersionUID = -5934215378852248255L;
     private transient List<WarEventListener> allListeners;
     @Id
-    private String id;
-    
+    private String id;  
     private String warName;  
     private String destination;
     private int damage;
@@ -36,11 +33,22 @@ public class EnemyLauncher extends Thread implements Munitions, Serializable {
     private boolean firstHiddenState;
     private boolean beenHit = false;
     private transient WarStatistics statistics;
-    private EnemyMissile currentMissile; 
-  //  @OneToOne
-    private transient War w;
+    private transient EnemyMissile currentMissile; 
+    @OneToOne
+    private War w;
 
-    protected EnemyLauncher() {
+    public War getW() {
+		return w;
+	}
+
+	public void setW(War w) {
+		this.w = w;
+		if(this.w != null){
+			w.addLauncher(this);
+		}
+	}
+
+	protected EnemyLauncher() {
     }
 
     public EnemyLauncher(String id, boolean isHidden, War w,

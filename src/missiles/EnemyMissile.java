@@ -4,14 +4,14 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.OneToOne;
 
 
 
-import db.jpa.CompositeMissileKey;
+
+
 import utils.Utils;
 import launchers.EnemyLauncher;
 import listeners.WarEventListener;
@@ -29,8 +29,8 @@ public class EnemyMissile extends Thread implements Serializable {
 
     
     private transient List<WarEventListener> allListeners;
-    @OneToOne
-    private EnemyLauncher whoLaunchedMe;
+    private String launcherID;
+    private transient EnemyLauncher whoLaunchedMe;
     private String destination;
     private int flyTime;
     private int damage;
@@ -53,6 +53,7 @@ public class EnemyMissile extends Thread implements Serializable {
 	this.whoLaunchedMe = whoLaunchedMeId;
 	this.statistics = statistics;
 	this.warName =  warName;
+	this.launcherID = whoLaunchedMeId.getLauncherId();
 	
     }
 

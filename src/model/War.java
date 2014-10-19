@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -29,12 +30,12 @@ public class War extends Thread implements Serializable{
     private transient List<WarEventListener> allListeners;
     @Id
     private String warName;
-    @OneToMany
-    private List<IronDome> ironDomeArr = new ArrayList<>();
-    @OneToMany
-    private List<LauncherDestructor> launcherDestractorArr = new ArrayList<>();
-    @OneToMany
-    private List<EnemyLauncher> enemyLauncherArr = new ArrayList<>();
+    @OneToMany(mappedBy="w", cascade=CascadeType.PERSIST)
+    private List<IronDome> ironDomeArr;
+    @OneToMany(mappedBy="w", cascade=CascadeType.PERSIST)
+    private List<LauncherDestructor> launcherDestractorArr;
+    @OneToMany(mappedBy="w", cascade=CascadeType.PERSIST)
+    private List<EnemyLauncher> enemyLauncherArr;
     private transient WarStatistics statistics;
     private String[] targetCities = { "Sderot", "Ofakim", "Beer-Sheva",
 	    "Netivot", "Tel-Aviv", "Re'ut" };
@@ -44,6 +45,9 @@ public class War extends Thread implements Serializable{
     }
     
     public War(String warName) {
+    ironDomeArr = new ArrayList<>();
+    launcherDestractorArr = new ArrayList<>();
+    enemyLauncherArr = new ArrayList<>();
 	allListeners = new LinkedList<>();
 	statistics = new WarStatistics();
 	this.warName = warName;
@@ -329,19 +333,30 @@ public class War extends Thread implements Serializable{
 
     // add enemy launcher with parameters
     public String addEnemyLauncher(String launcherId, boolean isHidden) {
-	return addEnemyLauncher(new EnemyLauncher(launcherId, isHidden, this,
+	return addLauncher(new EnemyLauncher(launcherId, isHidden, this,
 		statistics));
 
     }
 
-    public String addEnemyLauncher(EnemyLauncher launcher) {
+    public String addLauncher(EnemyLauncher launcher) {
 	for (WarEventListener l : allListeners)
 	    launcher.registerListeners(l);
-	DBFactory.getInstance().addLauncher(launcher);
+	try {
+		sleep(100);
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
 	launcher.start();
 	enemyLauncherArr.add(launcher);
+	DBFactory.getInstance().addLauncher(launcher);
 	return launcher.getLauncherId();
     }
+    
+  //  public void addEnemyLauncher(EnemyLauncher launcher){
+  //  enemyLauncherArr.add(launcher);
+   // }
 
     // add iron dome without given parameters
     public String addIronDome() {
@@ -359,11 +374,14 @@ public class War extends Thread implements Serializable{
 
 	ironDome.start();
 
-	ironDomeArr.add(ironDome);
+	addIronDone(ironDome);
 	// add iron dome to db
 	DBFactory.getInstance().addIronDome(ironDome);
 
 	return id;
+    }
+    public void addIronDone(IronDome id){
+    	ironDomeArr.add(id);
     }
 
     // add defense launcher destructor
@@ -384,6 +402,10 @@ public class War extends Thread implements Serializable{
 	DBFactory.getInstance().addLauncherDestructor(destructor);
 
 	return id;
+    }
+    
+    public void addLauncherDestructor(LauncherDestructor destructor){
+    	launcherDestractorArr.add(destructor);
     }
 
     public void registerListeners(WarEventListener control) {

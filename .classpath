@@ -12,16 +12,16 @@
 			<attribute name="owner.project.facets" value="jst.web"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="G:/GitHub/Java/TzukEitan/spring/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="G:/GitHub/Java/TzukEitan/spring/spring-aop-4.1.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="G:/GitHub/Java/TzukEitan/spring/spring-aspects-4.1.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="G:/GitHub/Java/TzukEitan/spring/spring-beans-4.1.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="G:/GitHub/Java/TzukEitan/spring/spring-context-4.1.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="G:/GitHub/Java/TzukEitan/spring/spring-core-4.1.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="G:/GitHub/Java/TzukEitan/spring/spring-expression-4.1.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="G:/GitHub/Java/TzukEitan/aspect/aopalliance-1.0.jar"/>
-	<classpathentry kind="lib" path="G:/GitHub/Java/TzukEitan/aspect/aspectjrt-1.6.9.jar"/>
-	<classpathentry kind="lib" path="G:/GitHub/Java/TzukEitan/aspect/aspectjweaver-1.6.9.jar"/>
+	<classpathentry kind="lib" path="C:/TzukEitan/spring/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/TzukEitan/spring/spring-aop-4.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/TzukEitan/spring/spring-aspects-4.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/TzukEitan/spring/spring-beans-4.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/TzukEitan/spring/spring-context-4.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/TzukEitan/spring/spring-core-4.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/TzukEitan/spring/spring-expression-4.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/TzukEitan/aspect/aopalliance-1.0.jar"/>
+	<classpathentry kind="lib" path="C:/TzukEitan/aspect/aspectjrt-1.6.9.jar"/>
+	<classpathentry kind="lib" path="C:/TzukEitan/aspect/aspectjweaver-1.6.9.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/EclipseLink 2.5.2">
 		<attributes>
 			<attribute name="owner.project.facets" value="jpt.jpa"/>
