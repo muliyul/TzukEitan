@@ -55,7 +55,7 @@ public class AnimationPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		for (GUIMissile m : missilesMap.values()) {
-			if (m.xpoints[0] < getWidth() - 10)
+			if (m.xpoints[0] < getWidth())
 				m.move(((getWidth() - 20) / (m.getFlyTime() * (1000.f / refresh
 						.getDelay()))));
 			else
@@ -90,7 +90,7 @@ public class AnimationPanel extends JPanel implements ActionListener {
 					e.printStackTrace();
 				} finally {
 					synchronized (explosions) {
-						explosions.remove(img);
+						explosions.remove(new Point(x, y));
 					}
 				}
 			}

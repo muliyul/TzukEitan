@@ -2,6 +2,7 @@ package controller;
 
 import java.util.Vector;
 
+import utils.IdGenerator;
 import utils.WarXMLReader;
 import view.AbstractWarView;
 import launchers.EnemyLauncher;

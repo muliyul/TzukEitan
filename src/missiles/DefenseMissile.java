@@ -39,6 +39,7 @@ public class DefenseMissile extends Thread {
 			// Check if the missile is still in the air before trying to destroy
 			if (missileToDestroy.isAlive() && Utils.randomSuccesRate()) {
 				missileToDestroy.interrupt();
+			
 			}
 		}//synchronized
 				

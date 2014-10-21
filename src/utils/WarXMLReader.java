@@ -112,11 +112,15 @@ public class WarXMLReader extends Thread {
 			@Override
 			public void run() {
 				try {
+					
+					
+					
 					// wait until launch time in XML
 					sleep(tempLaunchTime * Utils.SECOND);
 					
 					// update the id's
 					IdGenerator.updateEnemyMissileId(tempMissileId);
+					
 					
 					// add to the war
 					war.launchEnemyMissile(tempLauncherId, tempDestination, tempDamage, tempFlyTime);

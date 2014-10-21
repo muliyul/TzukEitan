@@ -15,7 +15,7 @@ public class WarStatistics {
 		totalDamage = 0;
 	}
 	
-	public synchronized void increaseNumOfLaunchMissiles(){
+	public synchronized void increaseNumOfLaunchMissiles() {
 		numOfLaunchMissiles++;
 	}
 	

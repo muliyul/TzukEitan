@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.Semaphore;
 
+import utils.IdGenerator;
 import model.War;
 
 public class Server extends Thread {

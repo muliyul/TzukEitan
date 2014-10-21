@@ -27,7 +27,7 @@ public class EnemyLauncher extends Thread implements Munitions, Serializable {
     private String id;  
     private String warName;  
     private String destination;
-    private int damage;
+    private transient int damage;
     private transient int flyTime;
     private boolean isHidden;
     private boolean firstHiddenState;
@@ -195,7 +195,7 @@ public class EnemyLauncher extends Thread implements Munitions, Serializable {
     // use the stop the thread when the launcher is been hit
     @Override
     public void stopRunning() {
-	currentMissile = null;
+	
 	beenHit = true;
     }
 

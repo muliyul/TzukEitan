@@ -57,19 +57,19 @@ public class IdGenerator {
 	// Enemy Missile:
 	/** Used for sync xml id's and the program id's **/
 	public static synchronized void updateEnemyMissileId(String id) {
-//		String temp = id.substring(1, id.length());
-//		try {
-//			enemyMissileId = Integer.parseInt(temp);
-//			if (enemyMissileId > maxEnemyMissileId)
-//				maxEnemyMissileId = enemyMissileId;
-//		} catch (NumberFormatException e) {
-//			e.getStackTrace();
-//		}
+		String temp = id.substring(1, id.length());
+		try {
+			enemyMissileId = Integer.parseInt(temp);
+			if (enemyMissileId > maxEnemyMissileId)
+				maxEnemyMissileId = enemyMissileId;
+		} catch (NumberFormatException e) {
+			e.getStackTrace();
+		}
 	}
 
 	/** Used for updated the max id **/
 	public static synchronized void updateFinalEnemyMissileId() {
-	//	enemyMissileId = ++maxEnemyMissileId;
+		enemyMissileId = ++maxEnemyMissileId;
 	}
 
 	// EnemyLauncher:

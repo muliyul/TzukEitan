@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -572,5 +571,7 @@ public class War extends Thread implements Serializable {
 	public void setStatistics(WarStatistics statistics) {
 		this.statistics = statistics;
 	}
+
+	
 
 }
