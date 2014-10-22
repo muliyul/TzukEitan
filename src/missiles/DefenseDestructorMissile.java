@@ -66,7 +66,11 @@ public class DefenseDestructorMissile extends Thread {
 	statistics.increaseNumOfLauncherDestroyed();
     }
 
-    // Event
+    public EnemyLauncher getLauncherToDestroy() {
+		return launcherToDestroy;
+	}
+
+	// Event
     private void fireMissEvent() {
 	for (WarEventListener l : allListeners) {
 	    l.defenseMissInterceptionLauncher(whoLaunchedMe.getDestructorId(), whoLaunchedMe.getType(),

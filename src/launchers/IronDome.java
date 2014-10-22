@@ -11,13 +11,13 @@ import javax.persistence.IdClass;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import aspects.WarLogger;
 import utils.IdGenerator;
 import utils.Utils;
 import listeners.WarEventListener;
 import missiles.DefenseMissile;
 import missiles.EnemyMissile;
 import model.War;
-import model.WarLogger;
 import model.WarStatistics;
 
 @Entity
@@ -48,7 +48,7 @@ public class IronDome extends Thread implements Munitions, Serializable {
 	this.id = id;
 	this.warName = w.getWarName();
 	this.w = w;
-	WarLogger.addLoggerHandler("IronDome", id);
+	
     }
 
     public War getW() {
@@ -91,8 +91,7 @@ public class IronDome extends Thread implements Munitions, Serializable {
 
 	}// while
 
-	// close the handler of the logger
-	WarLogger.closeMyHandler(id);
+
 	// ironDomeHandler.close();
     }// run
 

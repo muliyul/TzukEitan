@@ -10,12 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.OneToOne;
 
+import aspects.WarLogger;
 import utils.IdGenerator;
 import utils.Utils;
 import listeners.WarEventListener;
 import missiles.DefenseDestructorMissile;
 import model.War;
-import model.WarLogger;
 import model.WarStatistics;
 
 /** Plane or Ship **/
@@ -61,7 +61,7 @@ public class LauncherDestructor extends Thread implements Munitions,
 	this.statistics = statistics;
 	this.warName = w.getWarName();
 	this.w = w;
-	WarLogger.addLoggerHandler(this.type, id);
+	
     }
 
     public void run() {
@@ -106,8 +106,7 @@ public class LauncherDestructor extends Thread implements Munitions,
 	    currentMissile = null;
 	}// while
 
-	// close the handler of the logger
-	WarLogger.closeMyHandler(id);
+
     }// run
 
     // set the next target of this launcher destructor, called from the war

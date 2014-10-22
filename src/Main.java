@@ -7,6 +7,7 @@
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
+import javax.swing.JOptionPane;
 import javax.xml.parsers.ParserConfigurationException;
 
 import model.War;
@@ -23,6 +24,7 @@ import view.GUIView;
 import controller.WarController;
 import db.DBConnection;
 import db.DBFactory;
+import db.jpa.JPAConnection;
 
 public class Main {
 
@@ -42,9 +44,6 @@ public class Main {
 
 	if (startWar == 0) {
 	    String warName = null;
-
-	    // DECIDE WHICH DB DRIVER TO USE
-	    // DBFactory.setInstance(DBFactory.Type.JDBC);
 
 	    do {
 		warName = view.getWarNameFromUser();
@@ -76,6 +75,11 @@ public class Main {
 	    else if (view instanceof GUIView)
 		((GUIView) view).setVisible(true);
 	} else if (startWar == 1) {
+		if(DBFactory.getInstance().getClass() ==JPAConnection.class ){		
+			JOptionPane.showMessageDialog(null, "Please Run JDBC connection for this option");
+			System.exit(0);
+			}
+		else
 	    view.showDBDialog();
 	} else {
 	    System.exit(0);

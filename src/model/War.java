@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import aspects.WarLogger;
 import net.Server;
 import utils.IdGenerator;
 import launchers.EnemyLauncher;
@@ -36,7 +37,7 @@ public class War extends Thread implements Serializable {
 	@OneToMany(mappedBy = "w", cascade = CascadeType.PERSIST)
 	private List<EnemyLauncher> enemyLauncherArr;
 	private transient WarStatistics statistics;
-	private String[] targetCities = { "Sderot", "Ofakim", "Beer-Sheva",
+	private transient String[] targetCities = { "Sderot", "Ofakim", "Beer-Sheva",
 			"Netivot", "Tel-Aviv", "Re'ut" };
 	private transient Server warServer;
 
@@ -50,8 +51,8 @@ public class War extends Thread implements Serializable {
 		allListeners = new LinkedList<>();
 		statistics = new WarStatistics();
 		this.warName = warName;
-		registerListeners(new WarLogger());
-		WarLogger.addWarLoggerHandler(warName);
+		
+		
 	}
 
 	public void run() {
@@ -71,10 +72,7 @@ public class War extends Thread implements Serializable {
 			}
 		}// synchronized
 
-		// close all the handlers of the logger
-		WarLogger.closeAllHandlers();
-		WarLogger.closeWarHandler();
-		// warHandler.close();
+
 	}// run
 
 	// this method stop all the munitions that are alive

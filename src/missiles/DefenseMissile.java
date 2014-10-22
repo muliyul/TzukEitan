@@ -64,6 +64,14 @@ public class DefenseMissile extends Thread {
 		DBFactory.getInstance().interceptMissile(missileToDestroy, whoLaunchedMe);
 	}
 
+	public IronDome getWhoLaunchedMe() {
+		return whoLaunchedMe;
+	}
+
+	public EnemyMissile getMissileToDestroy() {
+		return missileToDestroy;
+	}
+
 	// Event
 	private void fireMissEvent() {
 		for (WarEventListener l : allListeners) {

@@ -4,16 +4,16 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.persistence.EmbeddedId;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
+
 import javax.persistence.OneToOne;
+
 
 import listeners.WarEventListener;
 import missiles.EnemyMissile;
 import model.War;
-import model.WarLogger;
 import model.WarStatistics;
 import utils.IdGenerator;
 import utils.Utils;
@@ -60,7 +60,7 @@ public class EnemyLauncher extends Thread implements Munitions, Serializable {
 	this.w = w;
 	allListeners = new LinkedList<WarEventListener>();
 	firstHiddenState = isHidden;
-	WarLogger.addLoggerHandler("Launcher", id);
+	
     }
 
     public void run() {
@@ -92,9 +92,6 @@ public class EnemyLauncher extends Thread implements Munitions, Serializable {
 	    currentMissile = null;
 
 	}// while
-
-	// close the handler of the logger
-	WarLogger.closeMyHandler(id);
 
     }// run
 

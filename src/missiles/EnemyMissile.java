@@ -36,7 +36,7 @@ public class EnemyMissile extends Thread implements Serializable {
     private int damage;
     private transient WarStatistics statistics;
     private String launchTime;
-    private boolean beenHit = false;
+    private boolean beenHit;
     
 
     protected EnemyMissile() {
@@ -54,6 +54,7 @@ public class EnemyMissile extends Thread implements Serializable {
 	this.statistics = statistics;
 	this.warName =  warName;
 	this.launcherID = whoLaunchedMeId.getLauncherId();
+	this.beenHit = false;
 	
     }
 
