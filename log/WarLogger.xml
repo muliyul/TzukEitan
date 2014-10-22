@@ -1,0 +1,26 @@
+22/10/2014 13:11:12 INFO	====== >	War started	< ======
+22/10/2014 13:11:15 INFO	L101	Launch: M1			Target: Sderot
+22/10/2014 13:11:15 INFO	L102	is now: visible
+22/10/2014 13:11:16 INFO	L102	Launch: M2			Target: Ofakim
+22/10/2014 13:11:17 INFO	D201	Launch: DM1001			Target: M1
+22/10/2014 13:11:17 INFO	P301	Launch: PM2001			Target: L101
+22/10/2014 13:11:17 INFO	P301	Intercept: L101			Status: SUCCESS
+22/10/2014 13:11:17 INFO	L101	Status: DESTROYED
+22/10/2014 13:11:18 INFO	D201	Intercept: M1			Status: SUCCESS
+22/10/2014 13:11:18 INFO	L103	is now: visible
+22/10/2014 13:11:19 INFO	L102	is now: hidden
+22/10/2014 13:11:19 INFO	L102	Target: Ofakim		Status: HIT			Land Time: 22/10/2014 13:11:19			Damage: 5000
+22/10/2014 13:11:19 INFO	L103	Launch: M5			Target: BenAmir
+22/10/2014 13:11:20 INFO	S302	Intercept: L102			Status: FAIL			Reason: Launcher is hidden
+22/10/2014 13:11:21 INFO	P303	Launch: PM2002			Target: L103
+22/10/2014 13:11:21 INFO	P303	Intercept: L103			Status: SUCCESS
+22/10/2014 13:11:21 INFO	L103	Status: DESTROYED
+22/10/2014 13:11:21 INFO	L104	is now: visible
+22/10/2014 13:11:22 INFO	L103	Target: BenAmir		Status: HIT			Land Time: 22/10/2014 13:11:22			Damage: 5000
+22/10/2014 13:11:22 INFO	L104	Launch: M6			Target: Sderot
+22/10/2014 13:11:24 INFO	S302	Intercept: L102			Status: FAIL			Reason: Launcher is hidden
+22/10/2014 13:11:26 INFO	D201	Launch: DM1002			Target: M6
+22/10/2014 13:11:26 INFO	D201	Intercept: M6			Status: FAIL 			Damage: 50
+22/10/2014 13:11:30 INFO	D201	Launch: DM1003			Target: M6
+22/10/2014 13:11:30 INFO	D201	Intercept: M6			Status: FAIL 			Damage: 50
+22/10/2014 13:11:45 INFO	====== >	War finished	< ====== 

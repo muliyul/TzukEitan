@@ -1,0 +1,6 @@
+22/10/2014 13:11:17 INFO	D201	Launch: DM1001			Target: M1
+22/10/2014 13:11:18 INFO	D201	Intercept: M1			Status: SUCCESS
+22/10/2014 13:11:26 INFO	D201	Launch: DM1002			Target: M6
+22/10/2014 13:11:26 INFO	D201	Intercept: M6			Status: FAIL 			Damage: 50
+22/10/2014 13:11:30 INFO	D201	Launch: DM1003			Target: M6
+22/10/2014 13:11:30 INFO	D201	Intercept: M6			Status: FAIL 			Damage: 50
